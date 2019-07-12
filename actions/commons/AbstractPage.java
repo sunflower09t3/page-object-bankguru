@@ -11,12 +11,15 @@ import java.util.Set;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import bankguru.NewCustomerPageUI;
 
 public class AbstractPage {
 	private WebElement element;
@@ -81,7 +84,13 @@ public class AbstractPage {
 
 	public void sendKeyToElement(WebDriver driver, String localtor, String text) {
 		element = driver.findElement(By.xpath(localtor));
+		element.clear();
 		element.sendKeys(text);
+	}
+	
+	public void clearDataElement(WebDriver driver, String locator) {
+		element = driver.findElement(By.xpath(locator));
+		element.clear();
 	}
 
 	public void selectItemInHtmlDropdownByValue(WebDriver driver, String locator, String value) {
@@ -141,6 +150,11 @@ public class AbstractPage {
 	public String getTextElement(WebDriver driver, String locator) {
 		element = driver.findElement(By.xpath(locator));
 		return element.getText();
+	}
+	
+	public String getEnteredTextFromTextbox(WebDriver driver, String locator) {
+		element = driver.findElement(By.xpath(locator));
+		return element.getAttribute("value");
 	}
 
 	public int countElementNumber(WebDriver driver, String locator) {
@@ -244,10 +258,15 @@ public class AbstractPage {
 		action.dragAndDrop(sourceElement, targetElement).perform();
 	}
 
-	public void sendKeyBoardToElement(WebDriver driver, String locator, CharSequence keys) {
+	public void sendKeyBoardToElement(WebDriver driver, String locator, Keys keys) {
 		element = driver.findElement(By.xpath(locator));
 		action = new Actions(driver);
 		action.sendKeys(element, keys).perform();
+	}
+	
+	public void sendKeyBoardToActiveElement(WebDriver driver, Keys key) {
+		action = new Actions(driver);
+		action.sendKeys(key).perform();
 	}
 
 	public void scrollToBottomPage(WebDriver driver) {
