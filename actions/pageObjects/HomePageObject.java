@@ -27,5 +27,10 @@ public class HomePageObject extends AbstractPage{
 		clickToElement(driver, HomePageUI.NEW_CUSTOMER_LINK);
 	}
 
+	public void clickEditCustomerLink() {
+		waitForElementVisible(driver, HomePageUI.EDIT_CUSTOMER_LINK);
+		clickToElement(driver, HomePageUI.EDIT_CUSTOMER_LINK);
+	}
+
 
 }

@@ -2,7 +2,8 @@
 <suite name="BANKGURU" parallel="false">
   <test name="Run on Firefox">
     <classes>
-      <class name="com.bankguru.validation.Validation_01_NewCustomer"/>
+    	<class name="com.bankguru.validation.Validation_01_NewCustomer"/>
+      <class name="com.bankguru.validation.Validation_02_EditCustomer"/>
     </classes>
   </test> <!-- Test -->
 </suite> <!-- Suite -->
