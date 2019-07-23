@@ -9,6 +9,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import commons.PageGeneratorManager;
 import pageObjects.HomePageObject;
 import pageObjects.LoginPageObject;
 import pageObjects.NewCustomerPageObject;
@@ -33,11 +34,13 @@ public class Validation_01_NewCustomer {
 		driver.manage().window().maximize();
 		driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
 
-		loginPage = new LoginPageObject(driver);
-		homePage = new HomePageObject(driver);
-		newCustomerPage = new NewCustomerPageObject(driver);
+		//loginPage = new LoginPageObject(driver);
+		//homePage = new HomePageObject(driver);
+		//newCustomerPage = new NewCustomerPageObject(driver);
 
 		driver.get("http://demo.guru99.com/V4/");
+		
+		loginPage = PageGeneratorManager.getLoginPage(driver);
 		
 		// Data
 		userName = "mngr204279";
@@ -73,10 +76,10 @@ public class Validation_01_NewCustomer {
 		// Login 
 		loginPage.inputToUserIDTextbox(userName);
 		loginPage.inputToPasswordTextbox(password);
-		loginPage.clickLoginButton();
+		homePage = loginPage.clickLoginButton();
 		
 		// Navigate to New customer page
-		homePage.clickNewCustomerLink();
+		newCustomerPage = homePage.clickNewCustomerLink();
 	}
 
 	@Test

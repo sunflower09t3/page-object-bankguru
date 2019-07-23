@@ -2,6 +2,7 @@ package com.bankguru.validation;
 
 import org.testng.annotations.Test;
 
+import commons.PageGeneratorManager;
 import pageObjects.EditCustomerPageObject;
 import pageObjects.HomePageObject;
 import pageObjects.LoginPageObject;
@@ -35,11 +36,13 @@ public class Validation_02_EditCustomer {
 		driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
 		driver.manage().window().maximize();
 
-		homePage = new HomePageObject(driver);
-		loginPage = new LoginPageObject(driver);
-		editCustomerPage = new EditCustomerPageObject(driver);
+		//homePage = new HomePageObject(driver);
+		//loginPage = new LoginPageObject(driver);
+		//editCustomerPage = new EditCustomerPageObject(driver);
 
 		driver.get("http://demo.guru99.com/V4/");
+		
+		loginPage = PageGeneratorManager.getLoginPage(driver);
 
 		// Data
 		userName = "mngr204279";
@@ -67,10 +70,10 @@ public class Validation_02_EditCustomer {
 		// Login
 		loginPage.inputToUserIDTextbox(userName);
 		loginPage.inputToPasswordTextbox(password);
-		loginPage.clickLoginButton();
+		homePage = loginPage.clickLoginButton();
 
 		// Navigate to New customer page
-		homePage.clickEditCustomerLink();
+		editCustomerPage = homePage.clickEditCustomerLink();
 	}
 
 	@Test

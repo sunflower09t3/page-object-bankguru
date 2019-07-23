@@ -4,6 +4,7 @@ import org.openqa.selenium.WebDriver;
 
 import bankguru.HomePageUI;
 import commons.AbstractPage;
+import commons.PageGeneratorManager;
 
 public class HomePageObject extends AbstractPage{
 	WebDriver driver;
@@ -22,14 +23,16 @@ public class HomePageObject extends AbstractPage{
 		return actualText.contains(userID);
 	}
 
-	public void clickNewCustomerLink() {
+	public NewCustomerPageObject clickNewCustomerLink() {
 		waitForElementVisible(driver, HomePageUI.NEW_CUSTOMER_LINK);
 		clickToElement(driver, HomePageUI.NEW_CUSTOMER_LINK);
+		return new NewCustomerPageObject(driver);
 	}
 
-	public void clickEditCustomerLink() {
+	public EditCustomerPageObject clickEditCustomerLink() {
 		waitForElementVisible(driver, HomePageUI.EDIT_CUSTOMER_LINK);
 		clickToElement(driver, HomePageUI.EDIT_CUSTOMER_LINK);
+		return PageGeneratorManager.getEditCustomerPage(driver);
 	}
 
 
