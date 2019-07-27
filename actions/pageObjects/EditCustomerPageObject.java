@@ -4,6 +4,7 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 
 import bankguru.EditCustomerPageUI;
+import bankguru.NewCustomerPageUI;
 import commons.AbstractPage;
 
 public class EditCustomerPageObject extends AbstractPage {
@@ -21,10 +22,6 @@ public class EditCustomerPageObject extends AbstractPage {
 	public void clickSubmitButton() {
 		waitForElementVisible(driver, EditCustomerPageUI.SUBMIT_BUTTON);
 		clickToElement(driver, EditCustomerPageUI.SUBMIT_BUTTON);
-	}
-
-	public void pressTabKey() {
-		sendKeyBoardToActiveElement(driver, Keys.TAB);
 	}
 
 	public boolean isCustomerIDMustNotBlankMessageDisplayed() {
@@ -155,5 +152,49 @@ public class EditCustomerPageObject extends AbstractPage {
 		waitForElementVisible(driver, EditCustomerPageUI.EMAIL_TEXTBOX);
 		sendKeyToElement(driver, EditCustomerPageUI.EMAIL_TEXTBOX, value);
 	}
+
+	public void inputNothingToAddressTextareaAndPressTabKey() {
+		waitForElementVisible(driver, EditCustomerPageUI.ADDRESS_TEXTAREA);
+		sendKeyToElement(driver, EditCustomerPageUI.ADDRESS_TEXTAREA, "");
+		sendKeyBoardToElement(driver, EditCustomerPageUI.ADDRESS_TEXTAREA, Keys.TAB);
+	}
+
+	public void inputNothingToCustomerIDTextboxAndPressTabKey() {
+		waitForElementVisible(driver, EditCustomerPageUI.CUSTOMER_ID_TEXTBOX);
+		sendKeyToElement(driver, EditCustomerPageUI.CUSTOMER_ID_TEXTBOX, "");
+		sendKeyBoardToElement(driver, EditCustomerPageUI.CUSTOMER_ID_TEXTBOX, Keys.TAB);
+	}
+
+	public void inputNothingToCityTextboxAndPressTabKey() {
+		waitForElementVisible(driver, EditCustomerPageUI.CITY_TEXTBOX);
+		sendKeyToElement(driver, EditCustomerPageUI.CITY_TEXTBOX, "");
+		sendKeyBoardToElement(driver, EditCustomerPageUI.CITY_TEXTBOX, Keys.TAB);
+	}
+
+	public void inputNothingToStateTextboxAndPressTabKey() {
+		waitForElementVisible(driver, EditCustomerPageUI.STATE_TEXTBOX);
+		sendKeyToElement(driver, EditCustomerPageUI.STATE_TEXTBOX, "");
+		sendKeyBoardToElement(driver, EditCustomerPageUI.STATE_TEXTBOX, Keys.TAB);
+	}
+
+	public void inputNothingToPinTextboxAndPressTabKey() {
+		waitForElementVisible(driver, EditCustomerPageUI.PIN_TEXTBOX);
+		sendKeyToElement(driver, EditCustomerPageUI.PIN_TEXTBOX, "");
+		sendKeyBoardToElement(driver, EditCustomerPageUI.PIN_TEXTBOX, Keys.TAB);
+	}
+
+	public void inputNothingToTelephoneTextboxAndPressTabKey() {
+		waitForElementVisible(driver, EditCustomerPageUI.TELEPHONE_TEXTBOX);
+		sendKeyToElement(driver, EditCustomerPageUI.TELEPHONE_TEXTBOX, "");
+		sendKeyBoardToElement(driver, EditCustomerPageUI.TELEPHONE_TEXTBOX, Keys.TAB);
+	}
+
+	public void inputNothingToEmailTextboxAndPressTabKey() {
+		waitForElementVisible(driver, EditCustomerPageUI.EMAIL_TEXTBOX);
+		sendKeyToElement(driver, EditCustomerPageUI.EMAIL_TEXTBOX, "");
+		sendKeyBoardToElement(driver, EditCustomerPageUI.EMAIL_TEXTBOX, Keys.TAB);
+	}
+	
+	
 
 }

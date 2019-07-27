@@ -1,61 +1,46 @@
 package com.bankguru.validation;
 
+import org.junit.Assert;
+import org.openqa.selenium.WebDriver;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
+import commons.AbstractTest;
 import commons.PageGeneratorManager;
 import pageObjects.EditCustomerPageObject;
 import pageObjects.HomePageObject;
 import pageObjects.LoginPageObject;
 
-import org.testng.annotations.BeforeClass;
-
-import java.util.concurrent.TimeUnit;
-
-import org.junit.Assert;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.testng.annotations.AfterClass;
-
-public class Validation_02_EditCustomer {
+public class Validation_02_EditCustomer extends AbstractTest{
 	WebDriver driver;
 	String validCustomerID, userName, password;
 	HomePageObject homePage;
 	LoginPageObject loginPage;
 	EditCustomerPageObject editCustomerPage;
-	String emptyCustomerID, customerIDWithCharacter, customerIDWithSpecialCharacter;
-	String emptyAddress;
-	String emptyCity, cityWithNumber, cityWithSpecialCharacter;
-	String emptyState, stateWithSpecialCharacter, stateWithNumber;
+	String customerIDWithCharacter, customerIDWithSpecialCharacter;
+	String cityWithNumber, cityWithSpecialCharacter;
+	String stateWithSpecialCharacter, stateWithNumber;
 	String pinWithCharacter, emptyPin, pinWithLessThan6Digits, pinWithMoreThan6Digits, pinWithSpecialCharacter;
-	String emptyTelephone, telephoneWithSpecialCharacter;
-	String emptyEmail, invalidEmail;
+	String telephoneWithSpecialCharacter;
+	String invalidEmail;
 
+	@Parameters("browser")
 	@BeforeClass
-	public void beforeClass() {
-		driver = new FirefoxDriver();
-		driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
-		driver.manage().window().maximize();
+	public void beforeClass(String browserName) {
+		driver = openMultipleBrowser(browserName);
 
-		//homePage = new HomePageObject(driver);
-		//loginPage = new LoginPageObject(driver);
-		//editCustomerPage = new EditCustomerPageObject(driver);
-
-		driver.get("http://demo.guru99.com/V4/");
-		
 		loginPage = PageGeneratorManager.getLoginPage(driver);
 
 		// Data
 		userName = "mngr204279";
 		password = "UgUdUhu";
 		validCustomerID = "53666";
-		emptyCustomerID = "";
 		customerIDWithCharacter = "123acc";
 		customerIDWithSpecialCharacter = "123$%^";
-		emptyAddress = "";
-		emptyCity = "";
 		cityWithNumber = "city123";
 		cityWithSpecialCharacter = "city@#%";
-		emptyState = "";
 		stateWithSpecialCharacter = "state#$%";
 		stateWithNumber = "state123";
 		pinWithCharacter = "123abc";
@@ -63,7 +48,6 @@ public class Validation_02_EditCustomer {
 		pinWithLessThan6Digits = "123";
 		pinWithMoreThan6Digits = "123456789";
 		pinWithSpecialCharacter = "123%$@";
-		emptyTelephone = "";
 		telephoneWithSpecialCharacter = "123456789$%";
 		invalidEmail = "tuongvi@";
 
@@ -76,10 +60,9 @@ public class Validation_02_EditCustomer {
 		editCustomerPage = homePage.clickEditCustomerLink();
 	}
 
-	@Test
-	public void TC_01_CustomerIDCannotBlank() {
-		editCustomerPage.inputToCustomerIDTextbox(emptyCustomerID);
-		editCustomerPage.pressTabKey();
+	@Test  
+	public void TC_01_CustomerIDCannotBeBlank() {
+		editCustomerPage.inputNothingToCustomerIDTextboxAndPressTabKey();
 		Assert.assertTrue(editCustomerPage.isCustomerIDMustNotBlankMessageDisplayed());
 	}
 
@@ -102,17 +85,15 @@ public class Validation_02_EditCustomer {
 		Assert.assertTrue(editCustomerPage.isRedirectedToEditCustomerEntryPage());
 	}
 
-	@Test
+	@Test  
 	public void TC_08_AddressCannotBeBlank() {
-		editCustomerPage.inpuToAddressTextarea(emptyAddress);
-		editCustomerPage.pressTabKey();
+		editCustomerPage.inputNothingToAddressTextareaAndPressTabKey();
 		Assert.assertTrue(editCustomerPage.isAddressMustNotBlankMessageDisplayed());
 	}
 
-	@Test
+	@Test  
 	public void TC_09_CityCannotBeBlank() {
-		editCustomerPage.inputToCityTextbox(emptyCity);
-		editCustomerPage.pressTabKey();
+		editCustomerPage.inputNothingToCityTextboxAndPressTabKey();
 		Assert.assertTrue(editCustomerPage.isCityMustNotBlankMessageDisplayed());
 	}
 
@@ -128,10 +109,9 @@ public class Validation_02_EditCustomer {
 		Assert.assertTrue(editCustomerPage.isCityMustNotContainSpecialCharacterMessageDisplayed());
 	}
 
-	@Test
+	@Test  
 	public void TC_12_StateCannotBeBlank() {
-		editCustomerPage.inputToStateTextbox(emptyState);
-		editCustomerPage.pressTabKey();
+		editCustomerPage.inputNothingToStateTextboxAndPressTabKey();
 		Assert.assertTrue(editCustomerPage.isStateMustNotBlankMessageDisplayed());
 	}
 
@@ -153,10 +133,9 @@ public class Validation_02_EditCustomer {
 		Assert.assertTrue(editCustomerPage.isPinMustNotContainCharacterMessageDisplayed());
 	}
 
-	@Test
-	public void TC_16_PinCannotBlank() {
-		editCustomerPage.inputToPinTextbox(emptyPin);
-		editCustomerPage.pressTabKey();
+	@Test  
+	public void TC_16_PinCannotBeBlank() {
+		editCustomerPage.inputNothingToPinTextboxAndPressTabKey();
 		Assert.assertTrue(editCustomerPage.isPinMustNotBlankMessageDisplayed());
 	}
 
@@ -178,10 +157,9 @@ public class Validation_02_EditCustomer {
 		Assert.assertTrue(editCustomerPage.isPinMustNotHaveSpecialCharacterMessageDisplayed());
 	}
 
-	@Test
-	public void TC_19_TelephoneCannotBlank() {
-		editCustomerPage.inputToTelephoneTextbox(emptyTelephone);
-		editCustomerPage.pressTabKey();
+	@Test  
+	public void TC_19_TelephoneCannotBeBlank() {
+		editCustomerPage.inputNothingToTelephoneTextboxAndPressTabKey();
 		Assert.assertTrue(editCustomerPage.isTelephoneMustNotBlankMessageDisplayed());
 	}
 
@@ -191,10 +169,9 @@ public class Validation_02_EditCustomer {
 		Assert.assertTrue(editCustomerPage.isTelephoneMustNotContainSpecialCharacterMessageDisplayed());
 	}
 
-	@Test
-	public void TC_21_EmailCannotBlank() {
-		editCustomerPage.inputToEmailTextbox(emptyEmail);
-		editCustomerPage.pressTabKey();
+	@Test  
+	public void TC_21_EmailCannotBeBlank() {
+		editCustomerPage.inputNothingToEmailTextboxAndPressTabKey();
 		Assert.assertTrue(editCustomerPage.isEmailMustNotBlankMessageDisplayed());
 	}
 
@@ -203,7 +180,6 @@ public class Validation_02_EditCustomer {
 		editCustomerPage.inputToEmailTextbox(invalidEmail);
 		Assert.assertTrue(editCustomerPage.isEmailInvalidFormatMessageDisplayed());
 	}
-
 
 	@AfterClass
 	public void afterClass() {

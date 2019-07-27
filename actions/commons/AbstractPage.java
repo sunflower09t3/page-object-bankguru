@@ -258,17 +258,12 @@ public class AbstractPage {
 		action.dragAndDrop(sourceElement, targetElement).perform();
 	}
 
-	public void sendKeyBoardToElement(WebDriver driver, String locator, Keys keys) {
+	public void sendKeyBoardToElement(WebDriver driver, String locator, CharSequence keys) {
 		element = driver.findElement(By.xpath(locator));
 		action = new Actions(driver);
 		action.sendKeys(element, keys).perform();
 	}
 	
-	public void sendKeyBoardToActiveElement(WebDriver driver, Keys key) {
-		action = new Actions(driver);
-		action.sendKeys(key).perform();
-	}
-
 	public void scrollToBottomPage(WebDriver driver) {
 		javascriptExecutor = (JavascriptExecutor) driver;
 		javascriptExecutor.executeScript("window.scrollBy(0, document.body.scrollHeight)");

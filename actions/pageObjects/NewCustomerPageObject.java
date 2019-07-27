@@ -18,9 +18,6 @@ public class NewCustomerPageObject extends AbstractPage {
 		sendKeyToElement(driver, NewCustomerPageUI.CUSTOMER_NAME_TEXTBOX, value);
 	}
 
-	public void pressTabKey() {
-		sendKeyBoardToActiveElement(driver, Keys.TAB);
-	}
 
 	public boolean isCustomerNameMustNotBlankMessageDisplayed() {
 		waitForElementVisible(driver, NewCustomerPageUI.CUSTOMER_NAME_MUST_NOT_BLANK_MESSAGE);
@@ -47,7 +44,7 @@ public class NewCustomerPageObject extends AbstractPage {
 		return isControlDisplayed(driver, NewCustomerPageUI.ADDRESS_MUST_NOT_BLANK_MESSAGE);
 	}
 
-	public void inputToAddressTextbox(String value) {
+	public void inputToAddressTextarea(String value) {
 		waitForElementVisible(driver, NewCustomerPageUI.ADDRESS_TEXT_AREA);
 		sendKeyToElement(driver, NewCustomerPageUI.ADDRESS_TEXT_AREA, value);
 	}
@@ -185,6 +182,48 @@ public class NewCustomerPageObject extends AbstractPage {
 	public boolean isEmailMustNotBeginWithSpaceMessageDisplayed() {
 		waitForElementVisible(driver, NewCustomerPageUI.EMAIL_MUST_NOT_BEGIN_WITH_SPACE_MESSAGE);
 		return isControlDisplayed(driver, NewCustomerPageUI.EMAIL_MUST_NOT_BEGIN_WITH_SPACE_MESSAGE);
+	}
+
+	public void inputNothingToCustomerNameTextboxAndPressTabKey() {
+		waitForElementVisible(driver, NewCustomerPageUI.CUSTOMER_NAME_TEXTBOX);
+		sendKeyToElement(driver, NewCustomerPageUI.CUSTOMER_NAME_TEXTBOX, "");
+		sendKeyBoardToElement(driver, NewCustomerPageUI.CUSTOMER_NAME_TEXTBOX, Keys.TAB);
+	}
+
+	public void inputNothingToCityTextboxAndPressTabKey() {
+		waitForElementVisible(driver, NewCustomerPageUI.CITY_TEXTBOX);
+		sendKeyToElement(driver, NewCustomerPageUI.CITY_TEXTBOX, "");
+		sendKeyBoardToElement(driver, NewCustomerPageUI.CITY_TEXTBOX, Keys.TAB);
+	}
+
+	public void inputNothingToStateTextboxAndPressTabKey() {
+		waitForElementVisible(driver, NewCustomerPageUI.STATE_TEXTBOX);
+		sendKeyToElement(driver, NewCustomerPageUI.STATE_TEXTBOX, "");
+		sendKeyBoardToElement(driver, NewCustomerPageUI.STATE_TEXTBOX, Keys.TAB);
+	}
+
+	public void inputNothingToPinTextboxAndPressTabKey() {
+		waitForElementVisible(driver, NewCustomerPageUI.PIN_TEXTBOX);
+		sendKeyToElement(driver, NewCustomerPageUI.PIN_TEXTBOX, "");
+		sendKeyBoardToElement(driver, NewCustomerPageUI.PIN_TEXTBOX, Keys.TAB);
+	}
+
+	public void inputNothingToTelephoneTextboxAndPressTabKey() {
+		waitForElementVisible(driver, NewCustomerPageUI.TELEPHONE_TEXBOX);
+		sendKeyToElement(driver, NewCustomerPageUI.TELEPHONE_TEXBOX, "");
+		sendKeyBoardToElement(driver, NewCustomerPageUI.TELEPHONE_TEXBOX, Keys.TAB);
+	}
+
+	public void inputNothingToAddressTextareaAndPressTabKey() {
+		waitForElementVisible(driver, NewCustomerPageUI.ADDRESS_TEXT_AREA);
+		sendKeyToElement(driver, NewCustomerPageUI.ADDRESS_TEXT_AREA, "");
+		sendKeyBoardToElement(driver, NewCustomerPageUI.ADDRESS_TEXT_AREA, Keys.TAB);
+	}
+
+	public void inputNothingToEmailTextboxAndPressTabKey() {
+		waitForElementVisible(driver, NewCustomerPageUI.EMAIL_TEXTBOX);
+		sendKeyToElement(driver, NewCustomerPageUI.EMAIL_TEXTBOX, "");
+		sendKeyBoardToElement(driver, NewCustomerPageUI.EMAIL_TEXTBOX, Keys.TAB);
 	}
 
 }
