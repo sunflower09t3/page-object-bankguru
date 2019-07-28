@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suite name="BANKGURU" parallel="tests" thread-count="3">
+	<test name="Run on Firefox">
+		<classes>
+			<class
+				name="com.bankguru.account.Account_Level03_RegisterAndLogin_PageFactoryPattern" />
+		</classes>
+	</test>
+
+
+</suite> <!-- Suite -->
