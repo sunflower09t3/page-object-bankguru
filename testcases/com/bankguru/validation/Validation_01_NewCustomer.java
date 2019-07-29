@@ -67,7 +67,7 @@ public class Validation_01_NewCustomer extends AbstractTest{
 		homePage = loginPage.clickLoginButton();
 
 		// Navigate to New customer page
-		newCustomerPage = homePage.clickNewCustomerLink();
+		newCustomerPage = homePage.openNewCustomerPage(driver);
 	}
 
 	@Test   

@@ -57,7 +57,7 @@ public class Validation_02_EditCustomer extends AbstractTest{
 		homePage = loginPage.clickLoginButton();
 
 		// Navigate to New customer page
-		editCustomerPage = homePage.clickEditCustomerLink();
+		editCustomerPage = homePage.openEditCustomerPage(driver);
 	}
 
 	@Test  
