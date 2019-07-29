@@ -7,7 +7,7 @@ import commons.AbstractPage;
 
 public class RegisterPageObject extends AbstractPage{
 	
-	WebDriver driver;
+	private WebDriver driver;
 	
 	public RegisterPageObject(WebDriver driver) {
 		this.driver = driver;

@@ -7,7 +7,7 @@ import commons.AbstractPage;
 import commons.PageGeneratorManager;
 
 public class LoginPageObject extends AbstractPage {
-	WebDriver driver;
+	private WebDriver driver;
 
 	public LoginPageObject(WebDriver driver) {
 		this.driver = driver;

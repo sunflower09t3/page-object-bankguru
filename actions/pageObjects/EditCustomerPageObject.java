@@ -4,11 +4,10 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 
 import bankguru.EditCustomerPageUI;
-import bankguru.NewCustomerPageUI;
 import commons.AbstractPage;
 
 public class EditCustomerPageObject extends AbstractPage {
-	WebDriver driver;
+	private WebDriver driver;
 
 	public EditCustomerPageObject(WebDriver driver) {
 		this.driver = driver;
