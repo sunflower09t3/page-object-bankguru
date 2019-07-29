@@ -408,110 +408,95 @@ public class AbstractPage {
 		element.click();
 	}
 	
-	// open pages
+	// switch page functions
 	
 	public HomePageObject openHomePage(WebDriver driver) {
-		element = driver.findElement(By.xpath(AbstractPageUI.HOME_PAGE_LINK));
 		waitForElementVisible(driver, AbstractPageUI.HOME_PAGE_LINK);
-		element.click();
+		clickToElement(driver, AbstractPageUI.HOME_PAGE_LINK);
 		return PageGeneratorManager.getHomePage(driver);
 	}
 	
 	public NewCustomerPageObject openNewCustomerPage(WebDriver driver) {
-		element = driver.findElement(By.xpath(AbstractPageUI.NEW_CUSTOMER_LINK));
 		waitForElementVisible(driver, AbstractPageUI.NEW_CUSTOMER_LINK);
-		element.click();
+		clickToElement(driver, AbstractPageUI.NEW_CUSTOMER_LINK);
 		return PageGeneratorManager.getNewCustomerPage(driver);
 	}
 	
 	public EditCustomerPageObject openEditCustomerPage(WebDriver driver) {
-		element = driver.findElement(By.xpath(AbstractPageUI.EDIT_CUSTOMER_LINK));
 		waitForElementVisible(driver, AbstractPageUI.EDIT_CUSTOMER_LINK);
-		element.click();
+		clickToElement(driver, AbstractPageUI.EDIT_CUSTOMER_LINK);
 		return PageGeneratorManager.getEditCustomerPage(driver);
 	}
 	
 	public DeleteCustomerPageObject openDeleteCustomerPage(WebDriver driver) {
-		element = driver.findElement(By.xpath(AbstractPageUI.DELETE_CUSTOMER_LINK));
 		waitForElementVisible(driver, AbstractPageUI.DELETE_CUSTOMER_LINK);
-		element.click();
+		clickToElement(driver, AbstractPageUI.DELETE_CUSTOMER_LINK);
 		return PageGeneratorManager.getDeleteCustomerPage(driver);
 	}
 	
 	public NewAccountPageObject openNewAccountPage(WebDriver driver) {
-		element =  driver.findElement(By.xpath(AbstractPageUI.NEW_ACCOUNT_LINK));
 		waitForElementVisible(driver, AbstractPageUI.NEW_ACCOUNT_LINK);
-		element.click();
+		clickToElement(driver, AbstractPageUI.NEW_ACCOUNT_LINK);
 		return PageGeneratorManager.getNewAccountPage(driver);
 	}
 	
 	public EditAccountPageObject openEditAccountPage(WebDriver driver) {
-		element = driver.findElement(By.xpath(AbstractPageUI.EDIT_ACCOUNT_LINK));
 		waitForElementVisible(driver, AbstractPageUI.EDIT_ACCOUNT_LINK);
-		element.click();
+		clickToElement(driver, AbstractPageUI.EDIT_ACCOUNT_LINK);
 		return PageGeneratorManager.getEditAccountPage(driver);
 	}
 	
 	public DeleteAccountPageObject openDeleteAccountPage(WebDriver driver) {
-		element = driver.findElement(By.xpath(AbstractPageUI.DELETE_ACCOUNT_LINK));
 		waitForElementVisible(driver, AbstractPageUI.DELETE_ACCOUNT_LINK);
-		element.click();
+		clickToElement(driver, AbstractPageUI.DELETE_ACCOUNT_LINK);
 		return PageGeneratorManager.getDeleteAccountpage(driver);
 	}
 	
 	public DepositPageObject openDepositPage(WebDriver driver) {
-		element = driver.findElement(By.xpath(AbstractPageUI.DEPOSIT_LINK));
 		waitForElementVisible(driver, AbstractPageUI.DEPOSIT_LINK);
-		element.click();
+		clickToElement(driver, AbstractPageUI.DEPOSIT_LINK);
 		return PageGeneratorManager.getDepositPage(driver);
 	}
 	
 	public WithDrawalPageObject openWithdrawalPage(WebDriver driver) {
-		element = driver.findElement(By.xpath(AbstractPageUI.WITH_DRAWAL_LINK));
 		waitForElementVisible(driver, AbstractPageUI.WITH_DRAWAL_LINK);
-		element.click();
+		clickToElement(driver, AbstractPageUI.WITH_DRAWAL_LINK);
 		return PageGeneratorManager.getWithdrawlPage(driver);
 	}
 	
 	public FundTransferPageObject openFundTrasferPage(WebDriver driver) {
-		element = driver.findElement(By.xpath(AbstractPageUI.FUND_TRANSFER_LINK));
 		waitForElementVisible(driver, AbstractPageUI.FUND_TRANSFER_LINK);
-		element.click();
+		clickToElement(driver, AbstractPageUI.FUND_TRANSFER_LINK);
 		return PageGeneratorManager.getFunTransferPage(driver);
 	}
 	
 	public ChangePasswordPageObject openChangePasswordPage(WebDriver driver) {
-		element = driver.findElement(By.xpath(AbstractPageUI.CHANGE_PASSWORD_LINK));
 		waitForElementVisible(driver, AbstractPageUI.CHANGE_PASSWORD_LINK);
-		element.click();
+		clickToElement(driver, AbstractPageUI.CHANGE_PASSWORD_LINK);
 		return PageGeneratorManager.getChangePasswordPage(driver);
 	}
 	
 	public BalanceEnquiryPageObject openBalanceEnquiryPage(WebDriver driver) {
-		element = driver.findElement(By.xpath(AbstractPageUI.BALANCE_ENQUIRY_LINK));
 		waitForElementVisible(driver, AbstractPageUI.BALANCE_ENQUIRY_LINK);
-		element.click();
+		clickToElement(driver, AbstractPageUI.BALANCE_ENQUIRY_LINK);
 		return PageGeneratorManager.getBalanceEnquiryPage(driver);
 	}
 	
 	public MiniStatementPageObject openMiniStatementPage(WebDriver driver) {
-		element = driver.findElement(By.xpath(AbstractPageUI.MINI_STATEMENT_LINK));
 		waitForElementVisible(driver, AbstractPageUI.MINI_STATEMENT_LINK);
-		element.click();
+		clickToElement(driver, AbstractPageUI.MINI_STATEMENT_LINK);
 		return PageGeneratorManager.getMiniStatementPage(driver);
 	}
 	
 	public CustomisedStatementPageObject openCustomisedStatementPage(WebDriver driver) {
-		element = driver.findElement(By.xpath(AbstractPageUI.CUSTOMISED_STATEMENT_LINK));
 		waitForElementVisible(driver, AbstractPageUI.CUSTOMISED_STATEMENT_LINK);
-		element.click();
+		clickToElement(driver, AbstractPageUI.CUSTOMISED_STATEMENT_LINK);
 		return PageGeneratorManager.getCustomisedStatementPage(driver);
 	}
 	
 	public LogoutPageObject openLogoutPage(WebDriver driver) {
-		element = driver.findElement(By.xpath(AbstractPageUI.LOGOUT_LINK));
 		waitForElementVisible(driver, AbstractPageUI.LOGOUT_LINK);
-		element.click();
+		clickToElement(driver, AbstractPageUI.LOGOUT_LINK);
 		return PageGeneratorManager.getLogoutPage(driver);
 	}
 }
