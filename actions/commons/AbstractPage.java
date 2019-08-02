@@ -11,7 +11,6 @@ import java.util.Set;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -20,22 +19,6 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import bankguru.AbstractPageUI;
-import bankguru.NewCustomerPageUI;
-import pageObjects.BalanceEnquiryPageObject;
-import pageObjects.ChangePasswordPageObject;
-import pageObjects.CustomisedStatementPageObject;
-import pageObjects.DeleteAccountPageObject;
-import pageObjects.DeleteCustomerPageObject;
-import pageObjects.DepositPageObject;
-import pageObjects.EditAccountPageObject;
-import pageObjects.EditCustomerPageObject;
-import pageObjects.FundTransferPageObject;
-import pageObjects.HomePageObject;
-import pageObjects.LogoutPageObject;
-import pageObjects.MiniStatementPageObject;
-import pageObjects.NewAccountPageObject;
-import pageObjects.NewCustomerPageObject;
-import pageObjects.WithDrawalPageObject;
 
 public class AbstractPage {
 	private WebElement element;
@@ -98,12 +81,25 @@ public class AbstractPage {
 		element.click();
 	}
 
-	public void sendKeyToElement(WebDriver driver, String localtor, String text) {
-		element = driver.findElement(By.xpath(localtor));
+	public void clickToElement(WebDriver driver, String locator, String... dynamicValue) {
+		locator = String.format(locator, (Object[]) dynamicValue);
+		element = driver.findElement(By.xpath(locator));
+		element.click();
+	}
+
+	public void sendKeyToElement(WebDriver driver, String locator, String text) {
+		element = driver.findElement(By.xpath(locator));
 		element.clear();
 		element.sendKeys(text);
 	}
-	
+
+	public void sendKeyToElement(WebDriver driver, String locator, String text, String... dynamicValues) {
+		locator = String.format(locator, (Object[]) dynamicValues);
+		element = driver.findElement(By.xpath(locator));
+		element.clear();
+		element.sendKeys(text);
+	}
+
 	public void clearDataElement(WebDriver driver, String locator) {
 		element = driver.findElement(By.xpath(locator));
 		element.clear();
@@ -167,7 +163,13 @@ public class AbstractPage {
 		element = driver.findElement(By.xpath(locator));
 		return element.getText();
 	}
-	
+
+	public String getTextElement(WebDriver driver, String locator, String... dynamicValue) {
+		locator = String.format(locator, (Object[]) dynamicValue);
+		element = driver.findElement(By.xpath(locator));
+		return element.getText();
+	}
+
 	public String getEnteredTextFromTextbox(WebDriver driver, String locator) {
 		element = driver.findElement(By.xpath(locator));
 		return element.getAttribute("value");
@@ -191,6 +193,12 @@ public class AbstractPage {
 	}
 
 	public boolean isControlDisplayed(WebDriver driver, String locator) {
+		element = driver.findElement(By.xpath(locator));
+		return element.isDisplayed();
+	}
+
+	public boolean isControlDisplayed(WebDriver driver, String locator, String... dynamicValue) {
+		locator = String.format(locator, (Object[]) dynamicValue);
 		element = driver.findElement(By.xpath(locator));
 		return element.isDisplayed();
 	}
@@ -279,7 +287,7 @@ public class AbstractPage {
 		action = new Actions(driver);
 		action.sendKeys(element, keys).perform();
 	}
-	
+
 	public void scrollToBottomPage(WebDriver driver) {
 		javascriptExecutor = (JavascriptExecutor) driver;
 		javascriptExecutor.executeScript("window.scrollBy(0, document.body.scrollHeight)");
@@ -339,6 +347,13 @@ public class AbstractPage {
 	}
 
 	public void waitForElementVisible(WebDriver driver, String locator) {
+		byLocator = By.xpath(locator);
+		explicitWait = new WebDriverWait(driver, 30);
+		explicitWait.until(ExpectedConditions.visibilityOfElementLocated(byLocator));
+	}
+
+	public void waitForElementVisible(WebDriver driver, String locator, String... dynamicValue) {
+		locator = String.format(locator, (Object[]) dynamicValue);
 		byLocator = By.xpath(locator);
 		explicitWait = new WebDriverWait(driver, 30);
 		explicitWait.until(ExpectedConditions.visibilityOfElementLocated(byLocator));
@@ -407,96 +422,53 @@ public class AbstractPage {
 		element = driver.findElement(By.xpath(uploadFileButtonXpath));
 		element.click();
 	}
-	
+
 	// switch page functions
+
+	// 1st way: Initialize and return PageObject at AbstractPage class. 
+	// Apply when number of pages is 10-20 pages
+	/*public AbstractPage openMultiplePage(WebDriver driver, String pageName) {
+		waitForElementVisible(driver, AbstractPageUI.DYNAMIC_MENU_LINK, pageName);
+		clickToElement(driver, AbstractPageUI.DYNAMIC_MENU_LINK, pageName);
+		
+		switch (pageName) {
+		case "New Customer":
+			return PageGeneratorManager.getNewCustomerPage(driver);
+		case "Edit Customer":
+			return PageGeneratorManager.getEditCustomerPage(driver);
+		case "Delete Customer":
+			return PageGeneratorManager.getDeleteCustomerPage(driver);
+		case "New Account":
+			return PageGeneratorManager.getNewAccountPage(driver);
+		case "Edit Account":
+			return PageGeneratorManager.getEditAccountPage(driver);
+		case "Delete Account":
+			return PageGeneratorManager.getDeleteAccountpage(driver);
+		case "Deposit":
+			return PageGeneratorManager.getDepositPage(driver);
+		case "WithDrawal":
+			return PageGeneratorManager.getWithdrawlPage(driver);
+		case "Fund Transfer":
+			return PageGeneratorManager.getFunTransferPage(driver);
+		case "Change Password":
+			return PageGeneratorManager.getChangePasswordPage(driver);
+		case "Balance Enquiry":
+			return PageGeneratorManager.getBalanceEnquiryPage(driver);
+		case "Mini Statement":
+			return PageGeneratorManager.getMiniStatementPage(driver);
+		case "Customised Statement":
+			return PageGeneratorManager.getCustomisedStatementPage(driver);
+		case "Log out":
+			return PageGeneratorManager.getLogoutPage(driver);
+		default:
+			return PageGeneratorManager.getHomePage(driver);
+		}
+	}*/
 	
-	public HomePageObject openHomePage(WebDriver driver) {
-		waitForElementVisible(driver, AbstractPageUI.HOME_PAGE_LINK);
-		clickToElement(driver, AbstractPageUI.HOME_PAGE_LINK);
-		return PageGeneratorManager.getHomePage(driver);
-	}
-	
-	public NewCustomerPageObject openNewCustomerPage(WebDriver driver) {
-		waitForElementVisible(driver, AbstractPageUI.NEW_CUSTOMER_LINK);
-		clickToElement(driver, AbstractPageUI.NEW_CUSTOMER_LINK);
-		return PageGeneratorManager.getNewCustomerPage(driver);
-	}
-	
-	public EditCustomerPageObject openEditCustomerPage(WebDriver driver) {
-		waitForElementVisible(driver, AbstractPageUI.EDIT_CUSTOMER_LINK);
-		clickToElement(driver, AbstractPageUI.EDIT_CUSTOMER_LINK);
-		return PageGeneratorManager.getEditCustomerPage(driver);
-	}
-	
-	public DeleteCustomerPageObject openDeleteCustomerPage(WebDriver driver) {
-		waitForElementVisible(driver, AbstractPageUI.DELETE_CUSTOMER_LINK);
-		clickToElement(driver, AbstractPageUI.DELETE_CUSTOMER_LINK);
-		return PageGeneratorManager.getDeleteCustomerPage(driver);
-	}
-	
-	public NewAccountPageObject openNewAccountPage(WebDriver driver) {
-		waitForElementVisible(driver, AbstractPageUI.NEW_ACCOUNT_LINK);
-		clickToElement(driver, AbstractPageUI.NEW_ACCOUNT_LINK);
-		return PageGeneratorManager.getNewAccountPage(driver);
-	}
-	
-	public EditAccountPageObject openEditAccountPage(WebDriver driver) {
-		waitForElementVisible(driver, AbstractPageUI.EDIT_ACCOUNT_LINK);
-		clickToElement(driver, AbstractPageUI.EDIT_ACCOUNT_LINK);
-		return PageGeneratorManager.getEditAccountPage(driver);
-	}
-	
-	public DeleteAccountPageObject openDeleteAccountPage(WebDriver driver) {
-		waitForElementVisible(driver, AbstractPageUI.DELETE_ACCOUNT_LINK);
-		clickToElement(driver, AbstractPageUI.DELETE_ACCOUNT_LINK);
-		return PageGeneratorManager.getDeleteAccountpage(driver);
-	}
-	
-	public DepositPageObject openDepositPage(WebDriver driver) {
-		waitForElementVisible(driver, AbstractPageUI.DEPOSIT_LINK);
-		clickToElement(driver, AbstractPageUI.DEPOSIT_LINK);
-		return PageGeneratorManager.getDepositPage(driver);
-	}
-	
-	public WithDrawalPageObject openWithdrawalPage(WebDriver driver) {
-		waitForElementVisible(driver, AbstractPageUI.WITH_DRAWAL_LINK);
-		clickToElement(driver, AbstractPageUI.WITH_DRAWAL_LINK);
-		return PageGeneratorManager.getWithdrawlPage(driver);
-	}
-	
-	public FundTransferPageObject openFundTrasferPage(WebDriver driver) {
-		waitForElementVisible(driver, AbstractPageUI.FUND_TRANSFER_LINK);
-		clickToElement(driver, AbstractPageUI.FUND_TRANSFER_LINK);
-		return PageGeneratorManager.getFunTransferPage(driver);
-	}
-	
-	public ChangePasswordPageObject openChangePasswordPage(WebDriver driver) {
-		waitForElementVisible(driver, AbstractPageUI.CHANGE_PASSWORD_LINK);
-		clickToElement(driver, AbstractPageUI.CHANGE_PASSWORD_LINK);
-		return PageGeneratorManager.getChangePasswordPage(driver);
-	}
-	
-	public BalanceEnquiryPageObject openBalanceEnquiryPage(WebDriver driver) {
-		waitForElementVisible(driver, AbstractPageUI.BALANCE_ENQUIRY_LINK);
-		clickToElement(driver, AbstractPageUI.BALANCE_ENQUIRY_LINK);
-		return PageGeneratorManager.getBalanceEnquiryPage(driver);
-	}
-	
-	public MiniStatementPageObject openMiniStatementPage(WebDriver driver) {
-		waitForElementVisible(driver, AbstractPageUI.MINI_STATEMENT_LINK);
-		clickToElement(driver, AbstractPageUI.MINI_STATEMENT_LINK);
-		return PageGeneratorManager.getMiniStatementPage(driver);
-	}
-	
-	public CustomisedStatementPageObject openCustomisedStatementPage(WebDriver driver) {
-		waitForElementVisible(driver, AbstractPageUI.CUSTOMISED_STATEMENT_LINK);
-		clickToElement(driver, AbstractPageUI.CUSTOMISED_STATEMENT_LINK);
-		return PageGeneratorManager.getCustomisedStatementPage(driver);
-	}
-	
-	public LogoutPageObject openLogoutPage(WebDriver driver) {
-		waitForElementVisible(driver, AbstractPageUI.LOGOUT_LINK);
-		clickToElement(driver, AbstractPageUI.LOGOUT_LINK);
-		return PageGeneratorManager.getLogoutPage(driver);
+	// 2nd way: Initialize PageObject at test case layer. 
+	// Apply when there are lots of pages (100-1000 pages)
+	public void openMultiplePage(WebDriver driver, String pageName) {
+		waitForElementVisible(driver, AbstractPageUI.DYNAMIC_MENU_LINK, pageName);
+		clickToElement(driver, AbstractPageUI.DYNAMIC_MENU_LINK, pageName);
 	}
 }

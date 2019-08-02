@@ -34,9 +34,9 @@ public class Validation_02_EditCustomer extends AbstractTest{
 		loginPage = PageGeneratorManager.getLoginPage(driver);
 
 		// Data
-		userName = "mngr204279";
-		password = "UgUdUhu";
-		validCustomerID = "53666";
+		userName = "mngr213678";
+		password = "Anajabu";
+		validCustomerID = "76519";
 		customerIDWithCharacter = "123acc";
 		customerIDWithSpecialCharacter = "123$%^";
 		cityWithNumber = "city123";
@@ -57,7 +57,8 @@ public class Validation_02_EditCustomer extends AbstractTest{
 		homePage = loginPage.clickLoginButton();
 
 		// Navigate to New customer page
-		editCustomerPage = homePage.openEditCustomerPage(driver);
+		homePage.openMultiplePage(driver, "Edit Customer");
+		editCustomerPage = PageGeneratorManager.getEditCustomerPage(driver);
 	}
 
 	@Test  

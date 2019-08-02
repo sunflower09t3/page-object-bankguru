@@ -36,8 +36,8 @@ public class Validation_01_NewCustomer extends AbstractTest{
 		loginPage = PageGeneratorManager.getLoginPage(driver);
 
 		// Data
-		userName = "mngr204279";
-		password = "UgUdUhu";
+		userName = "mngr213678";
+		password = "Anajabu";
 		customerNameWithNumber = "myname123";
 		customerNameWithSpecialCharacter = "myname!@$";
 		customerNameBeginWithSpace = " ";
@@ -67,7 +67,8 @@ public class Validation_01_NewCustomer extends AbstractTest{
 		homePage = loginPage.clickLoginButton();
 
 		// Navigate to New customer page
-		newCustomerPage = homePage.openNewCustomerPage(driver);
+		homePage.openMultiplePage(driver, "New Customer");
+		newCustomerPage = PageGeneratorManager.getNewCustomerPage(driver);
 	}
 
 	@Test   
