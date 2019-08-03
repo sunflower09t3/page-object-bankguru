@@ -31,4 +31,5 @@ public class HomePageFactory extends AbstractPage{
 		String actualText = userIDText.getText();
 		return actualText.contains(userID);
 	}
+
 }

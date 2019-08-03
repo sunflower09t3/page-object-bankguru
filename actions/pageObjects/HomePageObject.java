@@ -3,6 +3,7 @@ package pageObjects;
 import org.openqa.selenium.WebDriver;
 
 import bankguru.HomePageUI;
+import bankguru.LoginPageUI;
 import commons.AbstractPage;
 import commons.PageGeneratorManager;
 
@@ -22,6 +23,4 @@ public class HomePageObject extends AbstractPage{
 		String actualText = getTextElement(driver, HomePageUI.USER_ID_TEXT);
 		return actualText.contains(userID);
 	}
-
-
 }

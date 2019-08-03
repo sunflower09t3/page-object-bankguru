@@ -38,4 +38,18 @@ public class LoginPageObject extends AbstractPage {
 		return PageGeneratorManager.getHomePage(driver);
 	}
 
+	public boolean isHomePageDisplayed() {
+		waitForElementVisible(driver, LoginPageUI.LOGIN_BUTTON);
+		return isControlDisplayed(driver, LoginPageUI.LOGIN_BUTTON);
+	}
+
+	public boolean isYahooMenuItemUndisplayed() {
+		waitForElementInvisible(driver, LoginPageUI.YAHOO_MENU_ITEM);
+		return isControlUndisplayed(driver, LoginPageUI.YAHOO_MENU_ITEM);
+	}
+
+	public boolean isHomePageUndisplayed() {
+		waitForElementInvisible(driver, LoginPageUI.WELCOM_MESSAGE_AT_HOMEPAGE);
+		return isControlUndisplayed(driver, LoginPageUI.WELCOM_MESSAGE_AT_HOMEPAGE);
+	}
 }
