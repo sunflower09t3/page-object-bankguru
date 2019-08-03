@@ -8,7 +8,7 @@ import java.awt.datatransfer.StringSelection;
 import java.awt.event.KeyEvent;
 import java.util.List;
 import java.util.Set;
-
+import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -117,7 +117,7 @@ public class AbstractPage {
 		select.selectByVisibleText(visibleText);
 	}
 
-	public void selectItemInDropdown(WebDriver driver, String parentLocator, String allOptionsLocator, String value) {
+	public void selectItemInCustomDropdown(WebDriver driver, String parentLocator, String allOptionsLocator, String value) {
 		element = driver.findElement(By.xpath(parentLocator));
 		javascriptExecutor = (JavascriptExecutor) driver;
 
@@ -201,6 +201,50 @@ public class AbstractPage {
 		locator = String.format(locator, (Object[]) dynamicValue);
 		element = driver.findElement(By.xpath(locator));
 		return element.isDisplayed();
+	}
+	
+	public boolean isControlUndisplayed(WebDriver driver, String locator) {
+		overrideGlobalTimeout(driver, Constants.SHORT_TIMEOUT);
+		elements = driver.findElements(By.xpath(locator));
+		overrideGlobalTimeout(driver, Constants.LONG_TIMEOUT);
+		
+		// Elelment is not present in DOM
+		if(elements.size() == 0) {
+			return true;
+		}
+		// Element is present in DOM but NOT visible
+		else if(elements.size() > 0 && !elements.get(0).isDisplayed()) {
+			return true;
+		}
+		// Element is present in DOM and visible
+		else {
+			return false;
+		}
+	}
+	
+	public boolean isControlUndisplayed(WebDriver driver, String locator, String... dynanicValues) {
+		overrideGlobalTimeout(driver, Constants.SHORT_TIMEOUT);
+		locator = String.format(locator, (Object[]) dynanicValues);
+		elements = driver.findElements(By.xpath(locator));
+		overrideGlobalTimeout(driver, Constants.LONG_TIMEOUT);
+		
+		// Elelment is not present in DOM
+		if(elements.size() == 0) {
+			return true;
+		}
+		// Element is present in DOM but NOT visible
+		else if(elements.size() > 0 && !elements.get(0).isDisplayed()) {
+			return true;
+		}
+		// Element is present in DOM and visible
+		else {
+			return false;
+		}
+	}
+	
+	
+	public void overrideGlobalTimeout(WebDriver driver, int timeout) {
+		driver.manage().timeouts().implicitlyWait(timeout, TimeUnit.SECONDS);
 	}
 
 	public boolean isControlSelected(WebDriver driver, String locator) {
@@ -368,7 +412,9 @@ public class AbstractPage {
 	public void waitForElementInvisible(WebDriver driver, String locator) {
 		byLocator = By.xpath(locator);
 		explicitWait = new WebDriverWait(driver, 30);
-		explicitWait.until(ExpectedConditions.visibilityOfElementLocated(byLocator));
+		overrideGlobalTimeout(driver, Constants.SHORT_TIMEOUT);
+		explicitWait.until(ExpectedConditions.invisibilityOfElementLocated(byLocator));
+		overrideGlobalTimeout(driver, Constants.LONG_TIMEOUT);
 	}
 
 	public void waitForAlertPresent(WebDriver driver) {
