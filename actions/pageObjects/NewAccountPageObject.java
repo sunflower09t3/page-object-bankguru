@@ -1,5 +1,6 @@
 package pageObjects;
 
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 
 import bankguru.NewAccountPageUI;
@@ -45,5 +46,57 @@ public class NewAccountPageObject extends AbstractPage{
 	public String getCurrentAmount() {
 		waitForElementVisible(driver, NewAccountPageUI.CURRENT_AMOUNT_TEXT_IN_TABLE);
 		return getTextElement(driver, NewAccountPageUI.CURRENT_AMOUNT_TEXT_IN_TABLE);
+	}
+
+	public void inputNothingToCustomerIDTextboxAndPressTabKey() {
+		waitForElementVisible(driver, NewAccountPageUI.CUSTOMER_ID_TEXTBOX);
+		sendKeyToElement(driver, NewAccountPageUI.CUSTOMER_ID_TEXTBOX, "");
+		sendKeyBoardToElement(driver, NewAccountPageUI.CUSTOMER_ID_TEXTBOX, Keys.TAB);
+	}
+
+	public boolean isCustomerIDMustNoBlankMessageDisplayed() {
+		waitForElementVisible(driver, NewAccountPageUI.CUSTOMER_ID_MUST_NOT_BLANK_MESSAGE);
+		return isControlDisplayed(driver, NewAccountPageUI.CUSTOMER_ID_MUST_NOT_BLANK_MESSAGE);
+	}
+
+	public boolean isCustomerIDMustNotContainCharacterMessageDisplayed() {
+		waitForElementVisible(driver, NewAccountPageUI.CUSTOMER_ID_MUST_NOT_CONTAIN_CHARACTER_MESSAGE);
+		return isControlDisplayed(driver, NewAccountPageUI.CUSTOMER_ID_MUST_NOT_CONTAIN_CHARACTER_MESSAGE);
+	}
+
+	public boolean isCustomerIDMustNotContainSpecialCharacterMessageDisplayed() {
+		waitForElementVisible(driver, NewAccountPageUI.CUSTOMER_ID_MUST_NOT_CONTAIN_SPECIAL_CHARACTER_MESSAGE);
+		return isControlDisplayed(driver, NewAccountPageUI.CUSTOMER_ID_MUST_NOT_CONTAIN_SPECIAL_CHARACTER_MESSAGE);
+	}
+
+	public boolean isCustomerIDMustNotBeginWithSpaceMessageDisplayed() {
+		waitForElementVisible(driver, NewAccountPageUI.CUSTOMER_ID_MUST_NOT_BEGIN_WITH_SPACE_MESSAGE);
+		return isControlDisplayed(driver, NewAccountPageUI.CUSTOMER_ID_MUST_NOT_BEGIN_WITH_SPACE_MESSAGE);
+	}
+
+	public void inputNothingToInitialDepositTextboxAndPressTabKey() {
+		waitForElementVisible(driver, NewAccountPageUI.INITIAL_DEPOSIT_TEXTBOX);
+		sendKeyToElement(driver, NewAccountPageUI.INITIAL_DEPOSIT_TEXTBOX, "");
+		sendKeyBoardToElement(driver, NewAccountPageUI.INITIAL_DEPOSIT_TEXTBOX, Keys.TAB);
+	}
+
+	public boolean isInitialDepositMustNotBlankMessageDisplayed() {
+		waitForElementVisible(driver, NewAccountPageUI.INITIAL_DEPOSIT_MUST_NOT_BLANK_MESSAGE);
+		return isControlDisplayed(driver, NewAccountPageUI.INITIAL_DEPOSIT_MUST_NOT_BLANK_MESSAGE);
+	}
+
+	public boolean isInitialDepositMustNotContainCharacterMessageDisplayed() {
+		waitForElementVisible(driver, NewAccountPageUI.INITIAL_DEPOSIT_MUST_NOT_CONTAIN_CHARACTER_MESSAGE);
+		return isControlDisplayed(driver, NewAccountPageUI.INITIAL_DEPOSIT_MUST_NOT_CONTAIN_CHARACTER_MESSAGE);
+	}
+
+	public boolean isInitialDepositMustNotContainSpecialCharacterMessageDisplayed() {
+		waitForElementVisible(driver, NewAccountPageUI.INITIAL_DEPOSIT_MUST_NOT_CONTAIN_SPECIAL_CHARACTER_MESSAGE);
+		return isControlDisplayed(driver, NewAccountPageUI.INITIAL_DEPOSIT_MUST_NOT_CONTAIN_SPECIAL_CHARACTER_MESSAGE);
+	}
+
+	public boolean isInitialDepositMustNotBeginWithSpaceMessageDisplayed() {
+		waitForElementVisible(driver, NewAccountPageUI.INITIAL_DEPOSIT_MUST_NOT_BEGIN_WITH_SPACE_MESSAGE);
+		return isControlDisplayed(driver, NewAccountPageUI.INITIAL_DEPOSIT_MUST_NOT_BEGIN_WITH_SPACE_MESSAGE);
 	}
 }
