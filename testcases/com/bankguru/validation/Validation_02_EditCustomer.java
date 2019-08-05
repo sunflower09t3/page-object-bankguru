@@ -82,7 +82,7 @@ public class Validation_02_EditCustomer extends AbstractTest{
 	@Test
 	public void TC_04_ValidCustomerID() {
 		editCustomerPage.inputToCustomerIDTextbox(validCustomerID);
-		editCustomerPage.clickSubmitButton();
+		editCustomerPage.clickAccSubmitButton();
 		Assert.assertTrue(editCustomerPage.isRedirectedToEditCustomerEntryPage());
 	}
 
