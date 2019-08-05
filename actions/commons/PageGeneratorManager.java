@@ -18,7 +18,7 @@ import pageObjects.MiniStatementPageObject;
 import pageObjects.NewAccountPageObject;
 import pageObjects.NewCustomerPageObject;
 import pageObjects.RegisterPageObject;
-import pageObjects.WithDrawalPageObject;
+import pageObjects.WithdrawalPageObject;
 
 public class PageGeneratorManager {
 
@@ -62,8 +62,8 @@ public class PageGeneratorManager {
 		return  new DepositPageObject(driver);
 	}
 	
-	public static WithDrawalPageObject getWithdrawlPage(WebDriver driver) {
-		return new WithDrawalPageObject(driver);
+	public static WithdrawalPageObject getWithdrawlPage(WebDriver driver) {
+		return new WithdrawalPageObject(driver);
 	}
 	
 	public static FundTransferPageObject getFunTransferPage(WebDriver driver) {

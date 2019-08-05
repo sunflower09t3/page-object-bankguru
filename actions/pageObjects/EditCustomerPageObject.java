@@ -13,11 +13,16 @@ public class EditCustomerPageObject extends AbstractPage {
 		this.driver = driver;
 	}
 
-	public void inputToCustomerIDTextbox(String value) {
+	public void inputToCustomerIDTextbox(String customerID) {
 		waitForElementVisible(driver, EditCustomerPageUI.CUSTOMER_ID_TEXTBOX);
-		sendKeyToElement(driver, EditCustomerPageUI.CUSTOMER_ID_TEXTBOX, value);
+		sendKeyToElement(driver, EditCustomerPageUI.CUSTOMER_ID_TEXTBOX, customerID);
 	}
 
+	public void clickAccSubmitButton() {
+		waitForElementVisible(driver, EditCustomerPageUI.ACC_SUBMIT_BUTTON);
+		clickToElement(driver, EditCustomerPageUI.ACC_SUBMIT_BUTTON);
+	}
+	
 	public void clickSubmitButton() {
 		waitForElementVisible(driver, EditCustomerPageUI.SUBMIT_BUTTON);
 		clickToElement(driver, EditCustomerPageUI.SUBMIT_BUTTON);
@@ -43,9 +48,9 @@ public class EditCustomerPageObject extends AbstractPage {
 		return isControlDisplayed(driver, EditCustomerPageUI.EDIT_CUSTOMER_HEADING);
 	}
 
-	public void inpuToAddressTextarea(String value) {
+	public void inputToAddressTextarea(String address) {
 		waitForElementVisible(driver, EditCustomerPageUI.ADDRESS_TEXTAREA);
-		sendKeyToElement(driver, EditCustomerPageUI.ADDRESS_TEXTAREA, value);
+		sendKeyToElement(driver, EditCustomerPageUI.ADDRESS_TEXTAREA, address);
 	}
 
 	public boolean isAddressMustNotBlankMessageDisplayed() {
@@ -58,9 +63,9 @@ public class EditCustomerPageObject extends AbstractPage {
 		return isControlDisplayed(driver, EditCustomerPageUI.CITY_MUST_NOT_BLANK_MESSAGE);
 	}
 
-	public void inputToCityTextbox(String value) {
+	public void inputToCityTextbox(String city) {
 		waitForElementVisible(driver, EditCustomerPageUI.CITY_TEXTBOX);
-		sendKeyToElement(driver, EditCustomerPageUI.CITY_TEXTBOX, value);
+		sendKeyToElement(driver, EditCustomerPageUI.CITY_TEXTBOX, city);
 	}
 
 	public boolean isCityMustNotContainNumberMessageDisplayed() {
@@ -73,9 +78,9 @@ public class EditCustomerPageObject extends AbstractPage {
 		return isControlDisplayed(driver, EditCustomerPageUI.CITY_MUST_NOT_CONTAIN_SPECIAL_CHARACTER);
 	}
 
-	public void inputToStateTextbox(String value) {
+	public void inputToStateTextbox(String state) {
 		waitForElementVisible(driver, EditCustomerPageUI.STATE_TEXTBOX);
-		sendKeyToElement(driver, EditCustomerPageUI.STATE_TEXTBOX, value);
+		sendKeyToElement(driver, EditCustomerPageUI.STATE_TEXTBOX, state);
 	}
 
 	public boolean isStateMustNotBlankMessageDisplayed() {
@@ -88,9 +93,9 @@ public class EditCustomerPageObject extends AbstractPage {
 		return isControlDisplayed(driver, EditCustomerPageUI.STATE_MUST_NOT_CONTAIN_SPECIAL_CHARACTER_MESSAGE);
 	}
 
-	public void inputToPinTextbox(String value) {
+	public void inputToPinTextbox(String pin) {
 		waitForElementVisible(driver, EditCustomerPageUI.PIN_TEXTBOX);
-		sendKeyToElement(driver, EditCustomerPageUI.PIN_TEXTBOX, value);
+		sendKeyToElement(driver, EditCustomerPageUI.PIN_TEXTBOX, pin);
 	}
 
 	public boolean isPinMustNotContainCharacterMessageDisplayed() {
@@ -122,9 +127,9 @@ public class EditCustomerPageObject extends AbstractPage {
 		return isControlDisplayed(driver, EditCustomerPageUI.STATE_MUST_NOT_CONTAIN_NUMBER_MESSAGE);
 	}
 
-	public void inputToTelephoneTextbox(String value) {
+	public void inputToTelephoneTextbox(String telephone) {
 		waitForElementVisible(driver, EditCustomerPageUI.TELEPHONE_TEXTBOX);
-		sendKeyToElement(driver, EditCustomerPageUI.TELEPHONE_TEXTBOX, value);
+		sendKeyToElement(driver, EditCustomerPageUI.TELEPHONE_TEXTBOX, telephone);
 	}
 
 	public boolean isTelephoneMustNotBlankMessageDisplayed() {
@@ -147,9 +152,9 @@ public class EditCustomerPageObject extends AbstractPage {
 		return isControlDisplayed(driver, EditCustomerPageUI.EMAIL_INVALID_FORMAT_MESSAGE);
 	}
 
-	public void inputToEmailTextbox(String value) {
+	public void inputToEmailTextbox(String email) {
 		waitForElementVisible(driver, EditCustomerPageUI.EMAIL_TEXTBOX);
-		sendKeyToElement(driver, EditCustomerPageUI.EMAIL_TEXTBOX, value);
+		sendKeyToElement(driver, EditCustomerPageUI.EMAIL_TEXTBOX, email);
 	}
 
 	public void inputNothingToAddressTextareaAndPressTabKey() {
@@ -193,6 +198,23 @@ public class EditCustomerPageObject extends AbstractPage {
 		sendKeyToElement(driver, EditCustomerPageUI.EMAIL_TEXTBOX, "");
 		sendKeyBoardToElement(driver, EditCustomerPageUI.EMAIL_TEXTBOX, Keys.TAB);
 	}
+
+	public boolean isCustomerUpdatedSuccessfulMessageDisplayed() {
+		waitForElementVisible(driver, EditCustomerPageUI.CUSTOMER_UPDATED_SUCCESSFUL_MESSAGE);
+		return isControlDisplayed(driver, EditCustomerPageUI.CUSTOMER_UPDATED_SUCCESSFUL_MESSAGE);
+	}
+
+	public String getAlertMessage() {
+		waitForAlertPresent(driver);
+		return getTextAlert(driver);
+	}
+
+	public void acceptCustomerNotExistInformationAlert() {
+		waitForAlertPresent(driver);
+		acceptAlert(driver);
+	}
+
+	
 	
 	
 

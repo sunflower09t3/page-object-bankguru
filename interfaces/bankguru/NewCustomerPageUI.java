@@ -34,4 +34,11 @@ public class NewCustomerPageUI {
 	public static final String EMAIL_MUST_NOT_BLANK_MESSAGE = "//*[@id='message9' and text()='Email-ID must not be blank']";
 	public static final String EMAIL_INVALID_FORMAT_MESSAGE = "//*[@id='message9' and text()='Email-ID is not valid']";
 	public static final String EMAIL_MUST_NOT_BEGIN_WITH_SPACE_MESSAGE = "//*[@id='message9' and text()='First character can not have space']";
+	public static final String PASSWORD_TEXTBOX = "//input[@name='password']";
+	public static final String DATE_OF_BIRTH_TEXTBOX = "//input[@name='dob']";
+	public static final String MALE_GENDER_RADIO_BUTTON = "//input[@name='rad1' and @value='m']";
+	public static final String FEMALE_GENDER_RADIO_BUTTON = "//input[@name='rad1' and @value='f']";
+	public static final String SUBMIT_BUTTON = "//input[@name='sub']";
+	public static final String CUSTOMER_REGISTERED_SUCCESSFUL_MESSAGE = "//p[@class='heading3' and text()='Customer Registered Successfully!!!']";
+	public static final String CUSTOMER_ID_TEXT_IN_TABLE = "//td[text()='Customer ID']/following-sibling::td";
 }

@@ -13,9 +13,9 @@ public class NewCustomerPageObject extends AbstractPage {
 		this.driver = driver;
 	}
 
-	public void inputToCustomerNameTextbox(String value) {
+	public void inputToCustomerNameTextbox(String customerName) {
 		waitForElementVisible(driver, NewCustomerPageUI.CUSTOMER_NAME_TEXTBOX);
-		sendKeyToElement(driver, NewCustomerPageUI.CUSTOMER_NAME_TEXTBOX, value);
+		sendKeyToElement(driver, NewCustomerPageUI.CUSTOMER_NAME_TEXTBOX, customerName);
 	}
 
 
@@ -44,9 +44,9 @@ public class NewCustomerPageObject extends AbstractPage {
 		return isControlDisplayed(driver, NewCustomerPageUI.ADDRESS_MUST_NOT_BLANK_MESSAGE);
 	}
 
-	public void inputToAddressTextarea(String value) {
+	public void inputToAddressTextarea(String address) {
 		waitForElementVisible(driver, NewCustomerPageUI.ADDRESS_TEXT_AREA);
-		sendKeyToElement(driver, NewCustomerPageUI.ADDRESS_TEXT_AREA, value);
+		sendKeyToElement(driver, NewCustomerPageUI.ADDRESS_TEXT_AREA, address);
 	}
 
 	public boolean isAddressMustNotBeginWithSpaceMessageDisplayed() {
@@ -59,9 +59,9 @@ public class NewCustomerPageObject extends AbstractPage {
 		return isControlDisplayed(driver, NewCustomerPageUI.CITY_MUST_NOT_BLANK_MESSAGE);
 	}
 
-	public void inputToCityTextbox(String value) {
+	public void inputToCityTextbox(String city) {
 		waitForElementVisible(driver, NewCustomerPageUI.CITY_TEXTBOX);
-		sendKeyToElement(driver, NewCustomerPageUI.CITY_TEXTBOX, value);
+		sendKeyToElement(driver, NewCustomerPageUI.CITY_TEXTBOX, city);
 	}
 
 	public boolean isCityMustNotContainNumberMessageDisplayed() {
@@ -84,9 +84,9 @@ public class NewCustomerPageObject extends AbstractPage {
 		return isControlDisplayed(driver, NewCustomerPageUI.STATE_MUST_NOT_BLANK_MESSAGE);
 	}
 
-	public void inputToStateTextbox(String value) {
+	public void inputToStateTextbox(String state) {
 		waitForElementVisible(driver, NewCustomerPageUI.STATE_TEXTBOX);
-		sendKeyToElement(driver, NewCustomerPageUI.STATE_TEXTBOX, value);
+		sendKeyToElement(driver, NewCustomerPageUI.STATE_TEXTBOX, state);
 	}
 
 	public boolean isStateMustNotContainNumberMessageDisplayed() {
@@ -104,9 +104,9 @@ public class NewCustomerPageObject extends AbstractPage {
 		return isControlDisplayed(driver, NewCustomerPageUI.STATE_MUST_NOT_BEGIN_WITH_SPACE_MESSAGE);
 	}
 
-	public void inputToPinTextbox(String value) {
+	public void inputToPinTextbox(String pin) {
 		waitForElementVisible(driver, NewCustomerPageUI.PIN_TEXTBOX);
-		sendKeyToElement(driver, NewCustomerPageUI.PIN_TEXTBOX, value);
+		sendKeyToElement(driver, NewCustomerPageUI.PIN_TEXTBOX, pin);
 	}
 
 	public boolean isPinMustNotContainCharacterMessageDisplayed() {
@@ -144,9 +144,9 @@ public class NewCustomerPageObject extends AbstractPage {
 		return isControlDisplayed(driver, NewCustomerPageUI.TELEPHONE_MUST_NOT_BLANK_MESSAGE);
 	}
 
-	public void inputToTelephoneTextbox(String value) {
+	public void inputToTelephoneTextbox(String telephone) {
 		waitForElementVisible(driver, NewCustomerPageUI.TELEPHONE_TEXBOX);
-		sendKeyToElement(driver, NewCustomerPageUI.TELEPHONE_TEXBOX, value);
+		sendKeyToElement(driver, NewCustomerPageUI.TELEPHONE_TEXBOX, telephone);
 	}
 
 	public boolean isTelephoneMustNotBeginWithSpaceMessageDisplayed() {
@@ -164,9 +164,9 @@ public class NewCustomerPageObject extends AbstractPage {
 		return isControlDisplayed(driver, NewCustomerPageUI.TELEPHONE_MUST_NOT_CONTAIN_SPECIAL_CHARACTER_MESSAGE);
 	}
 
-	public void inputToEmailTextbox(String value) {
+	public void inputToEmailTextbox(String email) {
 		waitForElementVisible(driver, NewCustomerPageUI.EMAIL_TEXTBOX);
-		sendKeyToElement(driver, NewCustomerPageUI.EMAIL_TEXTBOX, value);
+		sendKeyToElement(driver, NewCustomerPageUI.EMAIL_TEXTBOX, email);
 	}
 
 	public boolean isEmailMustNotBlankMessageDisplayed() {
@@ -224,6 +224,43 @@ public class NewCustomerPageObject extends AbstractPage {
 		waitForElementVisible(driver, NewCustomerPageUI.EMAIL_TEXTBOX);
 		sendKeyToElement(driver, NewCustomerPageUI.EMAIL_TEXTBOX, "");
 		sendKeyBoardToElement(driver, NewCustomerPageUI.EMAIL_TEXTBOX, Keys.TAB);
+	}
+
+	public void inputToPasswordTextbox(String password) {
+		waitForElementVisible(driver, NewCustomerPageUI.PASSWORD_TEXTBOX);
+		sendKeyToElement(driver, NewCustomerPageUI.PASSWORD_TEXTBOX, password);
+	}
+
+	public void inputToDateOfBirthTextbox(String text) {
+		waitForElementVisible(driver, NewCustomerPageUI.DATE_OF_BIRTH_TEXTBOX);
+		sendKeyToElement(driver, NewCustomerPageUI.DATE_OF_BIRTH_TEXTBOX, text);
+	}
+
+	public void selectMaleGenderRadioButton() {
+		waitForElementVisible(driver, NewCustomerPageUI.MALE_GENDER_RADIO_BUTTON);
+		if(!isControlSelected(driver, NewCustomerPageUI.MALE_GENDER_RADIO_BUTTON))
+			clickToElement(driver, NewCustomerPageUI.MALE_GENDER_RADIO_BUTTON);
+	}
+
+	public void selectFemaleGenderRadioButton() {
+		waitForElementVisible(driver, NewCustomerPageUI.FEMALE_GENDER_RADIO_BUTTON);
+		if(!isControlSelected(driver, NewCustomerPageUI.FEMALE_GENDER_RADIO_BUTTON))
+			clickToElement(driver, NewCustomerPageUI.FEMALE_GENDER_RADIO_BUTTON);
+	}
+
+	public void clickSubmitButton() {
+		waitForElementVisible(driver, NewCustomerPageUI.SUBMIT_BUTTON);
+		clickToElement(driver, NewCustomerPageUI.SUBMIT_BUTTON);
+	}
+
+	public boolean isCustomerRegisteredSuccessfulMessageDisplayed() {
+		waitForElementVisible(driver, NewCustomerPageUI.CUSTOMER_REGISTERED_SUCCESSFUL_MESSAGE);
+		return isControlDisplayed(driver, NewCustomerPageUI.CUSTOMER_REGISTERED_SUCCESSFUL_MESSAGE);
+	}
+
+	public String getCustomerID() {
+		waitForElementVisible(driver, NewCustomerPageUI.CUSTOMER_ID_TEXT_IN_TABLE);
+		return getTextElement(driver, NewCustomerPageUI.CUSTOMER_ID_TEXT_IN_TABLE);
 	}
 
 }
