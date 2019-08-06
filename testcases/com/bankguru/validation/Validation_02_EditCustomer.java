@@ -1,5 +1,7 @@
 package com.bankguru.validation;
 
+import java.util.Random;
+
 import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterClass;
@@ -12,20 +14,25 @@ import commons.PageGeneratorManager;
 import pageObjects.EditCustomerPageObject;
 import pageObjects.HomePageObject;
 import pageObjects.LoginPageObject;
+import pageObjects.NewCustomerPageObject;
 
-public class Validation_02_EditCustomer extends AbstractTest{
+public class Validation_02_EditCustomer extends AbstractTest {
 	WebDriver driver;
-	String validCustomerID, userName, password;
-	HomePageObject homePage;
-	LoginPageObject loginPage;
-	EditCustomerPageObject editCustomerPage;
+	String userName, password;
 	String customerIDWithCharacter, customerIDWithSpecialCharacter;
 	String cityWithNumber, cityWithSpecialCharacter;
 	String stateWithSpecialCharacter, stateWithNumber;
 	String pinWithCharacter, emptyPin, pinWithLessThan6Digits, pinWithMoreThan6Digits, pinWithSpecialCharacter;
 	String telephoneWithSpecialCharacter;
 	String invalidEmail;
+	String newCustomerID, newCustomerName, newCustomerDateOfBirth, newCustomerAddress, newCustomerState;
+	String newCustomerCity, newCustomerPIN, newCustomerTelephone, newCustomerEmail, newCustomerPassword;
 
+	HomePageObject homePage;
+	LoginPageObject loginPage;
+	EditCustomerPageObject editCustomerPage;
+	NewCustomerPageObject newCustomerPage;
+	
 	@Parameters("browser")
 	@BeforeClass
 	public void beforeClass(String browserName) {
@@ -36,7 +43,6 @@ public class Validation_02_EditCustomer extends AbstractTest{
 		// Data
 		userName = "mngr213678";
 		password = "Anajabu";
-		validCustomerID = "76519";
 		customerIDWithCharacter = "123acc";
 		customerIDWithSpecialCharacter = "123$%^";
 		cityWithNumber = "city123";
@@ -51,6 +57,17 @@ public class Validation_02_EditCustomer extends AbstractTest{
 		telephoneWithSpecialCharacter = "123456789$%";
 		invalidEmail = "tuongvi@";
 
+		// New customer data
+		newCustomerName = "first customer";
+		newCustomerDateOfBirth = "01/01/1989";
+		newCustomerAddress = "PO Box 911 8331 Duis Avenue";
+		newCustomerState = "FL";
+		newCustomerCity = "Tampa";
+		newCustomerPIN = "466250";
+		newCustomerTelephone = "4555442476";
+		newCustomerEmail = "firstcustomer" + randomNumber() + "@gmail.com";
+		newCustomerPassword = "firstcustomerpassword";
+
 		// Login
 		loginPage.inputToUserIDTextbox(userName);
 		loginPage.inputToPasswordTextbox(password);
@@ -61,7 +78,7 @@ public class Validation_02_EditCustomer extends AbstractTest{
 		editCustomerPage = PageGeneratorManager.getEditCustomerPage(driver);
 	}
 
-	@Test  
+	@Test
 	public void TC_01_CustomerIDCannotBeBlank() {
 		editCustomerPage.inputNothingToCustomerIDTextboxAndPressTabKey();
 		Assert.assertTrue(editCustomerPage.isCustomerIDMustNotBlankMessageDisplayed());
@@ -81,18 +98,39 @@ public class Validation_02_EditCustomer extends AbstractTest{
 
 	@Test
 	public void TC_04_ValidCustomerID() {
-		editCustomerPage.inputToCustomerIDTextbox(validCustomerID);
+		editCustomerPage.openMultiplePage(driver, "New Customer");
+		newCustomerPage = PageGeneratorManager.getNewCustomerPage(driver);
+		
+		newCustomerPage.inputToCustomerNameTextbox(newCustomerName);
+		newCustomerPage.selectFemaleGenderRadioButton();
+		newCustomerPage.inputToDateOfBirthTextbox(newCustomerDateOfBirth);
+		newCustomerPage.inputToAddressTextarea(newCustomerAddress);
+		newCustomerPage.inputToCityTextbox(newCustomerCity);
+		newCustomerPage.inputToStateTextbox(newCustomerState);
+		newCustomerPage.inputToPinTextbox(newCustomerPIN);
+		newCustomerPage.inputToTelephoneTextbox(newCustomerTelephone);
+		newCustomerPage.inputToEmailTextbox(newCustomerEmail);
+		newCustomerPage.inputToPasswordTextbox(newCustomerPassword);
+		newCustomerPage.clickSubmitButton();
+		
+		newCustomerID = newCustomerPage.getCustomerID();
+		
+		newCustomerPage.openMultiplePage(driver, "Edit Customer");
+		editCustomerPage = PageGeneratorManager.getEditCustomerPage(driver);
+		
+		editCustomerPage.inputToCustomerIDTextbox(newCustomerID);
 		editCustomerPage.clickAccSubmitButton();
+		
 		Assert.assertTrue(editCustomerPage.isRedirectedToEditCustomerEntryPage());
 	}
 
-	@Test  
+	@Test
 	public void TC_08_AddressCannotBeBlank() {
 		editCustomerPage.inputNothingToAddressTextareaAndPressTabKey();
 		Assert.assertTrue(editCustomerPage.isAddressMustNotBlankMessageDisplayed());
 	}
 
-	@Test  
+	@Test
 	public void TC_09_CityCannotBeBlank() {
 		editCustomerPage.inputNothingToCityTextboxAndPressTabKey();
 		Assert.assertTrue(editCustomerPage.isCityMustNotBlankMessageDisplayed());
@@ -110,7 +148,7 @@ public class Validation_02_EditCustomer extends AbstractTest{
 		Assert.assertTrue(editCustomerPage.isCityMustNotContainSpecialCharacterMessageDisplayed());
 	}
 
-	@Test  
+	@Test
 	public void TC_12_StateCannotBeBlank() {
 		editCustomerPage.inputNothingToStateTextboxAndPressTabKey();
 		Assert.assertTrue(editCustomerPage.isStateMustNotBlankMessageDisplayed());
@@ -134,7 +172,7 @@ public class Validation_02_EditCustomer extends AbstractTest{
 		Assert.assertTrue(editCustomerPage.isPinMustNotContainCharacterMessageDisplayed());
 	}
 
-	@Test  
+	@Test
 	public void TC_16_PinCannotBeBlank() {
 		editCustomerPage.inputNothingToPinTextboxAndPressTabKey();
 		Assert.assertTrue(editCustomerPage.isPinMustNotBlankMessageDisplayed());
@@ -158,7 +196,7 @@ public class Validation_02_EditCustomer extends AbstractTest{
 		Assert.assertTrue(editCustomerPage.isPinMustNotHaveSpecialCharacterMessageDisplayed());
 	}
 
-	@Test  
+	@Test
 	public void TC_19_TelephoneCannotBeBlank() {
 		editCustomerPage.inputNothingToTelephoneTextboxAndPressTabKey();
 		Assert.assertTrue(editCustomerPage.isTelephoneMustNotBlankMessageDisplayed());
@@ -170,7 +208,7 @@ public class Validation_02_EditCustomer extends AbstractTest{
 		Assert.assertTrue(editCustomerPage.isTelephoneMustNotContainSpecialCharacterMessageDisplayed());
 	}
 
-	@Test  
+	@Test
 	public void TC_21_EmailCannotBeBlank() {
 		editCustomerPage.inputNothingToEmailTextboxAndPressTabKey();
 		Assert.assertTrue(editCustomerPage.isEmailMustNotBlankMessageDisplayed());
@@ -187,4 +225,8 @@ public class Validation_02_EditCustomer extends AbstractTest{
 		driver.quit();
 	}
 
+	public int randomNumber() {
+		Random random = new Random();
+		return random.nextInt(1000000);
+	}
 }
