@@ -1,5 +1,6 @@
 package pageObjects;
 
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 
 import bankguru.BalanceEnquiryPageUI;
@@ -39,6 +40,27 @@ public class DeleteAccountPageObject extends AbstractPage{
 		waitForAlertPresent(driver);
 		acceptAlert(driver);
 		return PageGeneratorManager.getHomePage(driver);
+	}
+
+	public void inputNothingToAccountNoTextboxAndPressTabKey() {
+		waitForElementVisible(driver, DeleteAccountPageUI.ACCOUNT_NO_TEXTBOX);
+		sendKeyToElement(driver, DeleteAccountPageUI.ACCOUNT_NO_TEXTBOX, "");
+		sendKeyBoardToElement(driver, DeleteAccountPageUI.ACCOUNT_NO_TEXTBOX, Keys.TAB);
+	}
+
+	public boolean isAccountNoMustNotBlankMessageDisplayed() {
+		waitForElementVisible(driver, DeleteAccountPageUI.ACCOUNT_NO_MUST_NOT_BLANK_MESSAGE);
+		return isControlDisplayed(driver, DeleteAccountPageUI.ACCOUNT_NO_MUST_NOT_BLANK_MESSAGE);
+	}
+
+	public boolean isAccountNoMustNotContainCharacterMessageDisplayed() {
+		waitForElementVisible(driver, DeleteAccountPageUI.ACCOUNT_NO_MUST_NOT_CONTAIN_CHARACTER_MESSAGE);
+		return isControlDisplayed(driver, DeleteAccountPageUI.ACCOUNT_NO_MUST_NOT_CONTAIN_CHARACTER_MESSAGE);
+	}
+
+	public boolean isAccountNoMustNotContainSpecialCharacterMessageDisplayed() {
+		waitForElementVisible(driver, DeleteAccountPageUI.ACCOUNT_NO_MUST_NOT_CONTAIN_SPECIAL_CHARACTER);
+		return isControlDisplayed(driver, DeleteAccountPageUI.ACCOUNT_NO_MUST_NOT_CONTAIN_SPECIAL_CHARACTER);
 	}
 
 }
