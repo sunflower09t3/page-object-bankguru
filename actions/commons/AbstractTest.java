@@ -17,6 +17,7 @@ public class AbstractTest {
 			System.setProperty("webdriver.chrome.driver", ".\\resources\\chromedriver.exe");
 			driver = new ChromeDriver();
 		} else if (browserName.equalsIgnoreCase("Chrome Headless")) {
+			System.setProperty("webdriver.chrome.driver", ".\\resources\\chromedriver.exe");
 			ChromeOptions options = new ChromeOptions();
 			options.addArguments("headless");
 			options.addArguments("window-size=1366x768");
