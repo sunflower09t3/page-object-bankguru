@@ -1,21 +1,17 @@
 package com.bankguru.validation;
 
-import java.util.Random;
-
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
+
 import commons.AbstractTest;
 import commons.PageGeneratorManager;
 import pageObjects.DeleteAccountPageObject;
-import pageObjects.EditAccountPageObject;
 import pageObjects.HomePageObject;
 import pageObjects.LoginPageObject;
-import pageObjects.NewAccountPageObject;
-import pageObjects.NewCustomerPageObject;
 
 public class Validation_06_DeleteAccount extends AbstractTest {
 	WebDriver driver;
@@ -87,11 +83,6 @@ public class Validation_06_DeleteAccount extends AbstractTest {
 	@AfterClass
 	public void afterClass() {
 		driver.quit();
-	}
-
-	public int randomNumber() {
-		Random random = new Random();
-		return random.nextInt(1000000);
 	}
 
 }

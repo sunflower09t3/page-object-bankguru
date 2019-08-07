@@ -66,7 +66,7 @@ public class PageGeneratorManager {
 		return new WithdrawalPageObject(driver);
 	}
 	
-	public static FundTransferPageObject getFunTransferPage(WebDriver driver) {
+	public static FundTransferPageObject getFundTransferPage(WebDriver driver) {
 		return new FundTransferPageObject(driver);
 	}
 	

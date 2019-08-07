@@ -258,7 +258,7 @@ public class Payment extends AbstractTest{
 		
 		// Transfer money from the current account to the newly created account
 		newAccountPage.openMultiplePage(driver, "Fund Transfer");
-		fundTransferPage = PageGeneratorManager.getFunTransferPage(driver);
+		fundTransferPage = PageGeneratorManager.getFundTransferPage(driver);
 		
 		fundTransferPage.inputToPayerAccountNoTextbox(newAccountID);
 		fundTransferPage.inputToPayeeAccountNoTextbox(anotherAccountID);
