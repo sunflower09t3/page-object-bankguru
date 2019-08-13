@@ -231,9 +231,9 @@ public class NewCustomerPageObject extends AbstractPage {
 		sendKeyToElement(driver, NewCustomerPageUI.PASSWORD_TEXTBOX, password);
 	}
 
-	public void inputToDateOfBirthTextbox(String text) {
+	public void inputToDateOfBirthTextbox(String dateOfBirth) {
 		waitForElementVisible(driver, NewCustomerPageUI.DATE_OF_BIRTH_TEXTBOX);
-		sendKeyToElement(driver, NewCustomerPageUI.DATE_OF_BIRTH_TEXTBOX, text);
+		sendKeyToElement(driver, NewCustomerPageUI.DATE_OF_BIRTH_TEXTBOX, dateOfBirth);
 	}
 
 	public void selectMaleGenderRadioButton() {
