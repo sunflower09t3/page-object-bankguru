@@ -64,80 +64,116 @@ public class Validation_08_CustomisedStatement extends AbstractTest {
 
 	@Test
 	public void TC_01_AccountNoMustNotBeBlank() {
+		log.info("Validate Account No field with blank value - STEP 01: Do not input a value in Account No field and press Tab key");
 		customisedStatementPage.inputNothingToAccountNoTextboxAndPressTabKey();
-		Assert.assertTrue(customisedStatementPage.isAccountNoMustNotBlankMessageDisplayed());
+		
+		log.info("Validate Account No field with blank value - STEP 02: Verify 'Account Number must not be blank' message is displayed");
+		verifyTrue(customisedStatementPage.isAccountNoMustNotBlankMessageDisplayed());
 	}
 
 	@Test
 	public void TC_02_AccountNoMustNotContainCharacter() {
+		log.info("Validate Account No field with character - STEP 01: Input character into Account No field");
 		customisedStatementPage.inputToAccountNoTextbox(accountNoContainingCharacter);
-		Assert.assertTrue(customisedStatementPage.isAccountNoMustNotContainCharacterMessageDisplayed());
+		
+		log.info("Validate Account No field with blank value - STEP 02: Verify 'Characters are not allowed' message is displayed");
+		verifyTrue(customisedStatementPage.isAccountNoMustNotContainCharacterMessageDisplayed());
 	}
 
 	@Test
 	public void TC_03_AccountNoMustNotContainSpecialCharacter() {
+		log.info("Validate Account No field with special character - STEP 01: Input special character into Account No field");
 		customisedStatementPage.inputToAccountNoTextbox(accountNoContainingSpecialCharacter);
-		Assert.assertTrue(customisedStatementPage.isAccountNoMustNotContainSpecialCharacterMessageDisplayed());
+		
+		log.info("Validate Account No field with special character - STEP 02: Verify 'Special characters are not allowed' message is displayed");
+		verifyTrue(customisedStatementPage.isAccountNoMustNotContainSpecialCharacterMessageDisplayed());
 	}
 
 	@Test
 	public void TC_04_AccountNoMustNotContainSpace() {
 		customisedStatementPage.inputToAccountNoTextbox(accountNoContainingSpace);
-		Assert.assertTrue(customisedStatementPage.isAccountNoMustNotContainCharacterMessageDisplayed());
+		verifyTrue(customisedStatementPage.isAccountNoMustNotContainCharacterMessageDisplayed());
 	}
 
 	@Test
 	public void TC_05_AccountNoMustNotBeginWithSpace() {
+		log.info("Validate Account No field with space - STEP 01: Input a number which contains a space into Account No field");
 		customisedStatementPage.inputToAccountNoTextbox(accountNoBeginWithSpace);
-		Assert.assertTrue(customisedStatementPage.isAccountNoMustNotContainCharacterMessageDisplayed());
+		
+		log.info("Validate Account No field with space - STEP 02: Verify 'Characters are not allowed' message is displayed");
+		verifyTrue(customisedStatementPage.isAccountNoMustNotContainCharacterMessageDisplayed());
 	}
 	
 	@Test
 	public void TC_07_MinimumTransactionValueMustNotContainCharacter() {
+		log.info("Validate Minimum Transaction Value field with character - STEP 01: Input character into Minimum Transaction Value field");
 		customisedStatementPage.inputToMinimumTransactionValueTextbox(minimumTransactionValueContainingCharacter);
-		Assert.assertTrue(customisedStatementPage.isMinimumTransactionValueMustNotContainCharacterMessageDisplayed());
+		
+		log.info("Validate Minimum Transaction Value field with blank value - STEP 02: Verify 'Characters are not allowed' message is displayed");
+		verifyTrue(customisedStatementPage.isMinimumTransactionValueMustNotContainCharacterMessageDisplayed());
 	}
 
 	@Test
 	public void TC_08_MinimumTransactionValueNoMustNotContainSpecialCharacter() {
+		log.info("Validate Minimum Transaction Value field with special character - STEP 01: Input special character into Minimum Transaction Value field");
 		customisedStatementPage.inputToMinimumTransactionValueTextbox(minimumTransactionValueContainingSpecialCharacter);
-		Assert.assertTrue(customisedStatementPage.isMinimumTransactionValueMustNotContainSpecialCharacterMessageDisplayed());
+		
+		log.info("Validate Minimum Transaction Value field with special character - STEP 02: Verify 'Special characters are not allowed' message is displayed");
+		verifyTrue(customisedStatementPage.isMinimumTransactionValueMustNotContainSpecialCharacterMessageDisplayed());
 	}
 	
 	@Test
 	public void TC_09_MinimumTransactionValueMustNotContainSpace() {
+		log.info("Validate Minimum Transaction Value field with space - STEP 01: Input a number which contains a space into Minimum Transaction Value field");
 		customisedStatementPage.inputToMinimumTransactionValueTextbox(minimumTransactionValueContainingSpace);
-		Assert.assertTrue(customisedStatementPage.isMinimumTransactionValueMustNotContainCharacterMessageDisplayed());
+		
+		log.info("Validate Minimum Transaction Value field with space - STEP 02: Verify 'Characters are not allowed' message is displayed");
+		verifyTrue(customisedStatementPage.isMinimumTransactionValueMustNotContainCharacterMessageDisplayed());
 	}
 
 	@Test
 	public void TC_10_MinimumTransactionValueoMustNotBeginWithSpace() {
+		log.info("Validate Minimum Transaction Value field with space at the beginning - STEP 01: Input first character as a space");
 		customisedStatementPage.inputToMinimumTransactionValueTextbox(minimumTransactionValueBeginWithSpace);
-		Assert.assertTrue(customisedStatementPage.isMinimumTransactionValueMustNotContainCharacterMessageDisplayed());
+		
+		log.info("Validate Minimum Transaction Value field with space at the beginning - STEP 02: Verify 'First character can not have space' message is displayed");
+		verifyTrue(customisedStatementPage.isMinimumTransactionValueMustNotContainCharacterMessageDisplayed());
 	}
 	
 	@Test
 	public void TC_12_NumberOfTransactionMustNotContainCharacter() {
+		log.info("Validate Number of Transaction field with character - STEP 01: Input character into Number of Transaction field");
 		customisedStatementPage.inputToNumberOfTransactionTextbox(numOfTransactionContainingCharacter);
-		Assert.assertTrue(customisedStatementPage.isNumberOfTransactionMustNotContainCharacterMessageDisplayed());
+		
+		log.info("Validate Number of Transaction field with blank value - STEP 02: Verify 'Characters are not allowed' message is displayed");
+		verifyTrue(customisedStatementPage.isNumberOfTransactionMustNotContainCharacterMessageDisplayed());
 	}
 
 	@Test
 	public void TC_13_MinimumTransactionValueNoMustNotContainSpecialCharacter() {
+		log.info("Validate Number of Transaction field with special character - STEP 01: Input special character into Number of Transaction field");
 		customisedStatementPage.inputToNumberOfTransactionTextbox(numOfTransactionContainingSpecialCharacter);
-		Assert.assertTrue(customisedStatementPage.isNumberOfTransactionMustNotContainSpecialCharacterMessageDisplayed());
+		
+		log.info("Validate Number of Transaction field with special character - STEP 02: Verify 'Special characters are not allowed' message is displayed");
+		verifyTrue(customisedStatementPage.isNumberOfTransactionMustNotContainSpecialCharacterMessageDisplayed());
 	}
 	
 	@Test
 	public void TC_14_MinimumTransactionValueMustNotContainSpace() {
+		log.info("Validate Number of Transaction field with space - STEP 01: Input a number which contains a space into Number of Transaction field");
 		customisedStatementPage.inputToNumberOfTransactionTextbox(numOfTransactionContainingSpace);
-		Assert.assertTrue(customisedStatementPage.isNumberOfTransactionMustNotContainCharacterMessageDisplayed());
+		
+		log.info("Validate Number of Transaction field with space - STEP 02: Verify 'Characters are not allowed' message is displayed");
+		verifyTrue(customisedStatementPage.isNumberOfTransactionMustNotContainCharacterMessageDisplayed());
 	}
 
 	@Test
 	public void TC_15_MinimumTransactionValueoMustNotBeginWithSpace() {
+		log.info("Validate Number of Transaction field with space at the beginning - STEP 01: Input first character as a space");
 		customisedStatementPage.inputToNumberOfTransactionTextbox(numOfTransactionBeginWithSpace);
-		Assert.assertTrue(customisedStatementPage.isNumberOfTransactionMustNotContainCharacterMessageDisplayed());
+		
+		log.info("Validate Number of Transaction field with space at the beginning - STEP 02: Verify 'First character can not have space' message is displayed");
+		verifyTrue(customisedStatementPage.isNumberOfTransactionMustNotContainCharacterMessageDisplayed());
 	}
 	
 	@AfterClass

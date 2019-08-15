@@ -51,32 +51,47 @@ public class Validation_07_MiniStatement extends AbstractTest {
 
 	@Test
 	public void TC_01_AccountNoMustNotBeBlank() {
+		log.info("Validate Account No field with blank value - STEP 01: Do not input a value in Account No field and press Tab key");
 		miniStatementPage.inputNothingToAccountNoTextboxAndPressTabKey();
-		Assert.assertTrue(miniStatementPage.isAccountNoMustNotBlankMessageDisplayed());
+		
+		log.info("Validate Account No field with blank value - STEP 02: Verify 'Account Number must not be blank' message is displayed");
+		verifyTrue(miniStatementPage.isAccountNoMustNotBlankMessageDisplayed());
 	}
 
 	@Test
 	public void TC_02_AccountNoMustNotContainCharacter() {
+		log.info("Validate Account No field with character - STEP 01: Input character into Account No field");
 		miniStatementPage.inputToAccountNoTextbox(accountNoContainingCharacter);
-		Assert.assertTrue(miniStatementPage.isAccountNoMustNotContainCharacterMessageDisplayed());
+		
+		log.info("Validate Account No field with blank value - STEP 02: Verify 'Characters are not allowed' message is displayed");
+		verifyTrue(miniStatementPage.isAccountNoMustNotContainCharacterMessageDisplayed());
 	}
 
 	@Test
 	public void TC_03_AccountNoMustNotContainSpecialCharacter() {
+		log.info("Validate Account No field with special character - STEP 01: Input special character into Account No field");
 		miniStatementPage.inputToAccountNoTextbox(accountNoContainingSpecialCharacter);
-		Assert.assertTrue(miniStatementPage.isAccountNoMustNotContainSpecialCharacterMessageDisplayed());
+		
+		log.info("Validate Account No field with special character - STEP 02: Verify 'Special characters are not allowed' message is displayed");
+		verifyTrue(miniStatementPage.isAccountNoMustNotContainSpecialCharacterMessageDisplayed());
 	}
 
 	@Test
 	public void TC_04_AccountNoMustNotContainSpace() {
+		log.info("Validate Account No field with space - STEP 01: Input a number which contains a space into Account No field");
 		miniStatementPage.inputToAccountNoTextbox(accountNoContainingSpace);
-		Assert.assertTrue(miniStatementPage.isAccountNoMustNotContainCharacterMessageDisplayed());
+		
+		log.info("Validate Account No field with space - STEP 02: Verify 'Characters are not allowed' message is displayed");
+		verifyTrue(miniStatementPage.isAccountNoMustNotContainCharacterMessageDisplayed());
 	}
 
 	@Test
 	public void TC_05_AccountNoMustNotBeginWithSpace() {
+		log.info("Validate Account No field with space at the beginning - STEP 01: Input first character as a space");
 		miniStatementPage.inputToAccountNoTextbox(accountNoBeginWithSpace);
-		Assert.assertTrue(miniStatementPage.isAccountNoMustNotContainCharacterMessageDisplayed());
+		
+		log.info("Validate Account No field with space at the beginning - STEP 02: Verify 'First character can not have space' message is displayed");
+		verifyTrue(miniStatementPage.isAccountNoMustNotContainCharacterMessageDisplayed());
 	}
 
 

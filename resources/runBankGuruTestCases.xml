@@ -1,20 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<suite name="BANKGURU" parallel="tests" thread-count="3">
+<suite name="BANKGURU" parallel="false" thread-count="3">
+
+	<listeners>
+		<listener class-name="org.uncommons.reportng.HTMLReporter"></listener>
+		<listener class-name="org.uncommons.reportng.JUnitXMLReporter"></listener>
+		<listener class-name="commons.ExtentReportListener"></listener>
+	</listeners>
+
 	<test name="Run on Firefox">
 		<parameter name="browser" value="Firefox"></parameter>
 		<classes>
 			<class name="com.bankguru.validation.Validation_01_NewCustomer" />
-			<class
-				name="com.bankguru.validation.Validation_02_EditCustomer" />
+			<class name="com.bankguru.validation.Validation_02_EditCustomer" />  
+			<class name = "com.bankguru.validation.Validation_03_DeleteCustomer"/>
+			<class name = "com.bankguru.validation.Validation_04_NewAccount"/>
+			<class name = "com.bankguru.validation.Validation_05_EditAccount"/> 
+			<class name = "com.bankguru.validation.Validation_06_DeleteAccount"/>
+			<class name = "com.bankguru.validation.Validation_07_MiniStatement"/>
+			<class name = "com.bankguru.validation.Validation_08_CustomisedStatement"/>
+			<class name = "com.bankguru.validation.Validation_09_FundTransfer"/>
+			<class name = "com.bankguru.validation.Validation_10_ChangePassword"/> 
+			<class name = "com.bankguru.payment.Payment" />
 		</classes>
 	</test>
 
-	<test name="Run on Chrome">
+	 <test name="Run on Chrome">
 		<parameter name="browser" value="Chrome"></parameter>
 		<classes>
 			<class name="com.bankguru.validation.Validation_01_NewCustomer" />
-			<class
-				name="com.bankguru.validation.Validation_02_EditCustomer" />
+			<class name="com.bankguru.validation.Validation_02_EditCustomer" /> 
+			<class name = "com.bankguru.validation.Validation_03_DeleteCustomer"/>
+			<class name = "com.bankguru.validation.Validation_04_NewAccount"/>
+			<class name = "com.bankguru.validation.Validation_05_EditAccount"/> 
+			<class name = "com.bankguru.validation.Validation_06_DeleteAccount"/>
+			<class name = "com.bankguru.validation.Validation_07_MiniStatement"/>
+			<class name = "com.bankguru.validation.Validation_08_CustomisedStatement"/>
+			<class name = "com.bankguru.validation.Validation_09_FundTransfer"/>
+			<class name = "com.bankguru.validation.Validation_10_ChangePassword"/> 
+			<class name = "com.bankguru.payment.Payment" />  
 		</classes>
 	</test>
 
@@ -22,9 +45,17 @@
 		<parameter name="browser" value="Chrome Headless"></parameter>
 		<classes>
 			<class name="com.bankguru.validation.Validation_01_NewCustomer" />
-			<class
-				name="com.bankguru.validation.Validation_02_EditCustomer" />
+			<class name="com.bankguru.validation.Validation_02_EditCustomer" /> 
+			<class name = "com.bankguru.validation.Validation_03_DeleteCustomer"/>
+			<class name = "com.bankguru.validation.Validation_04_NewAccount"/>
+			<class name = "com.bankguru.validation.Validation_05_EditAccount"/> 
+			<class name = "com.bankguru.validation.Validation_06_DeleteAccount"/>
+			<class name = "com.bankguru.validation.Validation_07_MiniStatement"/>
+			<class name = "com.bankguru.validation.Validation_08_CustomisedStatement"/>
+			<class name = "com.bankguru.validation.Validation_09_FundTransfer"/>
+			<class name = "com.bankguru.validation.Validation_10_ChangePassword"/>
+			<class name = "com.bankguru.payment.Payment" />
 		</classes>
-	</test>
+	</test> 
 
 </suite> <!-- Suite -->

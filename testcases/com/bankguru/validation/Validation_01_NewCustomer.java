@@ -13,7 +13,7 @@ import pageObjects.HomePageObject;
 import pageObjects.LoginPageObject;
 import pageObjects.NewCustomerPageObject;
 
-public class Validation_01_NewCustomer extends AbstractTest{
+public class Validation_01_NewCustomer extends AbstractTest {
 	WebDriver driver;
 	LoginPageObject loginPage;
 	NewCustomerPageObject newCustomerPage;
@@ -71,172 +71,257 @@ public class Validation_01_NewCustomer extends AbstractTest{
 		newCustomerPage = PageGeneratorManager.getNewCustomerPage(driver);
 	}
 
-	@Test   
+	@Test
 	public void TC_01_CustomerNameCannotBeBlank() {
+		log.info("Validate Customer Name field with blank value - STEP 01: Do not input a value in Customer Name field and press Tab key");
 		newCustomerPage.inputNothingToCustomerNameTextboxAndPressTabKey();
-		Assert.assertTrue(newCustomerPage.isCustomerNameMustNotBlankMessageDisplayed());
+
+		log.info(
+				"Validate Customer Name field with blank value - STEP 02: Verify 'Customer name must not be blank' message is displayed");
+		verifyTrue(newCustomerPage.isCustomerNameMustNotBlankMessageDisplayed());
 	}
 
 	@Test
 	public void TC_02_CustomerNameCannotContainNumber() {
+		log.info("Validate Customer Name field with numeric value - STEP 01: Input numeric value into Customer Name field");
 		newCustomerPage.inputToCustomerNameTextbox(customerNameWithNumber);
-		Assert.assertTrue(newCustomerPage.isCustomerNameMustNotContainNumberMessageDisplayed());
+
+		log.info("Validate Customer Name field with numeric value - STEP 02: Verify 'Numbers are not allowed' message is displayed");
+		verifyTrue(newCustomerPage.isCustomerNameMustNotContainNumberMessageDisplayed());
 	}
 
 	@Test
 	public void TC_03_CustomerNameCannotContainSpecialCharacter() {
+		log.info("Validate Customer Name field with special character - STEP 01: Input special character into Customer Name field");
 		newCustomerPage.inputToCustomerNameTextbox(customerNameWithSpecialCharacter);
-		Assert.assertTrue(newCustomerPage.isCustomerNameMustNotContainSpecialCharacterMessageDisplayed());
+		
+		log.info("Validate Customer Name field with special character - STEP 02: Verify 'Special characters are not allowed' message is displayed");
+		verifyTrue(newCustomerPage.isCustomerNameMustNotContainSpecialCharacterMessageDisplayed());
 	}
 
 	@Test
 	public void TC_04_CustomerNameCannotBeginWithSpaceCharacter() {
+		log.info("Validate Customer Name field with space at the beginning - STEP 01: Input first character as a space");
 		newCustomerPage.inputToCustomerNameTextbox(customerNameBeginWithSpace);
-		Assert.assertTrue(newCustomerPage.isCustomerNameMustNotBeginWithSpaceMessageDisplayed());
+		
+		log.info("Validate Customer Name field with space at the beginning - STEP 02: Verify 'First character can not have space' message is displayed");
+		verifyTrue(newCustomerPage.isCustomerNameMustNotBeginWithSpaceMessageDisplayed());
 	}
- 
-	@Test   
+
+	@Test
 	public void TC_05_AddressCannotBeBlank() {
+		log.info("Validate Address field with blank value - STEP 01: Do not input a value into Address field and press Tab key");
 		newCustomerPage.inputNothingToAddressTextareaAndPressTabKey();
-		Assert.assertTrue(newCustomerPage.isAddressMustNotBlankMessageDisplayed());
+		
+		log.info("Validate Address field with blank value - STEP 02: Verify 'Address Field must not be blank' message is displayed");
+		verifyTrue(newCustomerPage.isAddressMustNotBlankMessageDisplayed());
 	}
 
 	@Test
 	public void TC_06_AddressCannotBeginWithSpaceCharacter() {
+		log.info("Validate Address field field with space at the beginning - STEP 01: Input first character as a space");
 		newCustomerPage.inputToAddressTextarea(addressBeginWithSpace);
-		Assert.assertTrue(newCustomerPage.isAddressMustNotBeginWithSpaceMessageDisplayed());
+		
+		log.info("Validate Address field field with space at the beginning - STEP 02: Verify 'First character can not have space' message is displayed");
+		verifyTrue(newCustomerPage.isAddressMustNotBeginWithSpaceMessageDisplayed());
 	}
 
-	@Test   
+	@Test
 	public void TC_07_CityCannotBeBlank() {
+		log.info("Validate City field field with blank value - STEP 01: Do not input a value into City field and press Tab key");
 		newCustomerPage.inputNothingToCityTextboxAndPressTabKey();
-		Assert.assertTrue(newCustomerPage.isCityMustNotBlankMessageDisplayed());
+		
+		log.info("Validate City field field with blank value - STEP 02: Verify 'City Field must not be blank' message is displayed");
+		verifyTrue(newCustomerPage.isCityMustNotBlankMessageDisplayed());
 	}
 
 	@Test
 	public void TC_08_CityCannotContainNumber() {
+		log.info("Validate City field with numeric value - STEP 01: Input numeric value into City field");
 		newCustomerPage.inputToCityTextbox(cityWithNumber);
-		Assert.assertTrue(newCustomerPage.isCityMustNotContainNumberMessageDisplayed());
+		
+		log.info("Validate City field with numeric value - STEP 02: Verify 'Numbers are not allowed' message is displayed");
+		verifyTrue(newCustomerPage.isCityMustNotContainNumberMessageDisplayed());
 	}
 
 	@Test
 	public void TC_09_CityCannotContainSpecialCharacter() {
+		log.info("Validate City field with special character - STEP 01: Input special character into City field");
 		newCustomerPage.inputToCityTextbox(cityWithSpecialCharacter);
-		Assert.assertTrue(newCustomerPage.isCityMustNotContainSpecialCharacterMessageDisplayed());
+		
+		log.info("Validate City field with special character - STEP 02: Verify 'Special characters are not allowed' message is displayed");
+		verifyTrue(newCustomerPage.isCityMustNotContainSpecialCharacterMessageDisplayed());
 	}
 
 	@Test
 	public void TC_10_CityCannotBeginWithSpaceCharacter() {
+		log.info("Validate City field with space at the beginning - STEP 01: Input first character as a space");
 		newCustomerPage.inputToCityTextbox(cityBeginWithSpace);
-		Assert.assertTrue(newCustomerPage.isCityMustNotBeginWithSpaceMessageDisplayed());
+		
+		log.info("Validate City field with space at the beginning - STEP 02: Verify 'First character can not have space' message is displayed");
+		verifyTrue(newCustomerPage.isCityMustNotBeginWithSpaceMessageDisplayed());
 	}
 
-	@Test   
+	@Test
 	public void TC_11_StateCannotBeBlank() {
+		log.info("Validate State field with blank value - STEP 01: Do not input a value into State field and press Tab key");
 		newCustomerPage.inputNothingToStateTextboxAndPressTabKey();
-		Assert.assertTrue(newCustomerPage.isStateMustNotBlankMessageDisplayed());
+		
+		log.info("Validate State field with blank value - STEP 02: Verify 'State must not be blank' message is displayed");
+		verifyTrue(newCustomerPage.isStateMustNotBlankMessageDisplayed());
 	}
 
 	@Test
 	public void TC_12_StateCannotContainNumber() {
+		log.info("Validate State field with numeric value - STEP 01: Input numeric value into State field");
 		newCustomerPage.inputToStateTextbox(stateWithNumber);
-		Assert.assertTrue(newCustomerPage.isStateMustNotContainNumberMessageDisplayed());
+		
+		log.info("Validate State field with numeric value - STEP 02: Verify 'Numbers are not allowed' message is displayed");
+		verifyTrue(newCustomerPage.isStateMustNotContainNumberMessageDisplayed());
 	}
 
 	@Test
 	public void TC_13_StateCanNotContainSpecialCharacter() {
+		log.info("Validate State field with special character - STEP 01: Input special character into State field");
 		newCustomerPage.inputToStateTextbox(stateWithSpecialCharacter);
-		Assert.assertTrue(newCustomerPage.isStateMustNotContainSpecialCharacterMessageDisplayed());
+		
+		log.info("Validate State field with special character - STEP 02: Verify 'Special characters are not allowed' message is displayed");
+		verifyTrue(newCustomerPage.isStateMustNotContainSpecialCharacterMessageDisplayed());
 	}
 
 	@Test
 	public void TC_14_StateCanNotBeginWithSpace() {
+		log.info("Validate State field with space at the beginning - STEP 01: Input first character as a space");
 		newCustomerPage.inputToStateTextbox(stateBeginWithSpace);
-		Assert.assertTrue(newCustomerPage.isStateMustNotBeginWithSpaceMessageDisplayed());
+		
+		log.info("Validate State field with space at the beginning - STEP 02: Verify 'First character can not have space' message is displayed");
+		verifyTrue(newCustomerPage.isStateMustNotBeginWithSpaceMessageDisplayed());
 	}
 
 	@Test
 	public void TC_15_PinCanNotContainCharacter() {
+		log.info("Validate Pin field with character - STEP 01: Input character into Pin field");
 		newCustomerPage.inputToPinTextbox(pinWithCharacter);
-		Assert.assertTrue(newCustomerPage.isPinMustNotContainCharacterMessageDisplayed());
+		
+		log.info("Validate Pin field with character - STEP 02: Verify 'Characters are not allowed' message is displayed");
+		verifyTrue(newCustomerPage.isPinMustNotContainCharacterMessageDisplayed());
 	}
 
-	@Test   
+	@Test
 	public void TC_16_PinCanNotBeBlank() {
+		log.info("Validate Pin field with blank value - STEP 01: Do not input a value into Pin field and press Tab key");
 		newCustomerPage.inputNothingToPinTextboxAndPressTabKey();
-		Assert.assertTrue(newCustomerPage.isPinMustNotBlankMessageDisplayed());
+		
+		log.info("Validate Pin field with blank value - STEP 02: Verify 'PIN Code must not be blank' message is displayed");
+		verifyTrue(newCustomerPage.isPinMustNotBlankMessageDisplayed());
 	}
 
 	@Test
 	public void TC_17_PinCannotHaveMoreThan6Digits() {
+		log.info("Validate Pin field with more than 6 digits - STEP 01: Input more than 6 digits into Pin field");
 		newCustomerPage.inputToPinTextbox(pinWithMoreThan6Digits);
-		Assert.assertEquals(newCustomerPage.getEnteredTextFromPinTextbox(), pinWithMoreThan6Digits.substring(0, 6));
+		
+		log.info("Validate Pin field with more than 6 digits - STEP 02: Verify only able to input 6 digits");
+		verifyEquals(newCustomerPage.getEnteredTextFromPinTextbox(), pinWithMoreThan6Digits.substring(0, 6));
 	}
 
 	@Test
 	public void TC_17_PinCannotHaveLessThan6Digits() {
+		log.info("Validate Pin field with less than 6 digits - STEP 01: Input less than 6 digits into Pin field");
 		newCustomerPage.inputToPinTextbox(pinWithLessThan6Digits);
-		Assert.assertTrue(newCustomerPage.isPinMustHave6DigitsMessageDisplayed());
+		
+		log.info("Validate Pin field with less than 6 digits - STEP 02: Verify 'PIN Code must have 6 Digits' message is displayed");
+		verifyTrue(newCustomerPage.isPinMustHave6DigitsMessageDisplayed());
 	}
 
 	@Test
 	public void TC_18_PinCannotContainSpecialCharacter() {
+		log.info("Validate Pin field with special character - STEP 01: Input special character into Pin field");
 		newCustomerPage.inputToPinTextbox(pintWithSpecialCharacter);
-		Assert.assertTrue(newCustomerPage.isPinMustNotContainSpecialCharacterMessageDisplayed());
+		
+		log.info("Validate Pin field with special character - STEP 02: Verify 'Special characters are not allowed' message is displayed");
+		verifyTrue(newCustomerPage.isPinMustNotContainSpecialCharacterMessageDisplayed());
 	}
 
 	@Test
 	public void TC_19_PinCannotBeginWithSpace() {
+		log.info("Validate Pin field with space at the beginning - STEP 01: Input first character as a space");
 		newCustomerPage.inputToPinTextbox(pinBeginWithSpace);
-		Assert.assertTrue(newCustomerPage.isPinMustNotBeginWithSpaceMessageDisplayed());
+		
+		log.info("Validate Pin field with space at the beginning - STEP 02: Verify 'First character can not have space' message is displayed");
+		verifyTrue(newCustomerPage.isPinMustNotBeginWithSpaceMessageDisplayed());
 	}
 
 	@Test
 	public void TC_20_PinCannotContainSpace() {
+		log.info("Validate Pin field with space - STEP 01: Input pin containing a space into Pin field");
 		newCustomerPage.inputToPinTextbox(pintWithSpace);
-		Assert.assertTrue(newCustomerPage.isPinMustNotContainCharacterMessageDisplayed());
+		
+		log.info("Validate Pin field with space - STEP 02: Verify 'Characters are not allowed' message is displayed");
+		verifyTrue(newCustomerPage.isPinMustNotContainCharacterMessageDisplayed());
 	}
- 
-	@Test   
+
+	@Test
 	public void TC_21_TelephoneCannotBeBlank() {
+		log.info("Validate Telephone field with blank value - STEP 01: Do not input a value into Telephone field and press Tab key");
 		newCustomerPage.inputNothingToTelephoneTextboxAndPressTabKey();
-		Assert.assertTrue(newCustomerPage.isTelephoneMustNotBlankMessageDisplayed());
+		
+		log.info("Validate Telephone field with blank value - STEP 02: Verify 'Mobile no must not be blank' message is displayed");
+		verifyTrue(newCustomerPage.isTelephoneMustNotBlankMessageDisplayed());
 	}
 
 	@Test
 	public void TC_22_TelephoneCannotBeginWithSpace() {
+		log.info("Validate Telephone field with space at the beginning - STEP 01: Input first character as a space");
 		newCustomerPage.inputToTelephoneTextbox(telephoneBeginWithSpace);
-		Assert.assertTrue(newCustomerPage.isTelephoneMustNotBeginWithSpaceMessageDisplayed());
+		
+		log.info("Validate Telephone field with space at the beginning - STEP 02: Verify 'First character can not have space' message is displayed");
+		verifyTrue(newCustomerPage.isTelephoneMustNotBeginWithSpaceMessageDisplayed());
 	}
 
 	@Test
 	public void TC_23_TelephoneCannotContainSpace() {
+		log.info("Validate Telephone field with space - STEP 01: Input telephone containing space into Telephone field");
 		newCustomerPage.inputToTelephoneTextbox(telephoneWithSpace);
-		Assert.assertTrue(newCustomerPage.isTelephoneMustNotContainCharacterMessageDisplayed());
+		
+		log.info("Validate Telephone field with space - STEP 02: Verify 'Characters are not allowed' message is displayed");
+		verifyTrue(newCustomerPage.isTelephoneMustNotContainCharacterMessageDisplayed());
 	}
 
 	@Test
 	public void TC_24_TelephoneCannotContainSpecialCharacter() {
+		log.info("Validate Telephone field with special character - STEP 01: Input speical character into Telephone field");
 		newCustomerPage.inputToTelephoneTextbox(telephoneWithSpecialCharacter);
-		Assert.assertTrue(newCustomerPage.isTelephoneMustNotContainSpecialCharacterMessageDisplayed());
+		
+		log.info("Validate Telephone field with special character - STEP 02: Verify 'Special characters are not allowed' message is displayed");
+		verifyTrue(newCustomerPage.isTelephoneMustNotContainSpecialCharacterMessageDisplayed());
 	}
 
-	@Test   
+	@Test
 	public void TC_25_EmailCannotBeBlank() {
+		log.info("Validate Email field with blank value - STEP 01: Do not input a value into Email field and press Tab key");
 		newCustomerPage.inputNothingToEmailTextboxAndPressTabKey();
-		Assert.assertTrue(newCustomerPage.isEmailMustNotBlankMessageDisplayed());
+		
+		log.info("Validate Email field with blank value - STEP 02: Verify 'Email-ID must not be blank' message is displayed");
+		verifyTrue(newCustomerPage.isEmailMustNotBlankMessageDisplayed());
 	}
 
 	@Test
 	public void TC_26_EmailCannotBeInvalidFormat() {
+		log.info("Validate Email field with invalid email - STEP 01: Input an invalid email into Email field");
 		newCustomerPage.inputToEmailTextbox(invalidEmail);
-		Assert.assertTrue(newCustomerPage.isEmailInvalidFormatMessageDisplayed());
+		
+		log.info("Validate Email field with invalid email - STEP 02: Verify 'Email-ID is not valid' message is displayed");
+		verifyTrue(newCustomerPage.isEmailInvalidFormatMessageDisplayed());
 	}
 
 	@Test
 	public void TC_27_EmailCannotBeginWithSpace() {
+		log.info("Validate Email field with space at the beginning - STEP 01: Inout first character as a space");
 		newCustomerPage.inputToEmailTextbox(emailBeginWithSpace);
-		Assert.assertTrue(newCustomerPage.isEmailMustNotBeginWithSpaceMessageDisplayed());
+		
+		log.info("Validate Email field with space at the beginning - STEP 02: Verify 'First character can not have space' message is displayed");
+		verifyTrue(newCustomerPage.isEmailMustNotBeginWithSpaceMessageDisplayed());
 	}
 
 	@AfterClass

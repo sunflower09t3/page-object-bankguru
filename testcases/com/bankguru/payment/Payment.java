@@ -119,9 +119,11 @@ public class Payment extends AbstractTest{
 	
 	@Test
 	public void TC_01_CreateNewCustomer() {
+		log.info("Create new customer - STEP 01: Open New Customer page");
 		homePage.openMultiplePage(driver, "New Customer");
 		newCustomerPage = PageGeneratorManager.getNewCustomerPage(driver);
 		
+		log.info("Create new customer - STEP 02: Fill in New Customer form");
 		newCustomerPage.inputToCustomerNameTextbox(newCustomerName);
 		newCustomerPage.selectFemaleGenderRadioButton();
 		newCustomerPage.inputToDateOfBirthTextbox(newCustomerDateOfBirth);
@@ -132,101 +134,138 @@ public class Payment extends AbstractTest{
 		newCustomerPage.inputToTelephoneTextbox(newCustomerTelephone);
 		newCustomerPage.inputToEmailTextbox(newCustomerEmail);
 		newCustomerPage.inputToPasswordTextbox(newCustomerPassword);
+		
+		log.info("Create new customer - STEP 03: Click Submit button");
 		newCustomerPage.clickSubmitButton();
 		
-		Assert.assertTrue(newCustomerPage.isCustomerRegisteredSuccessfulMessageDisplayed());
+		log.info("Create new customer - STEP 04: Verify 'Customer Registered Successfully!!!' message is displayed");
+		verifyTrue(newCustomerPage.isCustomerRegisteredSuccessfulMessageDisplayed());
 		
 		newCustomerID = newCustomerPage.getCustomerID();
-		System.out.println("newCustomerID: " + newCustomerID);
 	}
 	
 	@Test 
 	public void TC_02_EditCustomer() {
+		log.info("Edit customer - STEP 01: Open Edit Customer page");
 		newCustomerPage.openMultiplePage(driver, "Edit Customer");
 		editCustomerPage = PageGeneratorManager.getEditCustomerPage(driver);
 		
+		log.info("Edit customer - STEP 02: Input the custoner ID");
 		editCustomerPage.inputToCustomerIDTextbox(newCustomerID);
+		
+		log.info("Edit customer - STEP 03: Click Submit button");
 		editCustomerPage.clickAccSubmitButton();
 		
+		log.info("Edit customer - STEP 04: Fill in Edit Customer Form");
 		editCustomerPage.inputToAddressTextarea(editedCustomerAddress);
 		editCustomerPage.inputToCityTextbox(editedCustomerCity);
 		editCustomerPage.inputToStateTextbox(editedCustomerState);
 		editCustomerPage.inputToPinTextbox(editedCustomerPIN);
 		editCustomerPage.inputToTelephoneTextbox(editedCustomerTelephone);
 		editCustomerPage.inputToEmailTextbox(editedCustomerEmail);
+		
+		log.info("Edit customer - STEP 04: Click Submit button");
 		editCustomerPage.clickSubmitButton();
 		
-		Assert.assertTrue(editCustomerPage.isCustomerUpdatedSuccessfulMessageDisplayed());
+		log.info("Edit customer - STEP 05: Verify 'Customer details updated Successfully!!!' message is displayed");
+		verifyTrue(editCustomerPage.isCustomerUpdatedSuccessfulMessageDisplayed());
 	}
 	
 	@Test 
 	public void TC_03_CreateNewAccount() {
+		log.info("Create new account - STEP 01: Open New Account page");
 		editCustomerPage.openMultiplePage(driver, "New Account");
 		newAccountPage = PageGeneratorManager.getNewAccountPage(driver);
 		
+		log.info("Create new account - STEP 02: Fill in New Account Form");
 		newAccountPage.inputToCustomerIDTextbox(newCustomerID);
 		newAccountPage.selectAccountType(newAccountAccType);
 		newAccountPage.inputToInitialDepositTextbox(String.valueOf(newAccountInitialDeposit));
+		
+		log.info("Create new account - STEP 03: Click Submit button");
 		newAccountPage.clickSubmitButton();
 		
-		Assert.assertTrue(newAccountPage.isAccountGeneratedSuccessfulMessageDisplayed());
+		log.info("Create new account - STEP 04: Verify 'Account Generated Successfully!!!' message is displayed");
+		verifyTrue(newAccountPage.isAccountGeneratedSuccessfulMessageDisplayed());
 		
-		Assert.assertEquals(newAccountPage.getCurrentAmount(), String.valueOf(newAccountInitialDeposit));
+		log.info("Create new account - STEP 05: Verify Current Amount is equal to Initial Deposit");
+		verifyEquals(newAccountPage.getCurrentAmount(), String.valueOf(newAccountInitialDeposit));
 		
 		newAccountID = newAccountPage.getAccountID();
-		System.out.println("newAccountID: " + newAccountID);
 	}
 	
 	@Test  
 	public void TC_04_EditAccoutType() {
+		log.info("Edit account type - STEP 01: Open Edit Account page");
 		newAccountPage.openMultiplePage(driver, "Edit Account");
 		editAccountPage = PageGeneratorManager.getEditAccountPage(driver);
 		
+		log.info("Edit account type - STEP 02: Input account ID");
 		editAccountPage.inputToAccountNoTextbox(newAccountID);
+		
+		log.info("Edit account type - STEP 03: Click Submit button");
 		editAccountPage.clickSubmitButton();
 		
+		log.info("Edit account type - STEP 04: Change Account Type");
 		editAccountPage.selectAccountType(editedAccountAccType);
+		
+		log.info("Edit account type - STEP 05: Click Submit button");
 		editAccountPage.clickSubmitButton();
 		
-		Assert.assertTrue(editAccountPage.isAccountDetailsUpdatedSuccessfulMessageDisplayed());
-		Assert.assertEquals(editAccountPage.getAccountType(), editedAccountAccType);
+		log.info("Edit account type - STEP 06: Verify 'Account details updated Successfully!!!' message is displayed");
+		verifyTrue(editAccountPage.isAccountDetailsUpdatedSuccessfulMessageDisplayed());
+		
+		log.info("Edit account type - STEP 07: Verify Account Type is updated successfully");
+		verifyEquals(editAccountPage.getAccountType(), editedAccountAccType);
 	}
 	
 	@Test  
 	public void TC_05_Deposit() {
+		log.info("Deposit - STEP 01: Open Deposit page");
 		editAccountPage.openMultiplePage(driver, "Deposit");
 		depositPage = PageGeneratorManager.getDepositPage(driver);
 		
+		log.info("Deposit - STEP 02: Fill in Deposit page");
 		depositPage.inputToAccountNoTextbox(newAccountID);
 		depositPage.inputToAmountTextbox(String.valueOf(depositAmount));
 		depositPage.inputToDescriptionTextbox(depositDescription);
+		
+		log.info("Deposit - STEP 03: click Submit button");
 		depositPage.clickSubmitButton();
 		
-		Assert.assertEquals(depositPage.getResultMessage(), "Transaction details of Deposit for Account " + newAccountID);
+		log.info("Deposit - STEP 04: Verify 'Transaction details of Deposit for Account account_id' message is displayed");
+		verifyEquals(depositPage.getResultMessage(), "Transaction details of Deposit for Account " + newAccountID);
 		
+		log.info("Deposit - STEP 05: Verify Current Balance is correct");
 		expectedBalance = newAccountInitialDeposit + depositAmount;
-		Assert.assertEquals(depositPage.getCurrentBalance(), String.valueOf(expectedBalance));
+		verifyEquals(depositPage.getCurrentBalance(), String.valueOf(expectedBalance));
 	}
 	 
 	@Test  
 	public void TC_06_Withdraw() {
+		log.info("Withdraw - STEP 01: Open Withdraw page");
 		depositPage.openMultiplePage(driver, "Withdrawal");
 		withdrawalPage = PageGeneratorManager.getWithdrawlPage(driver);
 		
+		log.info("Withdraw - STEP 02: Fill in Withdraw form");
 		withdrawalPage.inputToAccountNoTextbox(newAccountID);
 		withdrawalPage.inputToAmountTextbox(String.valueOf(withdrawAmount));
 		withdrawalPage.inputToDescriptionTextbox(withdrawDescription);
+		
+		log.info("Withdraw - STEP 03: Click Submit button");
 		withdrawalPage.clickSubmitButton();
 		
-		Assert.assertEquals(withdrawalPage.getResultMessage(), "Transaction details of Withdrawal for Account " + newAccountID);
+		log.info("Withdraw - STEP 04: Verify 'Transaction details of Withdrawal for Account account_id' message is displayed");
+		verifyEquals(withdrawalPage.getResultMessage(), "Transaction details of Withdrawal for Account " + newAccountID);
 		
+		log.info("Withdraw - STEP 05: Verify Current Balance is correct");
 		expectedBalance = newAccountInitialDeposit + depositAmount - withdrawAmount;
-		Assert.assertEquals(withdrawalPage.getCurrentBalance(), String.valueOf(expectedBalance));
+		verifyEquals(withdrawalPage.getCurrentBalance(), String.valueOf(expectedBalance));
 	}
 	
 	@Test  
 	public void TC_07_FundTransfer() {
-		// Create another customer and its account 
+		log.info("Fundtransfer - STEP 01: Create a new customer");
 		withdrawalPage.openMultiplePage(driver, "New Customer");
 		newCustomerPage = PageGeneratorManager.getNewCustomerPage(driver);
 		
@@ -243,8 +282,8 @@ public class Payment extends AbstractTest{
 		newCustomerPage.clickSubmitButton();
 		
 		anotherCustomerID = newCustomerPage.getCustomerID();
-		System.out.println("anotherCustomerID: " + anotherCustomerID);
 		
+		log.info("Fundtransfer - STEP 02: Create a new account for the new customer");
 		newCustomerPage.openMultiplePage(driver, "New Account");
 		newAccountPage = PageGeneratorManager.getNewAccountPage(driver);
 		
@@ -254,79 +293,118 @@ public class Payment extends AbstractTest{
 		newAccountPage.clickSubmitButton();
 		
 		anotherAccountID = newAccountPage.getAccountID();
-		System.out.println("anotherAccountID: " + anotherAccountID);
 		
-		// Transfer money from the current account to the newly created account
+		log.info("Fundtransfer - STEP 03: Open Fund Transfer page");
 		newAccountPage.openMultiplePage(driver, "Fund Transfer");
 		fundTransferPage = PageGeneratorManager.getFundTransferPage(driver);
 		
+		log.info("Fundtransfer - STEP 04: Fill in Fund Transfer page");
 		fundTransferPage.inputToPayerAccountNoTextbox(newAccountID);
 		fundTransferPage.inputToPayeeAccountNoTextbox(anotherAccountID);
 		fundTransferPage.inputToAmountTextbox(String.valueOf(fundTransferAmount));
 		fundTransferPage.inputToDescriptionTextbox(fundTransferDescription);
+		
+		log.info("Fundtransfer - STEP 05: Click Submit button");
 		fundTransferPage.clickSubmitButton();
 		
-		Assert.assertTrue(fundTransferPage.isFundTransferSuccessfulMessageDisplayed());
-		Assert.assertEquals(fundTransferPage.getTransferAmount(), String.valueOf(fundTransferAmount));
+		log.info("Fundtransfer - STEP 06: Verify 'Fund Transfer Details' message is displayed");
+		verifyTrue(fundTransferPage.isFundTransferSuccessfulMessageDisplayed());
+		
+		log.info("Fundtransfer - STEP 07: Verify Transfer Amount is correct");
+		verifyEquals(fundTransferPage.getTransferAmount(), String.valueOf(fundTransferAmount));
 	}
 	
 	@Test  
 	public void TC_08_BalanceEnquiry() {
+		log.info("Balance Enquiry - STEP 01: Open Balance Enquiry page");
 		fundTransferPage.openMultiplePage(driver, "Balance Enquiry");
 		balanceEnquiryPage = PageGeneratorManager.getBalanceEnquiryPage(driver);
 		
+		log.info("Balance Enquiry - STEP 02: Input account ID");
 		balanceEnquiryPage.inputToAccountNoTextbox(newAccountID);
+		
+		log.info("Balance Enquiry - STEP 03: Click Submit button");
 		balanceEnquiryPage.clickSubmitButton();
 		
-		Assert.assertEquals(balanceEnquiryPage.getResultMessage(), "Balance Details for Account " + newAccountID);
+		log.info("Balance Enquiry - STEP 04: Verify 'Balance Details for Account account_id' message is displayed");
+		verifyEquals(balanceEnquiryPage.getResultMessage(), "Balance Details for Account " + newAccountID);
 		
+		log.info("Balance Enquiry - STEP 05: Verify Balance Amount is correct");
 		expectedBalance = newAccountInitialDeposit + depositAmount - withdrawAmount - fundTransferAmount;
-		Assert.assertEquals(balanceEnquiryPage.getBalance(), String.valueOf(expectedBalance));
+		verifyEquals(balanceEnquiryPage.getBalance(), String.valueOf(expectedBalance));
 	}
 	
 	@Test  
 	public void TC_09_DeleteAccount() {
+		log.info("Delete account - STEP 01: Open Delete Account page");
 		balanceEnquiryPage.openMultiplePage(driver, "Delete Account");
 		deleteAccountPage = PageGeneratorManager.getDeleteAccountpage(driver);
 		
+		log.info("Delete account - STEP 02: Input account ID");
 		deleteAccountPage.inputToAccountNoTextbox(newAccountID);
+		
+		log.info("Delete account - STEP 03: click Submit button");
 		deleteAccountPage.clickSubmitButton();
+		
+		log.info("Delete account - STEP 04: Accept confirmation alert");
 		deleteAccountPage.acceptDeleteAccountConfirmationAlert();
 				
-		Assert.assertEquals(deleteAccountPage.getAlertMessage(), "Account Deleted Sucessfully");
+		log.info("Delete account - STEP 05: Verify 'Account Deleted Sucessfully' alert message is displayed");
+		verifyEquals(deleteAccountPage.getAlertMessage(), "Account Deleted Sucessfully");
 		homePage =  deleteAccountPage.acceptAccountDeletedInformationAlert();
 		
+		log.info("Delete account - STEP 06: Open Edit Account page");
 		homePage.openMultiplePage(driver, "Edit Account");
 		editAccountPage = PageGeneratorManager.getEditAccountPage(driver);
 	
+		log.info("Delete account - STEP 07: Input account ID");
 		editAccountPage.inputToAccountNoTextbox(newAccountID);
+		
+		log.info("Delete account - STEP 08: Click Submit button");
 		editAccountPage.clickSubmitButton();
 		
-		Assert.assertEquals(editAccountPage.getAlertMessage(), "Account does not exist");
+		log.info("Delete account - STEP 09: Verify 'Account does not exist' alert message is displayed");
+		verifyEquals(editAccountPage.getAlertMessage(), "Account does not exist");
+		
+		log.info("Delete account - STEP 10: Accept the information alert");
 		editAccountPage.acceptAccountNotExistInformationAlert();
 	}
 	
 	@Test  
 	public void TC_10_DeleteCustomer() {
+		log.info("Delete customer - STEP 01: Open Delete Customer page");
 		editAccountPage.openMultiplePage(driver, "Delete Customer");
 		deleteCustomerPage = PageGeneratorManager.getDeleteCustomerPage(driver);
 		
+		log.info("Delete customer - STEP 02: Input customer ID");
 		deleteCustomerPage.inputToCustomerIDTextbox(newCustomerID);
+		
+		log.info("Delete customer - STEP 03: Click Submit button");
 		deleteCustomerPage.clickSubmitButton();
 		
+		log.info("Delete customer - STEP 04: Accept the confirmation alert");
 		deleteCustomerPage.acceptDeleteCustomerConfirmationAlert();
 		
-		Assert.assertEquals(deleteCustomerPage.getAlertMessage(), "Customer deleted Successfully");
+		log.info("Delete customer - STEP 05: Verify 'Customer deleleted successfully' alert message is displayed");
+		verifyEquals(deleteCustomerPage.getAlertMessage(), "Customer deleted Successfully");
 		
+		log.info("Delete customer - STEP 06: Accept the information alert");
 		homePage = deleteCustomerPage.acceptCustomerDeletedInformationAlert();
+		
+		log.info("Delete customer - STEP 07: Open Edit Customer page");
 		homePage.openMultiplePage(driver, "Edit Customer");
 		editCustomerPage = PageGeneratorManager.getEditCustomerPage(driver);
 		
+		log.info("Delete customer - STEP 08: Input customer ID");
 		editCustomerPage.inputToCustomerIDTextbox(newCustomerID);
+		
+		log.info("Delete customer - STEP 09: Click Submit button");
 		editCustomerPage.clickAccSubmitButton();
 		
-		Assert.assertEquals(editCustomerPage.getAlertMessage(), "Customer does not exist!!");
+		log.info("Delete customer - STEP 10: Verify 'Customer does not exist!!' alert message is displayed");
+		verifyEquals(editCustomerPage.getAlertMessage(), "Customer does not exist!!");
 		
+		log.info("Delete customer - STEP 11: Accept the information alert");
 		editCustomerPage.acceptCustomerNotExistInformationAlert();
 	}
 	

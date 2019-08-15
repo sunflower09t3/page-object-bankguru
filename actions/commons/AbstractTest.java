@@ -2,14 +2,23 @@ package commons;
 
 import java.util.concurrent.TimeUnit;
 
+import org.apache.commons.logging.Log;
 import org.openqa.selenium.WebDriver;
+import org.apache.commons.logging.LogFactory;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.testng.Assert;
+import org.testng.Reporter;
 
 public class AbstractTest {
 	private WebDriver driver;
+	protected final Log log;
 	
+	protected AbstractTest() {
+		log = LogFactory.getLog(getClass());
+	}
+
 	public WebDriver openMultipleBrowser(String browserName) {
 		if (browserName.equalsIgnoreCase("Firefox")) {
 			driver = new FirefoxDriver();
@@ -30,8 +39,74 @@ public class AbstractTest {
 		driver.manage().timeouts().implicitlyWait(Constants.LONG_TIMEOUT, TimeUnit.SECONDS);
 
 		driver.get("http://demo.guru99.com/V4/");
-		
+
 		return driver;
 	}
 
+	private boolean checkPassed(boolean condition) {
+		boolean result = true;
+
+		try {
+			Assert.assertTrue(condition);
+			log.info("==PASSED==");
+		} catch (Throwable e) {
+			result = false;
+			log.info("==FAILED==");
+
+			// Add loi vao ReportNG
+			VerificationFailures.getFailures().addFailureForTest(Reporter.getCurrentTestResult(), e);
+			Reporter.getCurrentTestResult().setThrowable(e);
+
+		}
+		return result;
+	}
+
+	protected boolean verifyTrue(boolean condition) {
+		return checkPassed(condition);
+	}
+
+	private boolean checkFailed(boolean condition) {
+		boolean result = true;
+
+		try {
+			Assert.assertFalse(condition);
+			log.info("==PASSED==");
+
+		} catch (Throwable e) {
+			result = false;
+			log.info("==FAILED==");
+
+			// Add loi vao ReportNG
+			VerificationFailures.getFailures().addFailureForTest(Reporter.getCurrentTestResult(), e);
+			Reporter.getCurrentTestResult().setThrowable(e);
+		}
+		return result;
+	}
+
+	protected boolean verifyFalse(boolean condition) {
+		return checkFailed(condition);
+	}
+
+	private boolean checkEquals(Object actual, Object expected) {
+		boolean result = true;
+
+		try {
+			log.info("Actual: " + actual);
+			log.info("Expected: " + expected);
+			Assert.assertEquals(expected, actual);
+			log.info("==PASSED==");
+		} catch (Throwable e) {
+			result = false;
+			log.info("==FAILED==");
+
+			// Add loi vao ReportNG
+			VerificationFailures.getFailures().addFailureForTest(Reporter.getCurrentTestResult(), e);
+			Reporter.getCurrentTestResult().setThrowable(e);
+		}
+		return result;
+	}
+
+	protected boolean verifyEquals(Object actual, Object expected) {
+		return checkEquals(actual, expected);
+	}
 }
