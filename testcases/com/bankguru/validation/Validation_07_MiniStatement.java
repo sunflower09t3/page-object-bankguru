@@ -1,11 +1,12 @@
 package com.bankguru.validation;
 
 import org.openqa.selenium.WebDriver;
-import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
+
+import com.bankguru.commons.Common_01_RegisterToSystem;
 
 import commons.AbstractTest;
 import commons.PageGeneratorManager;
@@ -15,7 +16,6 @@ import pageObjects.MiniStatementPageObject;
 
 public class Validation_07_MiniStatement extends AbstractTest {
 	WebDriver driver;
-	String userName, password;
 	String accountNoContainingCharacter, accountNoContainingSpecialCharacter;
 	String accountNoContainingSpace, accountNoBeginWithSpace;
 
@@ -28,10 +28,6 @@ public class Validation_07_MiniStatement extends AbstractTest {
 	public void beforeClass(String browserName) {
 		driver = openMultipleBrowser(browserName);
 
-		// Login credentials
-		userName = "mngr213678";
-		password = "Anajabu";
-		
 		// Data
 		accountNoContainingCharacter = "123Acc";
 		accountNoContainingSpecialCharacter = "123$%^";
@@ -40,8 +36,8 @@ public class Validation_07_MiniStatement extends AbstractTest {
 
 		loginPage = PageGeneratorManager.getLoginPage(driver);
 
-		loginPage.inputToUserIDTextbox(userName);
-		loginPage.inputToPasswordTextbox(password);
+		loginPage.inputToUserIDTextbox(Common_01_RegisterToSystem.username);
+		loginPage.inputToPasswordTextbox(Common_01_RegisterToSystem.password);
 		homePage = loginPage.clickLoginButton();
 
 		homePage.openMultiplePage(driver, "Mini Statement");

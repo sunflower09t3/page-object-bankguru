@@ -1,12 +1,11 @@
 package com.bankguru.validation;
 
-import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
-
+import com.bankguru.commons.Common_01_RegisterToSystem;
 import commons.AbstractTest;
 import commons.PageGeneratorManager;
 import pageObjects.HomePageObject;
@@ -18,7 +17,6 @@ public class Validation_01_NewCustomer extends AbstractTest {
 	LoginPageObject loginPage;
 	NewCustomerPageObject newCustomerPage;
 	HomePageObject homePage;
-	String userName, password;
 	String customerNameWithNumber, customerNameWithSpecialCharacter, customerNameBeginWithSpace;
 	String addressBeginWithSpace;
 	String cityWithNumber, cityWithSpecialCharacter, cityBeginWithSpace;
@@ -36,8 +34,6 @@ public class Validation_01_NewCustomer extends AbstractTest {
 		loginPage = PageGeneratorManager.getLoginPage(driver);
 
 		// Data
-		userName = "mngr213678";
-		password = "Anajabu";
 		customerNameWithNumber = "myname123";
 		customerNameWithSpecialCharacter = "myname!@$";
 		customerNameBeginWithSpace = " ";
@@ -62,8 +58,8 @@ public class Validation_01_NewCustomer extends AbstractTest {
 		emailBeginWithSpace = " ";
 
 		// Login
-		loginPage.inputToUserIDTextbox(userName);
-		loginPage.inputToPasswordTextbox(password);
+		loginPage.inputToUserIDTextbox(Common_01_RegisterToSystem.username);
+		loginPage.inputToPasswordTextbox(Common_01_RegisterToSystem.password);
 		homePage = loginPage.clickLoginButton();
 
 		// Navigate to New customer page

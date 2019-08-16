@@ -1,13 +1,11 @@
 package com.bankguru.payment;
 
-import java.util.Random;
-
 import org.openqa.selenium.WebDriver;
-import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
+import com.bankguru.commons.Common_01_RegisterToSystem;
 import commons.AbstractTest;
 import commons.PageGeneratorManager;
 import pageObjects.BalanceEnquiryPageObject;
@@ -25,7 +23,6 @@ import pageObjects.WithdrawalPageObject;
 
 public class Payment extends AbstractTest{
 	WebDriver driver;
-	String userName, password;
 	String newCustomerID, newCustomerName, newCustomerDateOfBirth, newCustomerAddress, newCustomerState;
 	String newCustomerCity, newCustomerPIN, newCustomerTelephone, newCustomerEmail, newCustomerPassword;
 	String anotherCustomerID, anotherCustomerName, anotherCustomerDateOfBirth, anotherCustomerAddress, anotherCustomerState;
@@ -50,9 +47,6 @@ public class Payment extends AbstractTest{
 
 	@Parameters("browser")
 	@BeforeClass public void beforeClass(String browserName) {
-		// Login credentials
-		userName = "mngr213678";
-		password = "Anajabu";
 		
 		// New customer data
 		newCustomerName = "first customer";
@@ -112,8 +106,8 @@ public class Payment extends AbstractTest{
 		loginPage = PageGeneratorManager.getLoginPage(driver);
 		
 		// Login
-		loginPage.inputToUserIDTextbox(userName);
-		loginPage.inputToPasswordTextbox(password);
+		loginPage.inputToUserIDTextbox(Common_01_RegisterToSystem.username);
+		loginPage.inputToPasswordTextbox(Common_01_RegisterToSystem.password);
 		homePage = loginPage.clickLoginButton();
 	}
 	

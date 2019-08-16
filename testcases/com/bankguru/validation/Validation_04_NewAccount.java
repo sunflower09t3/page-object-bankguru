@@ -1,11 +1,13 @@
 package com.bankguru.validation;
 
-import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
+
+import com.bankguru.commons.Common_01_RegisterToSystem;
+
 import commons.AbstractTest;
 import commons.PageGeneratorManager;
 import pageObjects.HomePageObject;
@@ -14,7 +16,6 @@ import pageObjects.NewAccountPageObject;
 
 public class Validation_04_NewAccount extends AbstractTest{
 	WebDriver driver;
-	String userName, password;
 	String customerIDContainingCharacter, customerIDContaingSpecialCharacter; 
 	String customerIDContainingSpace, customerIDBeginWithSpace;
 	String initialDepositContainingCharacter, initialDepositContainingSpecialCharacter, initialDepositContainingSpace;
@@ -29,11 +30,6 @@ public class Validation_04_NewAccount extends AbstractTest{
 	public void beforeClass(String browserName) {
 		driver = openMultipleBrowser(browserName);
 
-		// Login credentials
-		userName = "mngr213678";
-		password = "Anajabu";
-
-		// Data
 		customerIDContainingCharacter = "123abc";
 		customerIDContaingSpecialCharacter = "123$%^";
 		customerIDContainingSpace = "123 45";
@@ -45,8 +41,8 @@ public class Validation_04_NewAccount extends AbstractTest{
 
 		loginPage = PageGeneratorManager.getLoginPage(driver);
 
-		loginPage.inputToUserIDTextbox(userName);
-		loginPage.inputToPasswordTextbox(password);
+		loginPage.inputToUserIDTextbox(Common_01_RegisterToSystem.username);
+		loginPage.inputToPasswordTextbox(Common_01_RegisterToSystem.password);
 		homePage = loginPage.clickLoginButton();
 		
 		homePage.openMultiplePage(driver, "New Account");

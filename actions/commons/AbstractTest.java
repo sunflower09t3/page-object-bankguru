@@ -24,10 +24,10 @@ public class AbstractTest {
 		if (browserName.equalsIgnoreCase("Firefox")) {
 			driver = new FirefoxDriver();
 		} else if (browserName.equalsIgnoreCase("Chrome")) {
-			System.setProperty("webdriver.chrome.driver", ".\\resources\\chromedriver.exe");
+			System.setProperty("webdriver.chrome.driver", "resources/chromedriver");
 			driver = new ChromeDriver();
 		} else if (browserName.equalsIgnoreCase("Chrome Headless")) {
-			System.setProperty("webdriver.chrome.driver", ".\\resources\\chromedriver.exe");
+			System.setProperty("webdriver.chrome.driver", "resources/chromedriver");
 			ChromeOptions options = new ChromeOptions();
 			options.addArguments("headless");
 			options.addArguments("window-size=1366x768");

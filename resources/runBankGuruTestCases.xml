@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <suite name="BANKGURU" parallel="false" thread-count="3">
-
 	<listeners>
 		<listener class-name="org.uncommons.reportng.HTMLReporter"></listener>
 		<listener class-name="org.uncommons.reportng.JUnitXMLReporter"></listener>
@@ -11,6 +10,7 @@
 		<parameter name="browser" value="Firefox"></parameter>
 		<classes>
 			<class name="com.bankguru.validation.Validation_01_NewCustomer" />
+			<class name="com.bankguru.commons.Common_01_RegisterToSystem" />
 			<class name="com.bankguru.validation.Validation_02_EditCustomer" />  
 			<class name = "com.bankguru.validation.Validation_03_DeleteCustomer"/>
 			<class name = "com.bankguru.validation.Validation_04_NewAccount"/>
@@ -27,6 +27,7 @@
 	 <test name="Run on Chrome">
 		<parameter name="browser" value="Chrome"></parameter>
 		<classes>
+			<class name="com.bankguru.commons.Common_01_RegisterToSystem"/>
 			<class name="com.bankguru.validation.Validation_01_NewCustomer" />
 			<class name="com.bankguru.validation.Validation_02_EditCustomer" /> 
 			<class name = "com.bankguru.validation.Validation_03_DeleteCustomer"/>
@@ -44,6 +45,7 @@
 	<test name="Run on Chrome Headless">
 		<parameter name="browser" value="Chrome Headless"></parameter>
 		<classes>
+			<class name="com.bankguru.commons.Common_01_RegisterToSystem"/>
 			<class name="com.bankguru.validation.Validation_01_NewCustomer" />
 			<class name="com.bankguru.validation.Validation_02_EditCustomer" /> 
 			<class name = "com.bankguru.validation.Validation_03_DeleteCustomer"/>
@@ -56,6 +58,6 @@
 			<class name = "com.bankguru.validation.Validation_10_ChangePassword"/>
 			<class name = "com.bankguru.payment.Payment" />
 		</classes>
-	</test> 
+	</test>  -->
 
 </suite> <!-- Suite -->

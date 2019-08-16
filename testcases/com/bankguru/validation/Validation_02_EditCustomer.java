@@ -1,14 +1,11 @@
 package com.bankguru.validation;
 
-import java.util.Random;
-
-import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
-
+import com.bankguru.commons.Common_01_RegisterToSystem;
 import commons.AbstractTest;
 import commons.PageGeneratorManager;
 import pageObjects.EditCustomerPageObject;
@@ -18,7 +15,6 @@ import pageObjects.NewCustomerPageObject;
 
 public class Validation_02_EditCustomer extends AbstractTest {
 	WebDriver driver;
-	String userName, password;
 	String customerIDWithCharacter, customerIDWithSpecialCharacter;
 	String cityWithNumber, cityWithSpecialCharacter;
 	String stateWithSpecialCharacter, stateWithNumber;
@@ -41,8 +37,6 @@ public class Validation_02_EditCustomer extends AbstractTest {
 		loginPage = PageGeneratorManager.getLoginPage(driver);
 
 		// Data
-		userName = "mngr213678";
-		password = "Anajabu";
 		customerIDWithCharacter = "123acc";
 		customerIDWithSpecialCharacter = "123$%^";
 		cityWithNumber = "city123";
@@ -69,8 +63,8 @@ public class Validation_02_EditCustomer extends AbstractTest {
 		newCustomerPassword = "firstcustomerpassword";
 
 		// Login
-		loginPage.inputToUserIDTextbox(userName);
-		loginPage.inputToPasswordTextbox(password);
+		loginPage.inputToUserIDTextbox(Common_01_RegisterToSystem.username);
+		loginPage.inputToPasswordTextbox(Common_01_RegisterToSystem.password);
 		homePage = loginPage.clickLoginButton();
 
 		// Navigate to New customer page

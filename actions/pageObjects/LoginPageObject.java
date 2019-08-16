@@ -13,9 +13,10 @@ public class LoginPageObject extends AbstractPage {
 		this.driver = driver;
 	}
 
-	public void clickHereLink() {
+	public RegisterPageObject clickHereLink() {
 		waitForElementVisible(driver, LoginPageUI.HERE_LINK);
 		clickToElement(driver, LoginPageUI.HERE_LINK);
+		return PageGeneratorManager.getRegisterPage(driver);
 	}
 
 	public String getLoginPageURL() {

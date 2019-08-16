@@ -1,13 +1,13 @@
 package com.bankguru.validation;
 
-import java.util.Random;
-
 import org.openqa.selenium.WebDriver;
-import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
+
+import com.bankguru.commons.Common_01_RegisterToSystem;
+
 import commons.AbstractTest;
 import commons.PageGeneratorManager;
 import pageObjects.EditAccountPageObject;
@@ -18,7 +18,6 @@ import pageObjects.NewCustomerPageObject;
 
 public class Validation_05_EditAccount extends AbstractTest {
 	WebDriver driver;
-	String userName, password;
 	String newCustomerID, newCustomerName, newCustomerDateOfBirth, newCustomerAddress, newCustomerState;
 	String newCustomerCity, newCustomerPIN, newCustomerTelephone, newCustomerEmail, newCustomerPassword;
 	String newAccountID, newAccountAccType;
@@ -36,10 +35,6 @@ public class Validation_05_EditAccount extends AbstractTest {
 	@BeforeClass
 	public void beforeClass(String browserName) {
 		driver = openMultipleBrowser(browserName);
-
-		// Login credentials
-		userName = "mngr213678";
-		password = "Anajabu";
 
 		// Data
 		accountNoContainingCharacter = "123Acc";
@@ -64,8 +59,8 @@ public class Validation_05_EditAccount extends AbstractTest {
 
 		loginPage = PageGeneratorManager.getLoginPage(driver);
 
-		loginPage.inputToUserIDTextbox(userName);
-		loginPage.inputToPasswordTextbox(password);
+		loginPage.inputToUserIDTextbox(Common_01_RegisterToSystem.username);
+		loginPage.inputToPasswordTextbox(Common_01_RegisterToSystem.password);
 		homePage = loginPage.clickLoginButton();
 
 		homePage.openMultiplePage(driver, "Edit Account");

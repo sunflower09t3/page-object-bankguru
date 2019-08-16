@@ -1,15 +1,14 @@
 package com.bankguru.validation;
 
 import org.openqa.selenium.WebDriver;
-import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
+import com.bankguru.commons.Common_01_RegisterToSystem;
 import commons.AbstractTest;
 import commons.PageGeneratorManager;
 import pageObjects.ChangePasswordPageObject;
-import pageObjects.FundTransferPageObject;
 import pageObjects.HomePageObject;
 import pageObjects.LoginPageObject;
 
@@ -22,17 +21,11 @@ public class Validation_10_ChangePassword extends AbstractTest {
 	HomePageObject homePage;
 	ChangePasswordPageObject changePasswordPage;
 
-	String userName, password;
-
 	@Parameters("browser")
 	@BeforeClass
 	public void beforeClass(String browserName) {
 		driver = openMultipleBrowser(browserName);
 
-		// Login credentials
-		userName = "mngr213678";
-		password = "Anajabu";
-		
 		// Data
 		newPasswordWithoutNumber = "Guru!@#$";
 		newPasswordWithoutSpecialCharacter = "Guru99";
@@ -42,8 +35,8 @@ public class Validation_10_ChangePassword extends AbstractTest {
 		
 		loginPage = PageGeneratorManager.getLoginPage(driver);
 
-		loginPage.inputToUserIDTextbox(userName);
-		loginPage.inputToPasswordTextbox(password);
+		loginPage.inputToUserIDTextbox(Common_01_RegisterToSystem.username);
+		loginPage.inputToPasswordTextbox(Common_01_RegisterToSystem.password);
 		homePage = loginPage.clickLoginButton();
 
 		homePage.openMultiplePage(driver, "Change Password");
