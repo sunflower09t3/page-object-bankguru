@@ -291,9 +291,5 @@ public class Validation_02_EditCustomer extends AbstractTest {
 	public void afterClass() {
 		driver.quit();
 	}
-
-	public int randomNumber() {
-		Random random = new Random();
-		return random.nextInt(1000000);
-	}
 }
+
