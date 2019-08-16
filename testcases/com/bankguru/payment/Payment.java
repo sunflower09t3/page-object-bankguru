@@ -408,11 +408,6 @@ public class Payment extends AbstractTest{
 		editCustomerPage.acceptCustomerNotExistInformationAlert();
 	}
 	
-	public int randomNumber() {
-		Random random = new Random();
-		return random.nextInt(1000000);
-	}
-
 	@AfterClass
 	public void afterClass() {
 		

@@ -176,9 +176,4 @@ public class Validation_05_EditAccount extends AbstractTest {
 		driver.quit();
 	}
 
-	public int randomNumber() {
-		Random random = new Random();
-		return random.nextInt(1000000);
-	}
-
 }
