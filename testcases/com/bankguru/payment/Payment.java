@@ -402,10 +402,9 @@ public class Payment extends AbstractTest{
 		editCustomerPage.acceptCustomerNotExistInformationAlert();
 	}
 	
-	@AfterClass
+	@AfterClass (alwaysRun=true)
 	public void afterClass() {
-		
-		driver.quit();
+		closeBrowserAndDriver(driver);
 	}
 
 }

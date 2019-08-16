@@ -320,9 +320,9 @@ public class Validation_01_NewCustomer extends AbstractTest {
 		verifyTrue(newCustomerPage.isEmailMustNotBeginWithSpaceMessageDisplayed());
 	}
 
-	@AfterClass
+	@AfterClass (alwaysRun=true)
 	public void afterClass() {
-		driver.quit();
+		closeBrowserAndDriver(driver);
 	}
 
 }

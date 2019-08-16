@@ -281,9 +281,9 @@ public class Validation_02_EditCustomer extends AbstractTest {
 		verifyTrue(editCustomerPage.isEmailInvalidFormatMessageDisplayed());
 	}
 
-	@AfterClass
+	@AfterClass (alwaysRun=true)
 	public void afterClass() {
-		driver.quit();
+		closeBrowserAndDriver(driver);
 	}
 }
 

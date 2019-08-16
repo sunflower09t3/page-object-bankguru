@@ -91,9 +91,9 @@ public class Validation_06_DeleteAccount extends AbstractTest {
 	}
 
 
-	@AfterClass
+	@AfterClass (alwaysRun=true)
 	public void afterClass() {
-		driver.quit();
+		closeBrowserAndDriver(driver);
 	}
 
 }

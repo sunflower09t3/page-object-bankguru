@@ -95,9 +95,9 @@ public class Validation_03_DeleteCustomer extends AbstractTest {
 		verifyTrue(deleteCustomerPage.isCustomerIDMustNotBeginWithSpaceMessageDisplayed());
 	}
 
-	@AfterClass
+	@AfterClass (alwaysRun=true)
 	public void afterClass() {
-		driver.quit();
+		closeBrowserAndDriver(driver);
 	}
 
 }

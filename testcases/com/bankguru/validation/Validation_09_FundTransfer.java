@@ -138,9 +138,9 @@ public class Validation_09_FundTransfer extends AbstractTest {
 		verifyTrue(fundTransferPage.isDescriptionMustNotBlankMessageDisplayed());
 	}
 
-	@AfterClass
+	@AfterClass (alwaysRun=true)
 	public void afterClass() {
-		driver.quit();
+		closeBrowserAndDriver(driver);
 	}
 
 }

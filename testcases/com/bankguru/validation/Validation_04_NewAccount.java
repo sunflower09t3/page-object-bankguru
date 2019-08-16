@@ -139,9 +139,9 @@ public class Validation_04_NewAccount extends AbstractTest{
 		verifyTrue(newAccountPage.isInitialDepositMustNotBeginWithSpaceMessageDisplayed());
 	}
 
-	@AfterClass
+	@AfterClass (alwaysRun=true)
 	public void afterClass() {
-		driver.quit();
+		closeBrowserAndDriver(driver);
 	}
 
 }

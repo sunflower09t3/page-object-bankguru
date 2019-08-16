@@ -100,9 +100,9 @@ public class Validation_10_ChangePassword extends AbstractTest {
 		verifyTrue(changePasswordPage.isPasswordNotMatchMessageDisplayed());
 	}
 
-	@AfterClass
+	@AfterClass (alwaysRun=true)
 	public void afterClass() {
-		driver.quit();
+		closeBrowserAndDriver(driver);
 	}
 
 }

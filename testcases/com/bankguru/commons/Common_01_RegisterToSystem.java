@@ -37,7 +37,7 @@ public class Common_01_RegisterToSystem extends AbstractTest {
 		username = registerPage.getUserIDInfo();
 		password = registerPage.getPasswordInfo();
 		
-		driver.quit();
+		closeBrowserAndDriver(driver);
 	}
 
 }

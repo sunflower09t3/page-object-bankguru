@@ -171,9 +171,9 @@ public class Validation_08_CustomisedStatement extends AbstractTest {
 		verifyTrue(customisedStatementPage.isNumberOfTransactionMustNotContainCharacterMessageDisplayed());
 	}
 	
-	@AfterClass
+	@AfterClass (alwaysRun=true)
 	public void afterClass() {
-		driver.quit();
+		closeBrowserAndDriver(driver);
 	}
 
 }

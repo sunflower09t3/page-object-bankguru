@@ -166,9 +166,9 @@ public class Validation_05_EditAccount extends AbstractTest {
 		verifyTrue(editAccountPage.isEditAccountEntryFormDisplayed());
 	}
 
-	@AfterClass
+	@AfterClass (alwaysRun=true)
 	public void afterClass() {
-		driver.quit();
+		closeBrowserAndDriver(driver);
 	}
 
 }
