@@ -96,7 +96,7 @@ public class AbstractTest {
 		try {
 			log.info("Actual: " + actual);
 			log.info("Expected: " + expected);
-			Assert.assertEquals(expected, actual);
+			Assert.assertEquals(actual, expected);
 			log.info("==PASSED==");
 		} catch (Throwable e) {
 			result = false;

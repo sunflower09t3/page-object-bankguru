@@ -13,16 +13,6 @@ public class RegisterPageObject extends AbstractPage{
 		this.driver = driver;
 	}
 
-	public void inputToEmailIDTextbox(String email) {
-		waitForElementVisible(driver, RegisterPageUI.EMAIL_ID_TEXTBOX);
-		sendKeyToElement(driver, RegisterPageUI.EMAIL_ID_TEXTBOX, email);
-	}
-
-	public void clickSubmitButton() {
-		waitForElementVisible(driver, RegisterPageUI.SUBMIT_BUTTON);
-		clickToElement(driver, RegisterPageUI.SUBMIT_BUTTON);
-	}
-
 	public String getUserIDInfo() {
 		waitForElementVisible(driver, RegisterPageUI.USER_ID_TEXT);
 		return getTextElement(driver, RegisterPageUI.USER_ID_TEXT);

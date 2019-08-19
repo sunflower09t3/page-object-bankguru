@@ -1,11 +1,8 @@
 package pageObjects;
 
 import org.openqa.selenium.WebDriver;
-
 import bankguru.HomePageUI;
-import bankguru.LoginPageUI;
 import commons.AbstractPage;
-import commons.PageGeneratorManager;
 
 public class HomePageObject extends AbstractPage{
 	private WebDriver driver;

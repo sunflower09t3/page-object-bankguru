@@ -21,7 +21,7 @@ public class Validation_01_NewCustomer extends AbstractTest {
 	String addressBeginWithSpace;
 	String cityWithNumber, cityWithSpecialCharacter, cityBeginWithSpace;
 	String stateWithNumber, stateWithSpecialCharacter, stateBeginWithSpace;
-	String emptyPin, pinWithCharacter, pinWithMoreThan6Digits, pinWithLessThan6Digits, pintWithSpecialCharacter,
+	String emptyPin, pinWithCharacter, pinWithLessThan6Digits, pintWithSpecialCharacter,
 			pinBeginWithSpace, pintWithSpace;
 	String telephoneBeginWithSpace, telephoneWithSpace, telephoneWithSpecialCharacter;
 	String invalidEmail, emailBeginWithSpace;
@@ -45,7 +45,6 @@ public class Validation_01_NewCustomer extends AbstractTest {
 		stateWithSpecialCharacter = "state*&";
 		stateBeginWithSpace = " ";
 		pinWithCharacter = "123pin";
-		pinWithMoreThan6Digits = "123456789";
 		pinWithLessThan6Digits = "123";
 		pintWithSpecialCharacter = "123$";
 		pinBeginWithSpace = " ";
@@ -58,8 +57,8 @@ public class Validation_01_NewCustomer extends AbstractTest {
 		emailBeginWithSpace = " ";
 
 		// Login
-		loginPage.inputToUserIDTextbox(Common_01_RegisterToSystem.username);
-		loginPage.inputToPasswordTextbox(Common_01_RegisterToSystem.password);
+		loginPage.inputToDynamicTextbox(driver, "uid", Common_01_RegisterToSystem.username);
+		loginPage.inputToDynamicTextbox(driver, "password", Common_01_RegisterToSystem.password);
 		homePage = loginPage.clickLoginButton();
 
 		// Navigate to New customer page
@@ -69,258 +68,302 @@ public class Validation_01_NewCustomer extends AbstractTest {
 
 	@Test
 	public void TC_01_CustomerNameCannotBeBlank() {
-		log.info("Validate Customer Name field with blank value - STEP 01: Do not input a value in Customer Name field and press Tab key");
-		newCustomerPage.inputNothingToCustomerNameTextboxAndPressTabKey();
+		log.info(
+				"Validate Customer Name field with blank value - STEP 01: Do not input a value in Customer Name field and press Tab key");
+		newCustomerPage.pressTabToDynamicTextbox(driver, "name");
 
 		log.info(
 				"Validate Customer Name field with blank value - STEP 02: Verify 'Customer name must not be blank' message is displayed");
-		verifyTrue(newCustomerPage.isCustomerNameMustNotBlankMessageDisplayed());
+		verifyEquals(newCustomerPage.getErrorMessageOfDynamicField(driver, "Customer Name"),
+				"Customer name must not be blank");
 	}
 
 	@Test
 	public void TC_02_CustomerNameCannotContainNumber() {
-		log.info("Validate Customer Name field with numeric value - STEP 01: Input numeric value into Customer Name field");
-		newCustomerPage.inputToCustomerNameTextbox(customerNameWithNumber);
+		log.info(
+				"Validate Customer Name field with numeric value - STEP 01: Input numeric value into Customer Name field");
+		newCustomerPage.inputToDynamicTextbox(driver, "name", customerNameWithNumber);
 
-		log.info("Validate Customer Name field with numeric value - STEP 02: Verify 'Numbers are not allowed' message is displayed");
-		verifyTrue(newCustomerPage.isCustomerNameMustNotContainNumberMessageDisplayed());
+		log.info(
+				"Validate Customer Name field with numeric value - STEP 02: Verify 'Numbers are not allowed' message is displayed");
+		verifyEquals(newCustomerPage.getErrorMessageOfDynamicField(driver, "Customer Name"), "Numbers are not allowed");
 	}
 
 	@Test
 	public void TC_03_CustomerNameCannotContainSpecialCharacter() {
-		log.info("Validate Customer Name field with special character - STEP 01: Input special character into Customer Name field");
-		newCustomerPage.inputToCustomerNameTextbox(customerNameWithSpecialCharacter);
-		
-		log.info("Validate Customer Name field with special character - STEP 02: Verify 'Special characters are not allowed' message is displayed");
-		verifyTrue(newCustomerPage.isCustomerNameMustNotContainSpecialCharacterMessageDisplayed());
+		log.info(
+				"Validate Customer Name field with special character - STEP 01: Input special character into Customer Name field");
+		newCustomerPage.inputToDynamicTextbox(driver, "name", customerNameWithSpecialCharacter);
+
+		log.info(
+				"Validate Customer Name field with special character - STEP 02: Verify 'Special characters are not allowed' message is displayed");
+		verifyEquals(newCustomerPage.getErrorMessageOfDynamicField(driver, "Customer Name"),
+				"Special characters are not allowed");
 	}
 
 	@Test
 	public void TC_04_CustomerNameCannotBeginWithSpaceCharacter() {
-		log.info("Validate Customer Name field with space at the beginning - STEP 01: Input first character as a space");
-		newCustomerPage.inputToCustomerNameTextbox(customerNameBeginWithSpace);
-		
-		log.info("Validate Customer Name field with space at the beginning - STEP 02: Verify 'First character can not have space' message is displayed");
-		verifyTrue(newCustomerPage.isCustomerNameMustNotBeginWithSpaceMessageDisplayed());
+		log.info(
+				"Validate Customer Name field with space at the beginning - STEP 01: Input first character as a space");
+		newCustomerPage.inputToDynamicTextbox(driver, "name", customerNameBeginWithSpace);
+
+		log.info(
+				"Validate Customer Name field with space at the beginning - STEP 02: Verify 'First character can not have space' message is displayed");
+		verifyEquals(newCustomerPage.getErrorMessageOfDynamicField(driver, "Customer Name"),
+				"First character can not have space");
 	}
 
 	@Test
 	public void TC_05_AddressCannotBeBlank() {
-		log.info("Validate Address field with blank value - STEP 01: Do not input a value into Address field and press Tab key");
-		newCustomerPage.inputNothingToAddressTextareaAndPressTabKey();
-		
-		log.info("Validate Address field with blank value - STEP 02: Verify 'Address Field must not be blank' message is displayed");
-		verifyTrue(newCustomerPage.isAddressMustNotBlankMessageDisplayed());
+		log.info(
+				"Validate Address field with blank value - STEP 01: Do not input a value into Address field and press Tab key");
+		newCustomerPage.pressTabToDynamicTextarea(driver, "addr");
+
+		log.info(
+				"Validate Address field with blank value - STEP 02: Verify 'Address Field must not be blank' message is displayed");
+		verifyEquals(newCustomerPage.getErrorMessageOfDynamicField(driver, "Address"),
+				"Address Field must not be blank");
 	}
 
 	@Test
 	public void TC_06_AddressCannotBeginWithSpaceCharacter() {
-		log.info("Validate Address field field with space at the beginning - STEP 01: Input first character as a space");
-		newCustomerPage.inputToAddressTextarea(addressBeginWithSpace);
-		
-		log.info("Validate Address field field with space at the beginning - STEP 02: Verify 'First character can not have space' message is displayed");
-		verifyTrue(newCustomerPage.isAddressMustNotBeginWithSpaceMessageDisplayed());
+		log.info(
+				"Validate Address field field with space at the beginning - STEP 01: Input first character as a space");
+		newCustomerPage.inputToDynamicTextarea(driver, "addr", addressBeginWithSpace);
+
+		log.info(
+				"Validate Address field field with space at the beginning - STEP 02: Verify 'First character can not have space' message is displayed");
+		verifyEquals(newCustomerPage.getErrorMessageOfDynamicField(driver, "Address"),
+				"First character can not have space");
 	}
 
 	@Test
 	public void TC_07_CityCannotBeBlank() {
-		log.info("Validate City field field with blank value - STEP 01: Do not input a value into City field and press Tab key");
-		newCustomerPage.inputNothingToCityTextboxAndPressTabKey();
-		
-		log.info("Validate City field field with blank value - STEP 02: Verify 'City Field must not be blank' message is displayed");
-		verifyTrue(newCustomerPage.isCityMustNotBlankMessageDisplayed());
+		log.info(
+				"Validate City field field with blank value - STEP 01: Do not input a value into City field and press Tab key");
+		newCustomerPage.pressTabToDynamicTextbox(driver, "city");
+
+		log.info(
+				"Validate City field field with blank value - STEP 02: Verify 'City Field must not be blank' message is displayed");
+		verifyEquals(newCustomerPage.getErrorMessageOfDynamicField(driver, "City"), "City Field must not be blank");
 	}
 
 	@Test
 	public void TC_08_CityCannotContainNumber() {
 		log.info("Validate City field with numeric value - STEP 01: Input numeric value into City field");
-		newCustomerPage.inputToCityTextbox(cityWithNumber);
-		
-		log.info("Validate City field with numeric value - STEP 02: Verify 'Numbers are not allowed' message is displayed");
-		verifyTrue(newCustomerPage.isCityMustNotContainNumberMessageDisplayed());
+		newCustomerPage.inputToDynamicTextbox(driver, "city", cityWithNumber);
+
+		log.info(
+				"Validate City field with numeric value - STEP 02: Verify 'Numbers are not allowed' message is displayed");
+		verifyEquals(newCustomerPage.getErrorMessageOfDynamicField(driver, "City"), "Numbers are not allowed");
 	}
 
 	@Test
 	public void TC_09_CityCannotContainSpecialCharacter() {
 		log.info("Validate City field with special character - STEP 01: Input special character into City field");
-		newCustomerPage.inputToCityTextbox(cityWithSpecialCharacter);
-		
-		log.info("Validate City field with special character - STEP 02: Verify 'Special characters are not allowed' message is displayed");
-		verifyTrue(newCustomerPage.isCityMustNotContainSpecialCharacterMessageDisplayed());
+		newCustomerPage.inputToDynamicTextbox(driver, "city", cityWithSpecialCharacter);
+
+		log.info(
+				"Validate City field with special character - STEP 02: Verify 'Special characters are not allowed' message is displayed");
+		verifyEquals(newCustomerPage.getErrorMessageOfDynamicField(driver, "City"),
+				"Special characters are not allowed");
 	}
 
 	@Test
 	public void TC_10_CityCannotBeginWithSpaceCharacter() {
 		log.info("Validate City field with space at the beginning - STEP 01: Input first character as a space");
-		newCustomerPage.inputToCityTextbox(cityBeginWithSpace);
-		
-		log.info("Validate City field with space at the beginning - STEP 02: Verify 'First character can not have space' message is displayed");
-		verifyTrue(newCustomerPage.isCityMustNotBeginWithSpaceMessageDisplayed());
+		newCustomerPage.inputToDynamicTextbox(driver, "city", cityBeginWithSpace);
+
+		log.info(
+				"Validate City field with space at the beginning - STEP 02: Verify 'First character can not have space' message is displayed");
+		verifyEquals(newCustomerPage.getErrorMessageOfDynamicField(driver, "City"),
+				"First character can not have space");
 	}
 
 	@Test
 	public void TC_11_StateCannotBeBlank() {
-		log.info("Validate State field with blank value - STEP 01: Do not input a value into State field and press Tab key");
-		newCustomerPage.inputNothingToStateTextboxAndPressTabKey();
-		
-		log.info("Validate State field with blank value - STEP 02: Verify 'State must not be blank' message is displayed");
-		verifyTrue(newCustomerPage.isStateMustNotBlankMessageDisplayed());
+		log.info(
+				"Validate State field with blank value - STEP 01: Do not input a value into State field and press Tab key");
+		newCustomerPage.pressTabToDynamicTextbox(driver, "state");
+
+		log.info(
+				"Validate State field with blank value - STEP 02: Verify 'State must not be blank' message is displayed");
+		verifyEquals(newCustomerPage.getErrorMessageOfDynamicField(driver, "State"), "State must not be blank");
 	}
 
 	@Test
 	public void TC_12_StateCannotContainNumber() {
 		log.info("Validate State field with numeric value - STEP 01: Input numeric value into State field");
-		newCustomerPage.inputToStateTextbox(stateWithNumber);
-		
-		log.info("Validate State field with numeric value - STEP 02: Verify 'Numbers are not allowed' message is displayed");
-		verifyTrue(newCustomerPage.isStateMustNotContainNumberMessageDisplayed());
+		newCustomerPage.inputToDynamicTextbox(driver, "state", stateWithNumber);
+
+		log.info(
+				"Validate State field with numeric value - STEP 02: Verify 'Numbers are not allowed' message is displayed");
+		verifyEquals(newCustomerPage.getErrorMessageOfDynamicField(driver, "State"), "Numbers are not allowed");
 	}
 
 	@Test
 	public void TC_13_StateCanNotContainSpecialCharacter() {
 		log.info("Validate State field with special character - STEP 01: Input special character into State field");
-		newCustomerPage.inputToStateTextbox(stateWithSpecialCharacter);
-		
-		log.info("Validate State field with special character - STEP 02: Verify 'Special characters are not allowed' message is displayed");
-		verifyTrue(newCustomerPage.isStateMustNotContainSpecialCharacterMessageDisplayed());
+		newCustomerPage.inputToDynamicTextbox(driver, "state", stateWithSpecialCharacter);
+
+		log.info(
+				"Validate State field with special character - STEP 02: Verify 'Special characters are not allowed' message is displayed");
+		verifyEquals(newCustomerPage.getErrorMessageOfDynamicField(driver, "State"),
+				"Special characters are not allowed");
 	}
 
 	@Test
 	public void TC_14_StateCanNotBeginWithSpace() {
 		log.info("Validate State field with space at the beginning - STEP 01: Input first character as a space");
-		newCustomerPage.inputToStateTextbox(stateBeginWithSpace);
-		
-		log.info("Validate State field with space at the beginning - STEP 02: Verify 'First character can not have space' message is displayed");
-		verifyTrue(newCustomerPage.isStateMustNotBeginWithSpaceMessageDisplayed());
+		newCustomerPage.inputToDynamicTextbox(driver, "state", stateBeginWithSpace);
+
+		log.info(
+				"Validate State field with space at the beginning - STEP 02: Verify 'First character can not have space' message is displayed");
+		verifyEquals(newCustomerPage.getErrorMessageOfDynamicField(driver, "State"),
+				"First character can not have space");
 	}
 
 	@Test
-	public void TC_15_PinCanNotContainCharacter() {
+	public void TC_15_PinCanNotBeBlank() {
+		log.info(
+				"Validate Pin field with blank value - STEP 01: Do not input a value into Pin field and press Tab key");
+		newCustomerPage.pressTabToDynamicTextbox(driver, "pinno");
+
+		log.info(
+				"Validate Pin field with blank value - STEP 02: Verify 'PIN Code must not be blank' message is displayed");
+		verifyEquals(newCustomerPage.getErrorMessageOfDynamicField(driver, "PIN"), "PIN Code must not be blank");
+	}
+
+	@Test
+	public void TC_16_PinCanNotContainCharacter() {
 		log.info("Validate Pin field with character - STEP 01: Input character into Pin field");
-		newCustomerPage.inputToPinTextbox(pinWithCharacter);
-		
-		log.info("Validate Pin field with character - STEP 02: Verify 'Characters are not allowed' message is displayed");
-		verifyTrue(newCustomerPage.isPinMustNotContainCharacterMessageDisplayed());
-	}
+		newCustomerPage.inputToDynamicTextbox(driver, "pinno", pinWithCharacter);
 
-	@Test
-	public void TC_16_PinCanNotBeBlank() {
-		log.info("Validate Pin field with blank value - STEP 01: Do not input a value into Pin field and press Tab key");
-		newCustomerPage.inputNothingToPinTextboxAndPressTabKey();
-		
-		log.info("Validate Pin field with blank value - STEP 02: Verify 'PIN Code must not be blank' message is displayed");
-		verifyTrue(newCustomerPage.isPinMustNotBlankMessageDisplayed());
-	}
-
-	@Test
-	public void TC_17_PinCannotHaveMoreThan6Digits() {
-		log.info("Validate Pin field with more than 6 digits - STEP 01: Input more than 6 digits into Pin field");
-		newCustomerPage.inputToPinTextbox(pinWithMoreThan6Digits);
-		
-		log.info("Validate Pin field with more than 6 digits - STEP 02: Verify only able to input 6 digits");
-		verifyEquals(newCustomerPage.getEnteredTextFromPinTextbox(), pinWithMoreThan6Digits.substring(0, 6));
+		log.info(
+				"Validate Pin field with character - STEP 02: Verify 'Characters are not allowed' message is displayed");
+		verifyEquals(newCustomerPage.getErrorMessageOfDynamicField(driver, "PIN"), "Characters are not allowed");
 	}
 
 	@Test
 	public void TC_17_PinCannotHaveLessThan6Digits() {
 		log.info("Validate Pin field with less than 6 digits - STEP 01: Input less than 6 digits into Pin field");
-		newCustomerPage.inputToPinTextbox(pinWithLessThan6Digits);
-		
-		log.info("Validate Pin field with less than 6 digits - STEP 02: Verify 'PIN Code must have 6 Digits' message is displayed");
-		verifyTrue(newCustomerPage.isPinMustHave6DigitsMessageDisplayed());
+		newCustomerPage.inputToDynamicTextbox(driver, "pinno", pinWithLessThan6Digits);
+
+		log.info(
+				"Validate Pin field with less than 6 digits - STEP 02: Verify 'PIN Code must have 6 Digits' message is displayed");
+		verifyEquals(newCustomerPage.getErrorMessageOfDynamicField(driver, "PIN"), "PIN Code must have 6 Digits");
 	}
 
 	@Test
 	public void TC_18_PinCannotContainSpecialCharacter() {
 		log.info("Validate Pin field with special character - STEP 01: Input special character into Pin field");
-		newCustomerPage.inputToPinTextbox(pintWithSpecialCharacter);
-		
-		log.info("Validate Pin field with special character - STEP 02: Verify 'Special characters are not allowed' message is displayed");
-		verifyTrue(newCustomerPage.isPinMustNotContainSpecialCharacterMessageDisplayed());
+		newCustomerPage.inputToDynamicTextbox(driver, "pinno", pintWithSpecialCharacter);
+
+		log.info(
+				"Validate Pin field with special character - STEP 02: Verify 'Special characters are not allowed' message is displayed");
+		verifyEquals(newCustomerPage.getErrorMessageOfDynamicField(driver, "PIN"), "Special characters are not allowed");
 	}
 
 	@Test
 	public void TC_19_PinCannotBeginWithSpace() {
 		log.info("Validate Pin field with space at the beginning - STEP 01: Input first character as a space");
-		newCustomerPage.inputToPinTextbox(pinBeginWithSpace);
-		
-		log.info("Validate Pin field with space at the beginning - STEP 02: Verify 'First character can not have space' message is displayed");
-		verifyTrue(newCustomerPage.isPinMustNotBeginWithSpaceMessageDisplayed());
+		newCustomerPage.inputToDynamicTextbox(driver, "pinno", pinBeginWithSpace);
+
+		log.info(
+				"Validate Pin field with space at the beginning - STEP 02: Verify 'First character can not have space' message is displayed");
+		verifyEquals(newCustomerPage.getErrorMessageOfDynamicField(driver, "PIN"),
+				"First character can not have space");
 	}
 
 	@Test
 	public void TC_20_PinCannotContainSpace() {
 		log.info("Validate Pin field with space - STEP 01: Input pin containing a space into Pin field");
-		newCustomerPage.inputToPinTextbox(pintWithSpace);
-		
+		newCustomerPage.inputToDynamicTextbox(driver, "pinno", pintWithSpace);
+
 		log.info("Validate Pin field with space - STEP 02: Verify 'Characters are not allowed' message is displayed");
-		verifyTrue(newCustomerPage.isPinMustNotContainCharacterMessageDisplayed());
+		verifyEquals(newCustomerPage.getErrorMessageOfDynamicField(driver, "PIN"), "Characters are not allowed");
 	}
 
 	@Test
 	public void TC_21_TelephoneCannotBeBlank() {
-		log.info("Validate Telephone field with blank value - STEP 01: Do not input a value into Telephone field and press Tab key");
-		newCustomerPage.inputNothingToTelephoneTextboxAndPressTabKey();
-		
-		log.info("Validate Telephone field with blank value - STEP 02: Verify 'Mobile no must not be blank' message is displayed");
-		verifyTrue(newCustomerPage.isTelephoneMustNotBlankMessageDisplayed());
+		log.info(
+				"Validate Telephone field with blank value - STEP 01: Do not input a value into Telephone field and press Tab key");
+		newCustomerPage.pressTabToDynamicTextbox(driver, "telephoneno");
+
+		log.info(
+				"Validate Telephone field with blank value - STEP 02: Verify 'Mobile no must not be blank' message is displayed");
+		verifyEquals(newCustomerPage.getErrorMessageOfDynamicField(driver, "Mobile Number"),
+				"Mobile no must not be blank");
 	}
 
 	@Test
 	public void TC_22_TelephoneCannotBeginWithSpace() {
 		log.info("Validate Telephone field with space at the beginning - STEP 01: Input first character as a space");
-		newCustomerPage.inputToTelephoneTextbox(telephoneBeginWithSpace);
-		
-		log.info("Validate Telephone field with space at the beginning - STEP 02: Verify 'First character can not have space' message is displayed");
-		verifyTrue(newCustomerPage.isTelephoneMustNotBeginWithSpaceMessageDisplayed());
+		newCustomerPage.inputToDynamicTextbox(driver, "telephoneno", telephoneBeginWithSpace);
+
+		log.info(
+				"Validate Telephone field with space at the beginning - STEP 02: Verify 'First character can not have space' message is displayed");
+		verifyEquals(newCustomerPage.getErrorMessageOfDynamicField(driver, "Mobile Number"),
+				"First character can not have space");
 	}
 
 	@Test
 	public void TC_23_TelephoneCannotContainSpace() {
-		log.info("Validate Telephone field with space - STEP 01: Input telephone containing space into Telephone field");
-		newCustomerPage.inputToTelephoneTextbox(telephoneWithSpace);
-		
-		log.info("Validate Telephone field with space - STEP 02: Verify 'Characters are not allowed' message is displayed");
-		verifyTrue(newCustomerPage.isTelephoneMustNotContainCharacterMessageDisplayed());
+		log.info(
+				"Validate Telephone field with space - STEP 01: Input telephone containing space into Telephone field");
+		newCustomerPage.inputToDynamicTextbox(driver, "telephoneno", telephoneWithSpace);
+
+		log.info(
+				"Validate Telephone field with space - STEP 02: Verify 'Characters are not allowed' message is displayed");
+		verifyEquals(newCustomerPage.getErrorMessageOfDynamicField(driver, "Mobile Number"),
+				"Characters are not allowed");
 	}
 
 	@Test
 	public void TC_24_TelephoneCannotContainSpecialCharacter() {
-		log.info("Validate Telephone field with special character - STEP 01: Input speical character into Telephone field");
-		newCustomerPage.inputToTelephoneTextbox(telephoneWithSpecialCharacter);
-		
-		log.info("Validate Telephone field with special character - STEP 02: Verify 'Special characters are not allowed' message is displayed");
-		verifyTrue(newCustomerPage.isTelephoneMustNotContainSpecialCharacterMessageDisplayed());
+		log.info(
+				"Validate Telephone field with special character - STEP 01: Input speical character into Telephone field");
+		newCustomerPage.inputToDynamicTextbox(driver, "telephoneno", telephoneWithSpecialCharacter);
+
+		log.info(
+				"Validate Telephone field with special character - STEP 02: Verify 'Special characters are not allowed' message is displayed");
+		verifyEquals(newCustomerPage.getErrorMessageOfDynamicField(driver, "Mobile Number"),
+				"Special characters are not allowed");
 	}
 
 	@Test
 	public void TC_25_EmailCannotBeBlank() {
-		log.info("Validate Email field with blank value - STEP 01: Do not input a value into Email field and press Tab key");
-		newCustomerPage.inputNothingToEmailTextboxAndPressTabKey();
-		
-		log.info("Validate Email field with blank value - STEP 02: Verify 'Email-ID must not be blank' message is displayed");
-		verifyTrue(newCustomerPage.isEmailMustNotBlankMessageDisplayed());
+		log.info(
+				"Validate Email field with blank value - STEP 01: Do not input a value into Email field and press Tab key");
+		newCustomerPage.pressTabToDynamicTextbox(driver, "emailid");
+
+		log.info(
+				"Validate Email field with blank value - STEP 02: Verify 'Email-ID must not be blank' message is displayed");
+		verifyEquals(newCustomerPage.getErrorMessageOfDynamicField(driver, "E-mail"), "Email-ID must not be blank");
 	}
 
 	@Test
 	public void TC_26_EmailCannotBeInvalidFormat() {
 		log.info("Validate Email field with invalid email - STEP 01: Input an invalid email into Email field");
-		newCustomerPage.inputToEmailTextbox(invalidEmail);
-		
-		log.info("Validate Email field with invalid email - STEP 02: Verify 'Email-ID is not valid' message is displayed");
-		verifyTrue(newCustomerPage.isEmailInvalidFormatMessageDisplayed());
+		newCustomerPage.inputToDynamicTextbox(driver, "emailid", invalidEmail);
+
+		log.info(
+				"Validate Email field with invalid email - STEP 02: Verify 'Email-ID is not valid' message is displayed");
+		verifyEquals(newCustomerPage.getErrorMessageOfDynamicField(driver, "E-mail"), "Email-ID is not valid");
 	}
 
 	@Test
 	public void TC_27_EmailCannotBeginWithSpace() {
 		log.info("Validate Email field with space at the beginning - STEP 01: Inout first character as a space");
-		newCustomerPage.inputToEmailTextbox(emailBeginWithSpace);
-		
-		log.info("Validate Email field with space at the beginning - STEP 02: Verify 'First character can not have space' message is displayed");
-		verifyTrue(newCustomerPage.isEmailMustNotBeginWithSpaceMessageDisplayed());
+		newCustomerPage.inputToDynamicTextbox(driver, "emailid", emailBeginWithSpace);
+
+		log.info(
+				"Validate Email field with space at the beginning - STEP 02: Verify 'First character can not have space' message is displayed");
+		verifyEquals(newCustomerPage.getErrorMessageOfDynamicField(driver, "E-mail"),
+				"First character can not have space");
 	}
 
-	@AfterClass (alwaysRun=true)
+	@AfterClass(alwaysRun = true)
 	public void afterClass() {
 		closeBrowserAndDriver(driver);
 	}

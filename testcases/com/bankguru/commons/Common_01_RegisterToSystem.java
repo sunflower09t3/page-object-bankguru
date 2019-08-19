@@ -28,10 +28,10 @@ public class Common_01_RegisterToSystem extends AbstractTest {
 		
 		log.info("Register - STEP 03: Input to Email textbox");
 		email =  "randomemail" + randomNumber() + "@gmail.com";
-		registerPage.inputToEmailIDTextbox(email);
+		registerPage.inputToDynamicTextbox(driver, "emailid", email);
 		
 		log.info("Register - STEP 04: Click Submit button");
-		registerPage.clickSubmitButton();
+		registerPage.clickDynamicButton(driver, "btnLogin");
 		
 		log.info("Register - STEP 05: Get username and password info");
 		username = registerPage.getUserIDInfo();

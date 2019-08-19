@@ -11,6 +11,7 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -251,6 +252,12 @@ public class AbstractPage {
 		element = driver.findElement(By.xpath(locator));
 		return element.isSelected();
 	}
+	
+	public boolean isControlSelected(WebDriver driver, String locator, String... dynamicValues) {
+		locator = String.format(locator, (Object[]) dynamicValues);
+		element = driver.findElement(By.xpath(locator));
+		return element.isSelected();
+	}
 
 	public boolean isControlEnabled(WebDriver driver, String locator) {
 		element = driver.findElement(By.xpath(locator));
@@ -327,6 +334,13 @@ public class AbstractPage {
 	}
 
 	public void sendKeyBoardToElement(WebDriver driver, String locator, CharSequence keys) {
+		element = driver.findElement(By.xpath(locator));
+		action = new Actions(driver);
+		action.sendKeys(element, keys).perform();
+	}
+	
+	public void sendKeyBoardToElement(WebDriver driver, String locator, CharSequence keys, String ... dynamicValues) {
+		locator = String.format(locator, (Object[]) dynamicValues);
 		element = driver.findElement(By.xpath(locator));
 		action = new Actions(driver);
 		action.sendKeys(element, keys).perform();
@@ -516,5 +530,42 @@ public class AbstractPage {
 	public void openMultiplePage(WebDriver driver, String pageName) {
 		waitForElementVisible(driver, AbstractPageUI.DYNAMIC_MENU_LINK, pageName);
 		clickToElement(driver, AbstractPageUI.DYNAMIC_MENU_LINK, pageName);
+	}
+	
+	public void pressTabToDynamicTextbox(WebDriver driver, String nameAttributeValue) {
+		waitForElementVisible(driver, AbstractPageUI.DYNAMIC_TEXTBOX, nameAttributeValue);
+		sendKeyBoardToElement(driver, AbstractPageUI.DYNAMIC_TEXTBOX, Keys.TAB, nameAttributeValue);
+	}
+	
+	public void pressTabToDynamicTextarea(WebDriver driver, String nameAttributeValue) {
+		waitForElementVisible(driver, AbstractPageUI.DYNAMIC_TEXTAREA, nameAttributeValue);
+		sendKeyBoardToElement(driver, AbstractPageUI.DYNAMIC_TEXTAREA, Keys.TAB, nameAttributeValue);
+	}
+	
+	public void inputToDynamicTextbox(WebDriver driver, String nameAttributeValue, String text) {
+		waitForElementVisible(driver, AbstractPageUI.DYNAMIC_TEXTBOX, nameAttributeValue);
+		sendKeyToElement(driver, AbstractPageUI.DYNAMIC_TEXTBOX, text, nameAttributeValue);
+	}
+	
+	public void inputToDynamicTextarea(WebDriver driver, String nameAttributeValue, String text) {
+		waitForElementVisible(driver, AbstractPageUI.DYNAMIC_TEXTAREA, nameAttributeValue);
+		sendKeyToElement(driver, AbstractPageUI.DYNAMIC_TEXTAREA, text, nameAttributeValue);
+	}
+	
+	public void clickDynamicButton(WebDriver driver, String nameAttributeValue) {
+		waitForElementVisible(driver, AbstractPageUI.DYNAMIC_BUTTON, nameAttributeValue);
+		clickToElement(driver, AbstractPageUI.DYNAMIC_BUTTON, nameAttributeValue);
+	}
+	
+	public String getErrorMessageOfDynamicField(WebDriver driver, String labelOfField) {
+		waitForElementVisible(driver, AbstractPageUI.DYNAMIC_ERROR_MESSAGE_OF_FIELD, labelOfField);
+		return getTextElement(driver, AbstractPageUI.DYNAMIC_ERROR_MESSAGE_OF_FIELD, labelOfField);
+	}
+	
+	public void selectDynamicRadioButton(WebDriver driver, String valueToSelect) {
+		waitForElementVisible(driver, AbstractPageUI.DYNAMIC_RADIO_BUTTON, valueToSelect);
+		if(!isControlSelected(driver, AbstractPageUI.DYNAMIC_RADIO_BUTTON, valueToSelect)) {
+			clickToElement(driver, AbstractPageUI.DYNAMIC_RADIO_BUTTON, valueToSelect);
+		}
 	}
 }

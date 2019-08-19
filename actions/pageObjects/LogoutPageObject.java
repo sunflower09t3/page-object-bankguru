@@ -1,7 +1,6 @@
 package pageObjects;
 
 import org.openqa.selenium.WebDriver;
-
 import commons.AbstractPage;
 
 public class LogoutPageObject extends AbstractPage{

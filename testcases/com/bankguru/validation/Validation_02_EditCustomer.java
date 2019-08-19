@@ -63,8 +63,8 @@ public class Validation_02_EditCustomer extends AbstractTest {
 		newCustomerPassword = "firstcustomerpassword";
 
 		// Login
-		loginPage.inputToUserIDTextbox(Common_01_RegisterToSystem.username);
-		loginPage.inputToPasswordTextbox(Common_01_RegisterToSystem.password);
+		loginPage.inputToDynamicTextbox(driver, "uid", Common_01_RegisterToSystem.username);
+		loginPage.inputToDynamicTextbox(driver, "password", Common_01_RegisterToSystem.password);
 		homePage = loginPage.clickLoginButton();
 
 		// Navigate to New customer page
@@ -75,28 +75,28 @@ public class Validation_02_EditCustomer extends AbstractTest {
 	@Test
 	public void TC_01_CustomerIDCannotBeBlank() {
 		log.info("Validate Customer ID field with blank value - STEP 01: Do not input a value in Customer ID field and press Tab key");
-		editCustomerPage.inputNothingToCustomerIDTextboxAndPressTabKey();
+		editCustomerPage.pressTabToDynamicTextbox(driver, "cusid");
 
 		log.info("Validate Customer ID field with blank value - STEP 02: Verify 'Customer ID is required' message is displayed");
-		verifyTrue(editCustomerPage.isCustomerIDMustNotBlankMessageDisplayed());
+		verifyEquals(editCustomerPage.getErrorMessageOfDynamicField(driver, "Customer ID"), "Customer ID is required");
 	}
 
 	@Test
 	public void TC_02_CustomerIDCannotContainCharacter() {
 		log.info("Validate Customer ID field with character - STEP 01: Input character into Customer ID field");
-		editCustomerPage.inputToCustomerIDTextbox(customerIDWithCharacter);
+		editCustomerPage.inputToDynamicTextbox(driver, "cusid", customerIDWithCharacter);
 
 		log.info("Validate Customer ID field with character - STEP 02: Verify 'Characters are not allowed' message is displayed");
-		verifyTrue(editCustomerPage.isCustomerIDMustNotContainCharacterDisplayed());
+		verifyEquals(editCustomerPage.getErrorMessageOfDynamicField(driver, "Customer ID"), "Characters are not allowed");
 	}
 
 	@Test
 	public void TC_03_CustomerIDCannotContainSpecialCharacter() {
 		log.info("Validate Customer ID field with special character - STEP 01: Input special character into Customer ID field");
-		editCustomerPage.inputToCustomerIDTextbox(customerIDWithSpecialCharacter);
+		editCustomerPage.inputToDynamicTextbox(driver, "cusid", customerIDWithSpecialCharacter);
 		
 		log.info("Validate Customer ID field with special character - STEP 02: Verify 'Special characters are not allowed' message is displayed");
-		verifyTrue(editCustomerPage.isCustomerIDMustNotContainSpecialCharacterMessgaeDisplayed());
+		verifyEquals(editCustomerPage.getErrorMessageOfDynamicField(driver, "Customer ID"), "Special characters are not allowed");
 	}
 
 	@Test
@@ -106,19 +106,19 @@ public class Validation_02_EditCustomer extends AbstractTest {
 		newCustomerPage = PageGeneratorManager.getNewCustomerPage(driver);
 
 		log.info("Valid customer ID - STEP 02: Fill in New Customer form");
-		newCustomerPage.inputToCustomerNameTextbox(newCustomerName);
-		newCustomerPage.selectFemaleGenderRadioButton();
-		newCustomerPage.inputToDateOfBirthTextbox(newCustomerDateOfBirth);
-		newCustomerPage.inputToAddressTextarea(newCustomerAddress);
-		newCustomerPage.inputToCityTextbox(newCustomerCity);
-		newCustomerPage.inputToStateTextbox(newCustomerState);
-		newCustomerPage.inputToPinTextbox(newCustomerPIN);
-		newCustomerPage.inputToTelephoneTextbox(newCustomerTelephone);
-		newCustomerPage.inputToEmailTextbox(newCustomerEmail);
-		newCustomerPage.inputToPasswordTextbox(newCustomerPassword);
+		newCustomerPage.inputToDynamicTextbox(driver, "name", newCustomerName);
+		newCustomerPage.selectDynamicRadioButton(driver, "f");
+		newCustomerPage.inputToDynamicTextbox(driver, "dob", newCustomerDateOfBirth);
+		newCustomerPage.inputToDynamicTextarea(driver, "addr", newCustomerAddress);
+		newCustomerPage.inputToDynamicTextbox(driver, "city", newCustomerCity);
+		newCustomerPage.inputToDynamicTextbox(driver, "state", newCustomerState);
+		newCustomerPage.inputToDynamicTextbox(driver, "pinno", newCustomerPIN);
+		newCustomerPage.inputToDynamicTextbox(driver, "telephoneno", newCustomerTelephone);
+		newCustomerPage.inputToDynamicTextbox(driver, "emailid", newCustomerEmail);
+		newCustomerPage.inputToDynamicTextbox(driver, "password", newCustomerPassword);
 		
 		log.info("Valid customer ID - STEP 03: Click Submit button");
-		newCustomerPage.clickSubmitButton();
+		newCustomerPage.clickDynamicButton(driver, "sub");
 
 		log.info("Valid customer ID - STEP 04: Store ID of the newly created customer");
 		newCustomerID = newCustomerPage.getCustomerID();
@@ -128,157 +128,154 @@ public class Validation_02_EditCustomer extends AbstractTest {
 		editCustomerPage = PageGeneratorManager.getEditCustomerPage(driver);
 
 		log.info("Valid customer ID - STEP 06: Input ID of the newly created customer into Customer ID field");
-		editCustomerPage.inputToCustomerIDTextbox(newCustomerID);
+		editCustomerPage.inputToDynamicTextbox(driver, "cusid", newCustomerID);
 		
 		log.info("Valid customer ID - STEP 07: Click Submit button");
-		editCustomerPage.clickAccSubmitButton();
+		editCustomerPage.clickDynamicButton(driver, "AccSubmit");
 
 		log.info("Valid customer ID - STEP 08: Verify Edit Customer Entry page is displayed");
 		verifyTrue(editCustomerPage.isRedirectedToEditCustomerEntryPage());
 	}
 
 	@Test
-	public void TC_08_AddressCannotBeBlank() {
+	public void TC_05_AddressCannotBeBlank() {
 		log.info("Validate Address field with blank value - STEP 01: Do not input a value into Address field and press Tab key");
-		editCustomerPage.inputNothingToAddressTextareaAndPressTabKey();
+		editCustomerPage.inputToDynamicTextarea(driver, "addr", "");
+		editCustomerPage.pressTabToDynamicTextarea(driver, "addr");
 		
 		log.info("Validate Address field with blank value - STEP 02: Verify 'Address Field must not be blank' message is displayed");
-		verifyTrue(editCustomerPage.isAddressMustNotBlankMessageDisplayed());
+		verifyEquals(editCustomerPage.getErrorMessageOfDynamicField(driver, "Address"), "Address Field must not be blank");
 	}
 
 	@Test
-	public void TC_09_CityCannotBeBlank() {
+	public void TC_06_CityCannotBeBlank() {
 		log.info("Validate City field field with blank value - STEP 01: Do not input a value into City field and press Tab key");
-		editCustomerPage.inputNothingToCityTextboxAndPressTabKey();
+		editCustomerPage.inputToDynamicTextbox(driver, "city", "");
+		editCustomerPage.pressTabToDynamicTextbox(driver, "city");
 		
 		log.info("Validate City field field with blank value - STEP 02: Verify 'City Field must not be blank' message is displayed");
-		verifyTrue(editCustomerPage.isCityMustNotBlankMessageDisplayed());
+		verifyEquals(editCustomerPage.getErrorMessageOfDynamicField(driver, "City"), "City Field must not be blank");
 	}
 
 	@Test
-	public void TC_10_CityCannotContainNumber() {
+	public void TC_07_CityCannotContainNumber() {
 		log.info("Validate City field with numeric value - STEP 01: Input numeric value into City field");
-		editCustomerPage.inputToCityTextbox(cityWithNumber);
+		editCustomerPage.inputToDynamicTextbox(driver, "city", cityWithNumber);
 		
 		log.info("Validate City field with numeric value - STEP 02: Verify 'Numbers are not allowed' message is displayed");
-		verifyTrue(editCustomerPage.isCityMustNotContainNumberMessageDisplayed());
+		verifyEquals(editCustomerPage.getErrorMessageOfDynamicField(driver, "City"), "Numbers are not allowed");
 	}
 
 	@Test
-	public void TC_11_CityCannotContainSpecialCharacter() {
+	public void TC_08_CityCannotContainSpecialCharacter() {
 		log.info("Validate City field with special character - STEP 01: Input special character into City field");
-		editCustomerPage.inputToCityTextbox(cityWithSpecialCharacter);
+		editCustomerPage.inputToDynamicTextbox(driver, "city", cityWithSpecialCharacter);
 		
 		log.info("Validate City field with special character - STEP 02: Verify 'Special characters are not allowed' message is displayed");
-		verifyTrue(editCustomerPage.isCityMustNotContainSpecialCharacterMessageDisplayed());
+		verifyEquals(editCustomerPage.getErrorMessageOfDynamicField(driver, "City"), "Special characters are not allowed");
 	}
 
 	@Test
-	public void TC_12_StateCannotBeBlank() {
+	public void TC_09_StateCannotBeBlank() {
 		log.info("Validate State field with blank value - STEP 01: Do not input a value into State field and press Tab key");
-		editCustomerPage.inputNothingToStateTextboxAndPressTabKey();
+		editCustomerPage.inputToDynamicTextbox(driver, "state", "");
+		editCustomerPage.pressTabToDynamicTextbox(driver, "state");
 		
 		log.info("Validate State field with blank value - STEP 02: Verify 'State must not be blank' message is displayed");
-		verifyTrue(editCustomerPage.isStateMustNotBlankMessageDisplayed());
+		verifyEquals(editCustomerPage.getErrorMessageOfDynamicField(driver, "State"), "State must not be blank");
 	}
 
 	@Test
-	public void TC_13_StateCannotContainNumber() {
+	public void TC_10_StateCannotContainNumber() {
 		log.info("Validate State field with numeric value - STEP 01: Input numeric value into State field");
-		editCustomerPage.inputToStateTextbox(stateWithNumber);
+		editCustomerPage.inputToDynamicTextbox(driver, "state", stateWithNumber);
 		
 		log.info("Validate State field with numeric value - STEP 02: Verify 'Numbers are not allowed' message is displayed");
-		verifyTrue(editCustomerPage.isStateMustNotContainNumberMessageDisplayed());
+		verifyEquals(editCustomerPage.getErrorMessageOfDynamicField(driver, "State"), "Numbers are not allowed");
 	}
 
 	@Test
-	public void TC_14_StateCannotContainSpecialCharacter() {
+	public void TC_11_StateCannotContainSpecialCharacter() {
 		log.info("Validate State field with special character - STEP 01: Input special character into State field");
-		editCustomerPage.inputToStateTextbox(stateWithSpecialCharacter);
+		editCustomerPage.inputToDynamicTextbox(driver, "state", stateWithSpecialCharacter);
 		
 		log.info("Validate State field with special character - STEP 02: Verify 'Special characters are not allowed' message is displayed");
-		verifyTrue(editCustomerPage.isStateMustNotContainSpecialCharacterMessageDisplayed());
+		verifyEquals(editCustomerPage.getErrorMessageOfDynamicField(driver, "State"), "Special characters are not allowed");
 	}
 
 	@Test
-	public void TC_15_PinCannotContainCharacter() {
+	public void TC_12_PinCannotContainCharacter() {
 		log.info("Validate Pin field with character - STEP 01: Input character into Pin field");
-		editCustomerPage.inputToPinTextbox(pinWithCharacter);
+		editCustomerPage.inputToDynamicTextbox(driver, "pinno", pinWithCharacter);
 		
 		log.info("Validate Pin field with character - STEP 02: Verify 'Characters are not allowed' message is displayed");
-		verifyTrue(editCustomerPage.isPinMustNotContainCharacterMessageDisplayed());
+		verifyEquals(editCustomerPage.getErrorMessageOfDynamicField(driver, "PIN"), "Characters are not allowed");
 	}
 
 	@Test
-	public void TC_16_PinCannotBeBlank() {
+	public void TC_13_PinCannotBeBlank() {
 		log.info("Validate Pin field with blank value - STEP 01: Do not input a value into Pin field and press Tab key");
-		editCustomerPage.inputNothingToPinTextboxAndPressTabKey();
+		editCustomerPage.inputToDynamicTextbox(driver, "pinno", "");
+		editCustomerPage.pressTabToDynamicTextbox(driver, "pinno");
 		
 		log.info("Validate Pin field with blank value - STEP 02: Verify 'PIN Code must not be blank' message is displayed");
-		verifyTrue(editCustomerPage.isPinMustNotBlankMessageDisplayed());
+		verifyEquals(editCustomerPage.getErrorMessageOfDynamicField(driver, "PIN"), "PIN Code must not be blank");
 	}
 
 	@Test
-	public void TC_17_PinCannotMoreThan6Digits() {
-		log.info("Validate Pin field with more than 6 digits - STEP 01: Input more than 6 digits into Pin field");
-		editCustomerPage.inputToPinTextbox(pinWithMoreThan6Digits);
-		
-		log.info("Validate Pin field with more than 6 digits - STEP 02: Verify only able to input 6 digits");
-		verifyEquals(pinWithMoreThan6Digits.substring(0, 6), editCustomerPage.getEnteredTextFromPinTextbox());
-	}
-
-	@Test
-	public void TC_17_PinCannotLessThan6Digits() {
+	public void TC_14_PinCannotLessThan6Digits() {
 		log.info("Validate Pin field with less than 6 digits - STEP 01: Input less than 6 digits into Pin field");
-		editCustomerPage.inputToPinTextbox(pinWithLessThan6Digits);
+		editCustomerPage.inputToDynamicTextbox(driver, "pinno", pinWithLessThan6Digits);
 		
 		log.info("Validate Pin field with less than 6 digits - STEP 02: Verify 'PIN Code must have 6 Digits' message is displayed");
-		verifyTrue(editCustomerPage.isPinMustBe6DigitsMessageDisplayed());
+		verifyEquals(editCustomerPage.getErrorMessageOfDynamicField(driver, "PIN"), "PIN Code must have 6 Digits");
 	}
 
 	@Test
-	public void TC_18_PinCannotHaveSpecialCharacter() {
+	public void TC_15_PinCannotHaveSpecialCharacter() {
 		log.info("Validate Pin field with special character - STEP 01: Input special character into Pin field");
-		editCustomerPage.inputToPinTextbox(pinWithSpecialCharacter);
+		editCustomerPage.inputToDynamicTextbox(driver, "pinno", pinWithSpecialCharacter);
 		
 		log.info("Validate Pin field with special character - STEP 02: Verify 'Special characters are not allowed' message is displayed");
-		verifyTrue(editCustomerPage.isPinMustNotHaveSpecialCharacterMessageDisplayed());
+		verifyEquals(editCustomerPage.getErrorMessageOfDynamicField(driver, "PIN"), "Special characters are not allowed");
 	}
 
 	@Test
-	public void TC_19_TelephoneCannotBeBlank() {
+	public void TC_16_TelephoneCannotBeBlank() {
 		log.info("Validate Telephone field with blank value - STEP 01: Do not input a value into Telephone field and press Tab key");
-		editCustomerPage.inputNothingToTelephoneTextboxAndPressTabKey();
+		editCustomerPage.inputToDynamicTextbox(driver, "telephoneno", "");
+		editCustomerPage.pressTabToDynamicTextbox(driver, "telephoneno");
 		
 		log.info("Validate Telephone field with blank value - STEP 02: Verify 'Mobile no must not be blank' message is displayed");
-		verifyTrue(editCustomerPage.isTelephoneMustNotBlankMessageDisplayed());
+		verifyEquals(editCustomerPage.getErrorMessageOfDynamicField(driver, "Mobile Number"), "Mobile no must not be blank");
 	}
 
 	@Test
-	public void TC_20_TelephoneCannotContainSpecialCharacter() {
+	public void TC_17_TelephoneCannotContainSpecialCharacter() {
 		log.info("Validate Telephone field with special character - STEP 01: Input speical character into Telephone field");
-		editCustomerPage.inputToTelephoneTextbox(telephoneWithSpecialCharacter);
+		editCustomerPage.inputToDynamicTextbox(driver, "telephoneno", telephoneWithSpecialCharacter);
 		
 		log.info("Validate Telephone field with special character - STEP 02: Verify 'Special characters are not allowed' message is displayed");
-		verifyTrue(editCustomerPage.isTelephoneMustNotContainSpecialCharacterMessageDisplayed());
+		verifyEquals(editCustomerPage.getErrorMessageOfDynamicField(driver, "Mobile Number"), "Special characters are not allowed");
 	}
 
 	@Test
-	public void TC_21_EmailCannotBeBlank() {
+	public void TC_18_EmailCannotBeBlank() {
 		log.info("Validate Email field with blank value - STEP 01: Do not input a value into Email field and press Tab key");
-		editCustomerPage.inputNothingToEmailTextboxAndPressTabKey();
+		editCustomerPage.inputToDynamicTextbox(driver, "emailid", "");
+		editCustomerPage.pressTabToDynamicTextbox(driver, "emailid");
 		
 		log.info("Validate Email field with blank value - STEP 02: Verify 'Email-ID must not be blank' message is displayed");
-		verifyTrue(editCustomerPage.isEmailMustNotBlankMessageDisplayed());
+		verifyEquals(editCustomerPage.getErrorMessageOfDynamicField(driver, "E-mail"), "Email-ID must not be blank");
 	}
 
 	@Test
-	public void TC_22_EmaitCannotBeInvalidFormat() {
+	public void TC_19_EmaitCannotBeInvalidFormat() {
 		log.info("Validate Email field with invalid email - STEP 01: Input an invalid email into Email field");
-		editCustomerPage.inputToEmailTextbox(invalidEmail);
+		editCustomerPage.inputToDynamicTextbox(driver, "emailid", invalidEmail);
 		
 		log.info("Validate Email field with invalid email - STEP 02: Verify 'Email-ID is not valid' message is displayed");
-		verifyTrue(editCustomerPage.isEmailInvalidFormatMessageDisplayed());
+		verifyEquals(editCustomerPage.getErrorMessageOfDynamicField(driver, "E-mail"), "Email-ID is not valid");
 	}
 
 	@AfterClass (alwaysRun=true)

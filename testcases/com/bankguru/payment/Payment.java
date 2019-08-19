@@ -106,8 +106,8 @@ public class Payment extends AbstractTest{
 		loginPage = PageGeneratorManager.getLoginPage(driver);
 		
 		// Login
-		loginPage.inputToUserIDTextbox(Common_01_RegisterToSystem.username);
-		loginPage.inputToPasswordTextbox(Common_01_RegisterToSystem.password);
+		loginPage.inputToDynamicTextbox(driver, "uid", Common_01_RegisterToSystem.username);
+		loginPage.inputToDynamicTextbox(driver, "password", Common_01_RegisterToSystem.password);
 		homePage = loginPage.clickLoginButton();
 	}
 	
@@ -118,22 +118,22 @@ public class Payment extends AbstractTest{
 		newCustomerPage = PageGeneratorManager.getNewCustomerPage(driver);
 		
 		log.info("Create new customer - STEP 02: Fill in New Customer form");
-		newCustomerPage.inputToCustomerNameTextbox(newCustomerName);
-		newCustomerPage.selectFemaleGenderRadioButton();
-		newCustomerPage.inputToDateOfBirthTextbox(newCustomerDateOfBirth);
-		newCustomerPage.inputToAddressTextarea(newCustomerAddress);
-		newCustomerPage.inputToCityTextbox(newCustomerCity);
-		newCustomerPage.inputToStateTextbox(newCustomerState);
-		newCustomerPage.inputToPinTextbox(newCustomerPIN);
-		newCustomerPage.inputToTelephoneTextbox(newCustomerTelephone);
-		newCustomerPage.inputToEmailTextbox(newCustomerEmail);
-		newCustomerPage.inputToPasswordTextbox(newCustomerPassword);
+		newCustomerPage.inputToDynamicTextbox(driver, "name", newCustomerName);
+		newCustomerPage.selectDynamicRadioButton(driver, "f");
+		newCustomerPage.inputToDynamicTextbox(driver, "dob", newCustomerDateOfBirth);
+		newCustomerPage.inputToDynamicTextarea(driver, "addr", newCustomerAddress);
+		newCustomerPage.inputToDynamicTextbox(driver, "city", newCustomerCity);
+		newCustomerPage.inputToDynamicTextbox(driver, "state", newCustomerState);
+		newCustomerPage.inputToDynamicTextbox(driver, "pinno", newCustomerPIN);
+		newCustomerPage.inputToDynamicTextbox(driver, "telephoneno", newCustomerTelephone);
+		newCustomerPage.inputToDynamicTextbox(driver, "emailid", newCustomerEmail);
+		newCustomerPage.inputToDynamicTextbox(driver, "password", newCustomerPassword);
 		
 		log.info("Create new customer - STEP 03: Click Submit button");
-		newCustomerPage.clickSubmitButton();
+		newCustomerPage.clickDynamicButton(driver, "sub");
 		
 		log.info("Create new customer - STEP 04: Verify 'Customer Registered Successfully!!!' message is displayed");
-		verifyTrue(newCustomerPage.isCustomerRegisteredSuccessfulMessageDisplayed());
+		verifyEquals(newCustomerPage.getResultMessage(), "Customer Registered Successfully!!!");
 		
 		newCustomerID = newCustomerPage.getCustomerID();
 	}
@@ -145,24 +145,24 @@ public class Payment extends AbstractTest{
 		editCustomerPage = PageGeneratorManager.getEditCustomerPage(driver);
 		
 		log.info("Edit customer - STEP 02: Input the custoner ID");
-		editCustomerPage.inputToCustomerIDTextbox(newCustomerID);
+		editCustomerPage.inputToDynamicTextbox(driver, "cusid", newCustomerID);
 		
 		log.info("Edit customer - STEP 03: Click Submit button");
-		editCustomerPage.clickAccSubmitButton();
+		editCustomerPage.clickDynamicButton(driver, "AccSubmit");
 		
 		log.info("Edit customer - STEP 04: Fill in Edit Customer Form");
-		editCustomerPage.inputToAddressTextarea(editedCustomerAddress);
-		editCustomerPage.inputToCityTextbox(editedCustomerCity);
-		editCustomerPage.inputToStateTextbox(editedCustomerState);
-		editCustomerPage.inputToPinTextbox(editedCustomerPIN);
-		editCustomerPage.inputToTelephoneTextbox(editedCustomerTelephone);
-		editCustomerPage.inputToEmailTextbox(editedCustomerEmail);
+		editCustomerPage.inputToDynamicTextarea(driver, "addr", editedCustomerAddress);
+		editCustomerPage.inputToDynamicTextbox(driver, "city",editedCustomerCity);
+		editCustomerPage.inputToDynamicTextbox(driver, "state",editedCustomerState);
+		editCustomerPage.inputToDynamicTextbox(driver, "pinno",editedCustomerPIN);
+		editCustomerPage.inputToDynamicTextbox(driver, "telephoneno",editedCustomerTelephone);
+		editCustomerPage.inputToDynamicTextbox(driver, "emailid",editedCustomerEmail);
 		
 		log.info("Edit customer - STEP 04: Click Submit button");
-		editCustomerPage.clickSubmitButton();
+		editCustomerPage.clickDynamicButton(driver, "sub");
 		
 		log.info("Edit customer - STEP 05: Verify 'Customer details updated Successfully!!!' message is displayed");
-		verifyTrue(editCustomerPage.isCustomerUpdatedSuccessfulMessageDisplayed());
+		verifyEquals(editCustomerPage.getResultMessage(), "Customer details updated Successfully!!!");
 	}
 	
 	@Test 
@@ -172,15 +172,15 @@ public class Payment extends AbstractTest{
 		newAccountPage = PageGeneratorManager.getNewAccountPage(driver);
 		
 		log.info("Create new account - STEP 02: Fill in New Account Form");
-		newAccountPage.inputToCustomerIDTextbox(newCustomerID);
+		newAccountPage.inputToDynamicTextbox(driver, "cusid", newCustomerID);
 		newAccountPage.selectAccountType(newAccountAccType);
-		newAccountPage.inputToInitialDepositTextbox(String.valueOf(newAccountInitialDeposit));
+		newAccountPage.inputToDynamicTextbox(driver, "inideposit", String.valueOf(newAccountInitialDeposit));
 		
 		log.info("Create new account - STEP 03: Click Submit button");
-		newAccountPage.clickSubmitButton();
+		newAccountPage.clickDynamicButton(driver, "button2");
 		
 		log.info("Create new account - STEP 04: Verify 'Account Generated Successfully!!!' message is displayed");
-		verifyTrue(newAccountPage.isAccountGeneratedSuccessfulMessageDisplayed());
+		verifyEquals(newAccountPage.getResultMessage(), "Account Generated Successfully!!!");
 		
 		log.info("Create new account - STEP 05: Verify Current Amount is equal to Initial Deposit");
 		verifyEquals(newAccountPage.getCurrentAmount(), String.valueOf(newAccountInitialDeposit));
@@ -195,19 +195,19 @@ public class Payment extends AbstractTest{
 		editAccountPage = PageGeneratorManager.getEditAccountPage(driver);
 		
 		log.info("Edit account type - STEP 02: Input account ID");
-		editAccountPage.inputToAccountNoTextbox(newAccountID);
+		editAccountPage.inputToDynamicTextbox(driver, "accountno", newAccountID);
 		
 		log.info("Edit account type - STEP 03: Click Submit button");
-		editAccountPage.clickSubmitButton();
+		editAccountPage.clickDynamicButton(driver, "AccSubmit");
 		
 		log.info("Edit account type - STEP 04: Change Account Type");
 		editAccountPage.selectAccountType(editedAccountAccType);
 		
 		log.info("Edit account type - STEP 05: Click Submit button");
-		editAccountPage.clickSubmitButton();
+		editAccountPage.clickDynamicButton(driver, "AccSubmit");
 		
 		log.info("Edit account type - STEP 06: Verify 'Account details updated Successfully!!!' message is displayed");
-		verifyTrue(editAccountPage.isAccountDetailsUpdatedSuccessfulMessageDisplayed());
+		verifyEquals(editAccountPage.getResultMessage(), "Account details updated Successfully!!!");
 		
 		log.info("Edit account type - STEP 07: Verify Account Type is updated successfully");
 		verifyEquals(editAccountPage.getAccountType(), editedAccountAccType);
@@ -220,12 +220,12 @@ public class Payment extends AbstractTest{
 		depositPage = PageGeneratorManager.getDepositPage(driver);
 		
 		log.info("Deposit - STEP 02: Fill in Deposit page");
-		depositPage.inputToAccountNoTextbox(newAccountID);
-		depositPage.inputToAmountTextbox(String.valueOf(depositAmount));
-		depositPage.inputToDescriptionTextbox(depositDescription);
+		depositPage.inputToDynamicTextbox(driver, "accountno", newAccountID);
+		depositPage.inputToDynamicTextbox(driver, "ammount", String.valueOf(depositAmount));
+		depositPage.inputToDynamicTextbox(driver, "desc", depositDescription);
 		
 		log.info("Deposit - STEP 03: click Submit button");
-		depositPage.clickSubmitButton();
+		depositPage.clickDynamicButton(driver, "AccSubmit");
 		
 		log.info("Deposit - STEP 04: Verify 'Transaction details of Deposit for Account account_id' message is displayed");
 		verifyEquals(depositPage.getResultMessage(), "Transaction details of Deposit for Account " + newAccountID);
@@ -242,12 +242,12 @@ public class Payment extends AbstractTest{
 		withdrawalPage = PageGeneratorManager.getWithdrawlPage(driver);
 		
 		log.info("Withdraw - STEP 02: Fill in Withdraw form");
-		withdrawalPage.inputToAccountNoTextbox(newAccountID);
-		withdrawalPage.inputToAmountTextbox(String.valueOf(withdrawAmount));
-		withdrawalPage.inputToDescriptionTextbox(withdrawDescription);
+		withdrawalPage.inputToDynamicTextbox(driver, "accountno", newAccountID);
+		withdrawalPage.inputToDynamicTextbox(driver, "ammount", String.valueOf(withdrawAmount));
+		withdrawalPage.inputToDynamicTextbox(driver, "desc", withdrawDescription);
 		
 		log.info("Withdraw - STEP 03: Click Submit button");
-		withdrawalPage.clickSubmitButton();
+		withdrawalPage.clickDynamicButton(driver, "AccSubmit");
 		
 		log.info("Withdraw - STEP 04: Verify 'Transaction details of Withdrawal for Account account_id' message is displayed");
 		verifyEquals(withdrawalPage.getResultMessage(), "Transaction details of Withdrawal for Account " + newAccountID);
@@ -263,17 +263,17 @@ public class Payment extends AbstractTest{
 		withdrawalPage.openMultiplePage(driver, "New Customer");
 		newCustomerPage = PageGeneratorManager.getNewCustomerPage(driver);
 		
-		newCustomerPage.inputToCustomerNameTextbox(anotherCustomerName);
-		newCustomerPage.selectFemaleGenderRadioButton();
-		newCustomerPage.inputToDateOfBirthTextbox(anotherCustomerDateOfBirth);
-		newCustomerPage.inputToAddressTextarea(anotherCustomerAddress);
-		newCustomerPage.inputToCityTextbox(anotherCustomerCity);
-		newCustomerPage.inputToStateTextbox(anotherCustomerState);
-		newCustomerPage.inputToPinTextbox(anotherCustomerPIN);
-		newCustomerPage.inputToTelephoneTextbox(anotherCustomerTelephone);
-		newCustomerPage.inputToEmailTextbox(anotherCustomerEmail);
-		newCustomerPage.inputToPasswordTextbox(anotherCustomerPassword);
-		newCustomerPage.clickSubmitButton();
+		newCustomerPage.inputToDynamicTextbox(driver, "name", anotherCustomerName);
+		newCustomerPage.selectDynamicRadioButton(driver, "f");
+		newCustomerPage.inputToDynamicTextbox(driver, "dob", anotherCustomerDateOfBirth);
+		newCustomerPage.inputToDynamicTextarea(driver, "addr", anotherCustomerAddress);
+		newCustomerPage.inputToDynamicTextbox(driver, "city", anotherCustomerCity);
+		newCustomerPage.inputToDynamicTextbox(driver, "state", anotherCustomerState);
+		newCustomerPage.inputToDynamicTextbox(driver, "pinno", anotherCustomerPIN);
+		newCustomerPage.inputToDynamicTextbox(driver, "telephoneno", anotherCustomerTelephone);
+		newCustomerPage.inputToDynamicTextbox(driver, "emailid", anotherCustomerEmail);
+		newCustomerPage.inputToDynamicTextbox(driver, "password", anotherCustomerPassword);
+		newCustomerPage.clickDynamicButton(driver, "sub");
 		
 		anotherCustomerID = newCustomerPage.getCustomerID();
 		
@@ -281,10 +281,10 @@ public class Payment extends AbstractTest{
 		newCustomerPage.openMultiplePage(driver, "New Account");
 		newAccountPage = PageGeneratorManager.getNewAccountPage(driver);
 		
-		newAccountPage.inputToCustomerIDTextbox(anotherCustomerID);
+		newAccountPage.inputToDynamicTextbox(driver, "cusid", anotherCustomerID);
 		newAccountPage.selectAccountType(anotherAccountAccType);
-		newAccountPage.inputToInitialDepositTextbox(String.valueOf(anotherAccountInitialDeposit));
-		newAccountPage.clickSubmitButton();
+		newAccountPage.inputToDynamicTextbox(driver, "inideposit", String.valueOf(anotherAccountInitialDeposit));
+		newAccountPage.clickDynamicButton(driver, "button2");
 		
 		anotherAccountID = newAccountPage.getAccountID();
 		
@@ -293,16 +293,16 @@ public class Payment extends AbstractTest{
 		fundTransferPage = PageGeneratorManager.getFundTransferPage(driver);
 		
 		log.info("Fundtransfer - STEP 04: Fill in Fund Transfer page");
-		fundTransferPage.inputToPayerAccountNoTextbox(newAccountID);
-		fundTransferPage.inputToPayeeAccountNoTextbox(anotherAccountID);
-		fundTransferPage.inputToAmountTextbox(String.valueOf(fundTransferAmount));
-		fundTransferPage.inputToDescriptionTextbox(fundTransferDescription);
+		fundTransferPage.inputToDynamicTextbox(driver, "payersaccount", newAccountID);
+		fundTransferPage.inputToDynamicTextbox(driver, "payeeaccount", anotherAccountID);
+		fundTransferPage.inputToDynamicTextbox(driver, "ammount", String.valueOf(fundTransferAmount));
+		fundTransferPage.inputToDynamicTextbox(driver, "desc", fundTransferDescription);
 		
 		log.info("Fundtransfer - STEP 05: Click Submit button");
-		fundTransferPage.clickSubmitButton();
+		fundTransferPage.clickDynamicButton(driver, "AccSubmit");
 		
 		log.info("Fundtransfer - STEP 06: Verify 'Fund Transfer Details' message is displayed");
-		verifyTrue(fundTransferPage.isFundTransferSuccessfulMessageDisplayed());
+		verifyEquals(fundTransferPage.getResultMessage(), "Fund Transfer Details");
 		
 		log.info("Fundtransfer - STEP 07: Verify Transfer Amount is correct");
 		verifyEquals(fundTransferPage.getTransferAmount(), String.valueOf(fundTransferAmount));
@@ -315,10 +315,10 @@ public class Payment extends AbstractTest{
 		balanceEnquiryPage = PageGeneratorManager.getBalanceEnquiryPage(driver);
 		
 		log.info("Balance Enquiry - STEP 02: Input account ID");
-		balanceEnquiryPage.inputToAccountNoTextbox(newAccountID);
+		balanceEnquiryPage.inputToDynamicTextbox(driver, "accountno", newAccountID);
 		
 		log.info("Balance Enquiry - STEP 03: Click Submit button");
-		balanceEnquiryPage.clickSubmitButton();
+		balanceEnquiryPage.clickDynamicButton(driver, "AccSubmit");
 		
 		log.info("Balance Enquiry - STEP 04: Verify 'Balance Details for Account account_id' message is displayed");
 		verifyEquals(balanceEnquiryPage.getResultMessage(), "Balance Details for Account " + newAccountID);
@@ -335,10 +335,10 @@ public class Payment extends AbstractTest{
 		deleteAccountPage = PageGeneratorManager.getDeleteAccountpage(driver);
 		
 		log.info("Delete account - STEP 02: Input account ID");
-		deleteAccountPage.inputToAccountNoTextbox(newAccountID);
+		deleteAccountPage.inputToDynamicTextbox(driver, "accountno",newAccountID);
 		
 		log.info("Delete account - STEP 03: click Submit button");
-		deleteAccountPage.clickSubmitButton();
+		deleteAccountPage.clickDynamicButton(driver, "AccSubmit");
 		
 		log.info("Delete account - STEP 04: Accept confirmation alert");
 		deleteAccountPage.acceptDeleteAccountConfirmationAlert();
@@ -352,10 +352,10 @@ public class Payment extends AbstractTest{
 		editAccountPage = PageGeneratorManager.getEditAccountPage(driver);
 	
 		log.info("Delete account - STEP 07: Input account ID");
-		editAccountPage.inputToAccountNoTextbox(newAccountID);
+		editAccountPage.inputToDynamicTextbox(driver, "accountno", newAccountID);
 		
 		log.info("Delete account - STEP 08: Click Submit button");
-		editAccountPage.clickSubmitButton();
+		editAccountPage.clickDynamicButton(driver, "AccSubmit");
 		
 		log.info("Delete account - STEP 09: Verify 'Account does not exist' alert message is displayed");
 		verifyEquals(editAccountPage.getAlertMessage(), "Account does not exist");
@@ -371,10 +371,10 @@ public class Payment extends AbstractTest{
 		deleteCustomerPage = PageGeneratorManager.getDeleteCustomerPage(driver);
 		
 		log.info("Delete customer - STEP 02: Input customer ID");
-		deleteCustomerPage.inputToCustomerIDTextbox(newCustomerID);
+		deleteCustomerPage.inputToDynamicTextbox(driver, "cusid", newCustomerID);
 		
 		log.info("Delete customer - STEP 03: Click Submit button");
-		deleteCustomerPage.clickSubmitButton();
+		deleteCustomerPage.clickDynamicButton(driver, "AccSubmit");
 		
 		log.info("Delete customer - STEP 04: Accept the confirmation alert");
 		deleteCustomerPage.acceptDeleteCustomerConfirmationAlert();
@@ -390,10 +390,10 @@ public class Payment extends AbstractTest{
 		editCustomerPage = PageGeneratorManager.getEditCustomerPage(driver);
 		
 		log.info("Delete customer - STEP 08: Input customer ID");
-		editCustomerPage.inputToCustomerIDTextbox(newCustomerID);
+		editCustomerPage.inputToDynamicTextbox(driver, "cusid", newCustomerID);
 		
 		log.info("Delete customer - STEP 09: Click Submit button");
-		editCustomerPage.clickAccSubmitButton();
+		editCustomerPage.clickDynamicButton(driver, "AccSubmit");
 		
 		log.info("Delete customer - STEP 10: Verify 'Customer does not exist!!' alert message is displayed");
 		verifyEquals(editCustomerPage.getAlertMessage(), "Customer does not exist!!");

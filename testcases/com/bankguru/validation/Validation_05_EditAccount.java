@@ -59,8 +59,8 @@ public class Validation_05_EditAccount extends AbstractTest {
 
 		loginPage = PageGeneratorManager.getLoginPage(driver);
 
-		loginPage.inputToUserIDTextbox(Common_01_RegisterToSystem.username);
-		loginPage.inputToPasswordTextbox(Common_01_RegisterToSystem.password);
+		loginPage.inputToDynamicTextbox(driver, "uid", Common_01_RegisterToSystem.username);
+		loginPage.inputToDynamicTextbox(driver, "password", Common_01_RegisterToSystem.password);
 		homePage = loginPage.clickLoginButton();
 
 		homePage.openMultiplePage(driver, "Edit Account");
@@ -71,46 +71,46 @@ public class Validation_05_EditAccount extends AbstractTest {
 	@Test
 	public void TC_01_AccountNoMustNotBeBlank() {
 		log.info("Validate Account No field with blank value - STEP 01: Do not input a value in Account No field and press Tab key");
-		editAccountPage.inputNothingToAccountNoTextboxAndPressTabKey();
+		editAccountPage.pressTabToDynamicTextbox(driver, "accountno");
 		
 		log.info("Validate Account No field with blank value - STEP 02: Verify 'Account Number must not be blank' message is displayed");
-		verifyTrue(editAccountPage.isAccountNoMustNotBlankMessageDisplayed());
+		verifyEquals(editAccountPage.getErrorMessageOfDynamicField(driver, "Account No"), "Account Number must not be blank");
 	}
 
 	@Test
 	public void TC_02_AccountNoMustNotContainCharacter() {
 		log.info("Validate Account No field with character - STEP 01: Input character into Account No field");
-		editAccountPage.inputToAccountNoTextbox(accountNoContainingCharacter);
+		editAccountPage.inputToDynamicTextbox(driver, "accountno", accountNoContainingCharacter);
 		
 		log.info("Validate Account No field with blank value - STEP 02: Verify 'Characters are not allowed' message is displayed");
-		verifyTrue(editAccountPage.isAccountNoMustNotContainCharacterMessageDisplayed());
+		verifyEquals(editAccountPage.getErrorMessageOfDynamicField(driver, "Account No"), "Characters are not allowed");
 	}
 
 	@Test
 	public void TC_03_AccountNoMustNotContainSpecialCharacter() {
 		log.info("Validate Account No field with special character - STEP 01: Input special character into Account No field");
-		editAccountPage.inputToAccountNoTextbox(accountNoContainingSpecialCharacter);
+		editAccountPage.inputToDynamicTextbox(driver, "accountno", accountNoContainingSpecialCharacter);
 		
 		log.info("Validate Account No field with special character - STEP 02: Verify 'Special characters are not allowed' message is displayed");
-		verifyTrue(editAccountPage.isAccountNoMustNotContainSpecialCharacterMessageDisplayed());
+		verifyEquals(editAccountPage.getErrorMessageOfDynamicField(driver, "Account No"), "Special characters are not allowed");
 	}
 
 	@Test
 	public void TC_04_AccountNoMustNotContainSpace() {
 		log.info("Validate Account No field with space - STEP 01: Input a number which contains a space into Account No field");
-		editAccountPage.inputToAccountNoTextbox(accountNoContainingSpace);
+		editAccountPage.inputToDynamicTextbox(driver, "accountno", accountNoContainingSpace);
 		
 		log.info("Validate Account No field with space - STEP 02: Verify 'Characters are not allowed' message is displayed");
-		verifyTrue(editAccountPage.isAccountNoMustNotContainCharacterMessageDisplayed());
+		verifyEquals(editAccountPage.getErrorMessageOfDynamicField(driver, "Account No"), "Characters are not allowed");
 	}
 
 	@Test
 	public void TC_05_AccountNoMustNotBeginWithSpace() {
 		log.info("Validate Account No field with space at the beginning - STEP 01: Input first character as a space");
-		editAccountPage.inputToAccountNoTextbox(accountNoBeginWithSpace);
+		editAccountPage.inputToDynamicTextbox(driver, "accountno", accountNoBeginWithSpace);
 		
-		log.info("Validate Account No field with space at the beginning - STEP 02: Verify 'First character can not have space' message is displayed");
-		verifyTrue(editAccountPage.isAccountNoMustNotContainCharacterMessageDisplayed());
+		log.info("Validate Account No field with space at the beginning - STEP 02: Verify 'Characters are not allowed' message is displayed");
+		verifyEquals(editAccountPage.getErrorMessageOfDynamicField(driver, "Account No"), "Characters are not allowed");
 	}
 
 	@Test
@@ -120,19 +120,19 @@ public class Validation_05_EditAccount extends AbstractTest {
 		newCustomerPage = PageGeneratorManager.getNewCustomerPage(driver);
 		
 		log.info("Valid Account No - STEP 02: Fill in New Customer form");
-		newCustomerPage.inputToCustomerNameTextbox(newCustomerName);
-		newCustomerPage.selectFemaleGenderRadioButton();
-		newCustomerPage.inputToDateOfBirthTextbox(newCustomerDateOfBirth);
-		newCustomerPage.inputToAddressTextarea(newCustomerAddress);
-		newCustomerPage.inputToCityTextbox(newCustomerCity);
-		newCustomerPage.inputToStateTextbox(newCustomerState);
-		newCustomerPage.inputToPinTextbox(newCustomerPIN);
-		newCustomerPage.inputToTelephoneTextbox(newCustomerTelephone);
-		newCustomerPage.inputToEmailTextbox(newCustomerEmail);
-		newCustomerPage.inputToPasswordTextbox(newCustomerPassword);
+		newCustomerPage.inputToDynamicTextbox(driver, "name", newCustomerName);
+		newCustomerPage.selectDynamicRadioButton(driver, "f");
+		newCustomerPage.inputToDynamicTextbox(driver, "dob", newCustomerDateOfBirth);
+		newCustomerPage.inputToDynamicTextarea(driver, "addr", newCustomerAddress);
+		newCustomerPage.inputToDynamicTextbox(driver, "city", newCustomerCity);
+		newCustomerPage.inputToDynamicTextbox(driver, "state", newCustomerState);
+		newCustomerPage.inputToDynamicTextbox(driver, "pinno", newCustomerPIN);
+		newCustomerPage.inputToDynamicTextbox(driver, "telephoneno", newCustomerTelephone);
+		newCustomerPage.inputToDynamicTextbox(driver, "emailid", newCustomerEmail);
+		newCustomerPage.inputToDynamicTextbox(driver, "password", newCustomerPassword);
 		
-		log.info("Valid Account No - STEP 03: Click Submut button");
-		newCustomerPage.clickSubmitButton();
+		log.info("Valid Account No - STEP 03: Click Submit button");
+		newCustomerPage.clickDynamicButton(driver, "sub");
 		
 		log.info("Valid Account No - STEP 04: Store ID of the newly created customer");
 		newCustomerID = newCustomerPage.getCustomerID();
@@ -141,13 +141,13 @@ public class Validation_05_EditAccount extends AbstractTest {
 		newCustomerPage.openMultiplePage(driver, "New Account");
 		newAccountPage = PageGeneratorManager.getNewAccountPage(driver);
 		
-		log.info("Valid Account No - STEP 06: Fill in New Customer page");
-		newAccountPage.inputToCustomerIDTextbox(newCustomerID);
+		log.info("Valid Account No - STEP 06: Fill in New Account page");
+		newAccountPage.inputToDynamicTextbox(driver, "cusid", newCustomerID);
 		newAccountPage.selectAccountType(newAccountAccType);
-		newAccountPage.inputToInitialDepositTextbox(String.valueOf(newAccountInitialDeposit));
+		newAccountPage.inputToDynamicTextbox(driver, "inideposit", String.valueOf(newAccountInitialDeposit));
 		
 		log.info("Valid Account No - STEP 07: Click Submit button");
-		newAccountPage.clickSubmitButton();
+		newAccountPage.clickDynamicButton(driver, "button2");
 		
 		log.info("Valid Account No - STEP 08: Store ID of newly created account");
 		newAccountID = newAccountPage.getAccountID();
@@ -157,10 +157,10 @@ public class Validation_05_EditAccount extends AbstractTest {
 		editAccountPage = PageGeneratorManager.getEditAccountPage(driver);
 		
 		log.info("Valid Account No - STEP 10: Input account ID");
-		editAccountPage.inputToAccountNoTextbox(newAccountID);
+		editAccountPage.inputToDynamicTextbox(driver, "accountno", newAccountID);
 		
 		log.info("Valid Account No - STEP 11: Click Submit button");
-		editAccountPage.clickSubmitButton();
+		editAccountPage.clickDynamicButton(driver, "AccSubmit");
 
 		log.info("Valid Account No - STEP 12: Verify Edit Account Entry form is displayed");
 		verifyTrue(editAccountPage.isEditAccountEntryFormDisplayed());
