@@ -10,9 +10,4 @@ public class NewAccountPageUI {
 	
 	// Dropdown list
 	public static final String ACCOUNT_TYPE_DROPDOWN = "//select[@name='selaccount']";
-	
-	// Text
-	public static final String ADD_ACCOUNT_RESULT = "//p[@class='heading3']";
-	public static final String ACCOUNT_ID_TEXT_IN_TABLE = "//td[text()='Account ID']/following-sibling::td";
-	public static final String CURRENT_AMOUNT_TEXT_IN_TABLE = "//td[text()='Current Amount']/following-sibling::td";
 }

@@ -18,14 +18,15 @@ public class Validation_07_MiniStatement extends AbstractTest {
 	WebDriver driver;
 	String accountNoContainingCharacter, accountNoContainingSpecialCharacter;
 	String accountNoContainingSpace, accountNoBeginWithSpace;
+	String miniStatementPageURL;
 
 	LoginPageObject loginPage;
 	HomePageObject homePage;
 	MiniStatementPageObject miniStatementPage;
-	
+
 	@Parameters("browser")
 	@BeforeClass
-	public void beforeClass(String browserName) {
+	public void setup(String browserName) {
 		driver = openMultipleBrowser(browserName);
 
 		// Data
@@ -40,59 +41,77 @@ public class Validation_07_MiniStatement extends AbstractTest {
 		loginPage.inputToDynamicTextbox(driver, "password", Common_01_RegisterToSystem.password);
 		homePage = loginPage.clickLoginButton();
 
-		homePage.openMultiplePage(driver, "Mini Statement");
-		miniStatementPage = PageGeneratorManager.getMiniStatementPage(driver);
-
 	}
 
 	@Test
 	public void TC_01_AccountNoMustNotBeBlank() {
-		log.info("Validate Account No field with blank value - STEP 01: Do not input a value in Account No field and press Tab key");
+		log.info("TC_01_AccountNoMustNotBeBlank - STEP 01: OPen Mini Statement form");
+		homePage.openMultiplePage(driver, "Mini Statement");
+		miniStatementPage = PageGeneratorManager.getMiniStatementPage(driver);
+		verifyTrue(miniStatementPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Mini Statement Form"));
+		miniStatementPageURL = miniStatementPage.getMiniStatementPageURL();
+
+		log.info("TC_01_AccountNoMustNotBeBlank - STEP 02: Do not input a value in Account No field and press Tab key");
 		miniStatementPage.pressTabToDynamicTextbox(driver, "accountno");
-		
-		log.info("Validate Account No field with blank value - STEP 02: Verify 'Account Number must not be blank' message is displayed");
+
+		log.info("TC_01_AccountNoMustNotBeBlank - STEP 03: Verify 'Account Number must not be blank' message is displayed");
 		verifyEquals(miniStatementPage.getErrorMessageOfDynamicField(driver, "Account No"), "Account Number must not be blank");
 	}
 
 	@Test
 	public void TC_02_AccountNoMustNotContainCharacter() {
-		log.info("Validate Account No field with character - STEP 01: Input character into Account No field");
+		log.info("TC_02_AccountNoMustNotContainCharacter - STEP 01: OPen Mini Statement form");
+		miniStatementPage.openURL(driver, miniStatementPageURL);
+		verifyTrue(miniStatementPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Mini Statement Form"));
+
+		log.info("TC_02_AccountNoMustNotContainCharacter - STEP 02: Input character into Account No field");
 		miniStatementPage.inputToDynamicTextbox(driver, "accountno", accountNoContainingCharacter);
-		
-		log.info("Validate Account No field with blank value - STEP 02: Verify 'Characters are not allowed' message is displayed");
+
+		log.info("TC_02_AccountNoMustNotContainCharacter - STEP 03: Verify 'Characters are not allowed' message is displayed");
 		verifyEquals(miniStatementPage.getErrorMessageOfDynamicField(driver, "Account No"), "Characters are not allowed");
 	}
 
 	@Test
 	public void TC_03_AccountNoMustNotContainSpecialCharacter() {
-		log.info("Validate Account No field with special character - STEP 01: Input special character into Account No field");
+		log.info("TC_03_AccountNoMustNotContainSpecialCharacter - STEP 01: OPen Mini Statement form");
+		miniStatementPage.openURL(driver, miniStatementPageURL);
+		verifyTrue(miniStatementPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Mini Statement Form"));
+
+		log.info("TC_03_AccountNoMustNotContainSpecialCharacter - STEP 02: Input special character into Account No field");
 		miniStatementPage.inputToDynamicTextbox(driver, "accountno", accountNoContainingSpecialCharacter);
-		
-		log.info("Validate Account No field with special character - STEP 02: Verify 'Special characters are not allowed' message is displayed");
+
+		log.info("TC_03_AccountNoMustNotContainSpecialCharacter - STEP 03: Verify 'Special characters are not allowed' message is displayed");
 		verifyEquals(miniStatementPage.getErrorMessageOfDynamicField(driver, "Account No"), "Special characters are not allowed");
 	}
 
 	@Test
 	public void TC_04_AccountNoMustNotContainSpace() {
-		log.info("Validate Account No field with space - STEP 01: Input a number which contains a space into Account No field");
+		log.info("TC_04_AccountNoMustNotContainSpace - STEP 01: OPen Mini Statement form");
+		miniStatementPage.openURL(driver, miniStatementPageURL);
+		verifyTrue(miniStatementPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Mini Statement Form"));
+
+		log.info("TC_04_AccountNoMustNotContainSpace - STEP 02: Input a number which contains a space into Account No field");
 		miniStatementPage.inputToDynamicTextbox(driver, "accountno", accountNoContainingSpace);
-		
-		log.info("Validate Account No field with space - STEP 02: Verify 'Characters are not allowed' message is displayed");
+
+		log.info("TC_04_AccountNoMustNotContainSpace - STEP 03: Verify 'Characters are not allowed' message is displayed");
 		verifyEquals(miniStatementPage.getErrorMessageOfDynamicField(driver, "Account No"), "Characters are not allowed");
 	}
 
 	@Test
 	public void TC_05_AccountNoMustNotBeginWithSpace() {
-		log.info("Validate Account No field with space at the beginning - STEP 01: Input first character as a space");
+		log.info("TC_05_AccountNoMustNotBeginWithSpace - STEP 01: OPen Mini Statement form");
+		miniStatementPage.openURL(driver, miniStatementPageURL);
+		verifyTrue(miniStatementPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Mini Statement Form"));
+
+		log.info("TC_05_AccountNoMustNotBeginWithSpace - STEP 02: Input first character as a space");
 		miniStatementPage.inputToDynamicTextbox(driver, "accountno", accountNoBeginWithSpace);
-		
-		log.info("Validate Account No field with space at the beginning - STEP 02: Verify 'Characters are not allowed' message is displayed");
+
+		log.info("TC_05_AccountNoMustNotBeginWithSpace - STEP 03: Verify 'Characters are not allowed' message is displayed");
 		verifyEquals(miniStatementPage.getErrorMessageOfDynamicField(driver, "Account No"), "Characters are not allowed");
 	}
 
-
-	@AfterClass (alwaysRun=true)
-	public void afterClass() {
+	@AfterClass(alwaysRun = true)
+	public void tearDown() {
 		closeBrowserAndDriver(driver);
 	}
 

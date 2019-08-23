@@ -10,4 +10,8 @@ public class CustomisedStatementPageObject extends AbstractPage {
 		this.driver = driver;
 	}
 
+	public String getCustomisedStatementPageURL() {
+		return getCurrentPageURL(driver);
+	}
+
 }

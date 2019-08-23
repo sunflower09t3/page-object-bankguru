@@ -1,7 +1,7 @@
 package pageObjects;
 
 import org.openqa.selenium.WebDriver;
-import bankguru.FundTransferPageUI;
+
 import commons.AbstractPage;
 
 public class FundTransferPageObject extends AbstractPage {
@@ -11,14 +11,8 @@ public class FundTransferPageObject extends AbstractPage {
 		this.driver = driver;
 	}
 
-	public String getTransferAmount() {
-		waitForElementVisible(driver, FundTransferPageUI.AMOUNT_TEXT_IN_TABLE);
-		return getTextElement(driver, FundTransferPageUI.AMOUNT_TEXT_IN_TABLE);
-	}
-	
-	public String getResultMessage() {
-		waitForElementVisible(driver, FundTransferPageUI.FUND_TRANSFER_RESULT);
-		return getTextElement(driver, FundTransferPageUI.FUND_TRANSFER_RESULT);
+	public String getFundTransferPageURL() {
+		return getCurrentPageURL(driver);
 	}
 
 }

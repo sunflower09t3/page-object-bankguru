@@ -9,8 +9,4 @@ public class FundTransferPageUI {
 	
 	// Button
 	public static final String SUBMIT_BUTTON = "//input[@name='AccSubmit']";
-	
-	// Text
-	public static final String FUND_TRANSFER_RESULT = "//p[@class='heading3']";
-	public static final String AMOUNT_TEXT_IN_TABLE = "//td[text()='Amount']/following-sibling::td";
 }

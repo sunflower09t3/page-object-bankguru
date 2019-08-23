@@ -69,7 +69,7 @@ public class AbstractPage {
 	}
 
 	public String getTextAlert(WebDriver driver) {
-		return driver.switchTo().alert().getText();
+		return driver.switchTo().alert().getText().trim();
 	}
 
 	public void sendKeyToAlert(WebDriver driver, String value) {
@@ -94,8 +94,8 @@ public class AbstractPage {
 		element.sendKeys(text);
 	}
 
-	public void sendKeyToElement(WebDriver driver, String locator, String text, String... dynamicValues) {
-		locator = String.format(locator, (Object[]) dynamicValues);
+	public void sendKeyToElement(WebDriver driver, String locator, String text, String... dynamicValuesOfLocator) {
+		locator = String.format(locator, (Object[]) dynamicValuesOfLocator);
 		element = driver.findElement(By.xpath(locator));
 		element.clear();
 		element.sendKeys(text);
@@ -106,16 +106,30 @@ public class AbstractPage {
 		element.clear();
 	}
 
-	public void selectItemInHtmlDropdownByValue(WebDriver driver, String locator, String value) {
+	public void selectItemInHtmlDropdownByValue(WebDriver driver, String locator, String valueToSelect) {
 		element = driver.findElement(By.xpath(locator));
 		select = new Select(element);
-		select.selectByValue(value);
+		select.selectByValue(valueToSelect);
+	}
+	
+	public void selectItemInHtmlDropdownByValue(WebDriver driver, String locator, String valueToSelect, String... dynamicValuesOfLocator) {
+		locator = String.format(locator, (Object[]) dynamicValuesOfLocator);
+		element = driver.findElement(By.xpath(locator));
+		select = new Select(element);
+		select.selectByValue(valueToSelect);
 	}
 
-	public void selectItemInHtmlDropdownByVisibleTex(WebDriver driver, String locator, String visibleText) {
+	public void selectItemInHtmlDropdownByVisibleText(WebDriver driver, String locator, String textToSelect) {
 		element = driver.findElement(By.xpath(locator));
 		select = new Select(element);
-		select.selectByVisibleText(visibleText);
+		select.selectByVisibleText(textToSelect);
+	}
+	
+	public void selectItemInHtmlDropdownByVisibleText(WebDriver driver, String locator, String textToSelect, String... dynamicValuesOfLocator) {
+		locator = String.format(locator, (Object[]) dynamicValuesOfLocator);
+		element = driver.findElement(By.xpath(locator));
+		select = new Select(element);
+		select.selectByVisibleText(textToSelect);
 	}
 
 	public void selectItemInCustomDropdown(WebDriver driver, String parentLocator, String allOptionsLocator, String value) {
@@ -154,28 +168,37 @@ public class AbstractPage {
 		return select.getFirstSelectedOption();
 
 	}
+	
+	public WebElement getCurrentSelectedItemInHtmlDropdown(WebDriver driver, String locator, String... dynamicValuesOfLocator) {
+		locator = String.format(locator, (Object[]) dynamicValuesOfLocator);
+		element = driver.findElement(By.xpath(locator));
+		select = new Select(element);
+		return select.getFirstSelectedOption();
+
+	}
 
 	public String getAttributeValue(WebDriver driver, String locator, String attributeName) {
+		element = driver.findElement(By.xpath(locator));
+		return element.getAttribute(attributeName);
+	}
+	
+	public String getAttributeValue(WebDriver driver, String locator, String attributeName, String ... dynamicValue) {
+		locator = String.format(locator, (Object[]) dynamicValue); 
 		element = driver.findElement(By.xpath(locator));
 		return element.getAttribute(attributeName);
 	}
 
 	public String getTextElement(WebDriver driver, String locator) {
 		element = driver.findElement(By.xpath(locator));
-		return element.getText();
+		return element.getText().trim();
 	}
 
 	public String getTextElement(WebDriver driver, String locator, String... dynamicValue) {
 		locator = String.format(locator, (Object[]) dynamicValue);
 		element = driver.findElement(By.xpath(locator));
-		return element.getText();
+		return element.getText().trim();
 	}
-
-	public String getEnteredTextFromTextbox(WebDriver driver, String locator) {
-		element = driver.findElement(By.xpath(locator));
-		return element.getAttribute("value");
-	}
-
+	
 	public int countElementNumber(WebDriver driver, String locator) {
 		elements = driver.findElements(By.xpath(locator));
 		return elements.size();
@@ -253,8 +276,8 @@ public class AbstractPage {
 		return element.isSelected();
 	}
 	
-	public boolean isControlSelected(WebDriver driver, String locator, String... dynamicValues) {
-		locator = String.format(locator, (Object[]) dynamicValues);
+	public boolean isControlSelected(WebDriver driver, String locator, String... dynamicValuesOfLocator) {
+		locator = String.format(locator, (Object[]) dynamicValuesOfLocator);
 		element = driver.findElement(By.xpath(locator));
 		return element.isSelected();
 	}
@@ -339,8 +362,8 @@ public class AbstractPage {
 		action.sendKeys(element, keys).perform();
 	}
 	
-	public void sendKeyBoardToElement(WebDriver driver, String locator, CharSequence keys, String ... dynamicValues) {
-		locator = String.format(locator, (Object[]) dynamicValues);
+	public void sendKeyBoardToElement(WebDriver driver, String locator, CharSequence keys, String ... dynamicValuesOfLocator) {
+		locator = String.format(locator, (Object[]) dynamicValuesOfLocator);
 		element = driver.findElement(By.xpath(locator));
 		action = new Actions(driver);
 		action.sendKeys(element, keys).perform();
@@ -532,34 +555,34 @@ public class AbstractPage {
 		clickToElement(driver, AbstractPageUI.DYNAMIC_MENU_LINK, pageName);
 	}
 	
-	public void pressTabToDynamicTextbox(WebDriver driver, String nameAttributeValue) {
-		waitForElementVisible(driver, AbstractPageUI.DYNAMIC_TEXTBOX, nameAttributeValue);
-		sendKeyBoardToElement(driver, AbstractPageUI.DYNAMIC_TEXTBOX, Keys.TAB, nameAttributeValue);
+	public void pressTabToDynamicTextbox(WebDriver driver, String fieldName) {
+		waitForElementVisible(driver, AbstractPageUI.DYNAMIC_TEXTBOX, fieldName);
+		sendKeyBoardToElement(driver, AbstractPageUI.DYNAMIC_TEXTBOX, Keys.TAB, fieldName);
 	}
 	
-	public void pressTabToDynamicTextarea(WebDriver driver, String nameAttributeValue) {
-		waitForElementVisible(driver, AbstractPageUI.DYNAMIC_TEXTAREA, nameAttributeValue);
-		sendKeyBoardToElement(driver, AbstractPageUI.DYNAMIC_TEXTAREA, Keys.TAB, nameAttributeValue);
+	public void pressTabToDynamicTextarea(WebDriver driver, String fieldName) {
+		waitForElementVisible(driver, AbstractPageUI.DYNAMIC_TEXTAREA, fieldName);
+		sendKeyBoardToElement(driver, AbstractPageUI.DYNAMIC_TEXTAREA, Keys.TAB, fieldName);
 	}
 	
-	public void inputToDynamicTextbox(WebDriver driver, String nameAttributeValue, String text) {
-		waitForElementVisible(driver, AbstractPageUI.DYNAMIC_TEXTBOX, nameAttributeValue);
-		sendKeyToElement(driver, AbstractPageUI.DYNAMIC_TEXTBOX, text, nameAttributeValue);
+	public void inputToDynamicTextbox(WebDriver driver, String fieldName, String text) {
+		waitForElementVisible(driver, AbstractPageUI.DYNAMIC_TEXTBOX, fieldName);
+		sendKeyToElement(driver, AbstractPageUI.DYNAMIC_TEXTBOX, text, fieldName);
 	}
 	
-	public void inputToDynamicTextarea(WebDriver driver, String nameAttributeValue, String text) {
-		waitForElementVisible(driver, AbstractPageUI.DYNAMIC_TEXTAREA, nameAttributeValue);
-		sendKeyToElement(driver, AbstractPageUI.DYNAMIC_TEXTAREA, text, nameAttributeValue);
+	public void inputToDynamicTextarea(WebDriver driver, String fieldName, String text) {
+		waitForElementVisible(driver, AbstractPageUI.DYNAMIC_TEXTAREA, fieldName);
+		sendKeyToElement(driver, AbstractPageUI.DYNAMIC_TEXTAREA, text, fieldName);
 	}
 	
-	public void clickDynamicButton(WebDriver driver, String nameAttributeValue) {
-		waitForElementVisible(driver, AbstractPageUI.DYNAMIC_BUTTON, nameAttributeValue);
-		clickToElement(driver, AbstractPageUI.DYNAMIC_BUTTON, nameAttributeValue);
+	public void clickDynamicButton(WebDriver driver, String fieldName) {
+		waitForElementVisible(driver, AbstractPageUI.DYNAMIC_BUTTON, fieldName);
+		clickToElement(driver, AbstractPageUI.DYNAMIC_BUTTON, fieldName);
 	}
 	
-	public String getErrorMessageOfDynamicField(WebDriver driver, String labelOfField) {
-		waitForElementVisible(driver, AbstractPageUI.DYNAMIC_ERROR_MESSAGE_OF_FIELD, labelOfField);
-		return getTextElement(driver, AbstractPageUI.DYNAMIC_ERROR_MESSAGE_OF_FIELD, labelOfField);
+	public String getErrorMessageOfDynamicField(WebDriver driver, String fieldLable) {
+		waitForElementVisible(driver, AbstractPageUI.DYNAMIC_ERROR_MESSAGE_OF_FIELD, fieldLable);
+		return getTextElement(driver, AbstractPageUI.DYNAMIC_ERROR_MESSAGE_OF_FIELD, fieldLable);
 	}
 	
 	public void selectDynamicRadioButton(WebDriver driver, String valueToSelect) {
@@ -567,5 +590,35 @@ public class AbstractPage {
 		if(!isControlSelected(driver, AbstractPageUI.DYNAMIC_RADIO_BUTTON, valueToSelect)) {
 			clickToElement(driver, AbstractPageUI.DYNAMIC_RADIO_BUTTON, valueToSelect);
 		}
+	}
+	
+	public boolean isPageTitleOrTableHeaderMessageDisplayed(WebDriver driver, String message) {
+		waitForElementVisible(driver, AbstractPageUI.DYNAMIC_PAGE_NAME_OR_TABLE_HEADER_MESSAGE, message);
+		return isControlDisplayed(driver, AbstractPageUI.DYNAMIC_PAGE_NAME_OR_TABLE_HEADER_MESSAGE, message);
+	}
+	
+	public String getDanymicDataInTable(WebDriver driver, String rowName) {
+		waitForElementVisible(driver, AbstractPageUI.DYNAMIC_DATA_IN_TABLE, rowName);
+		return getTextElement(driver, AbstractPageUI.DYNAMIC_DATA_IN_TABLE, rowName);
+	}
+	
+	public String getTextValueInDynamicTextbox(WebDriver driver, String fieldName) {
+		waitForElementVisible(driver, AbstractPageUI.DYNAMIC_TEXTBOX, fieldName);
+		return getAttributeValue(driver, AbstractPageUI.DYNAMIC_TEXTBOX, "value", fieldName);
+	}
+	
+	public String getTextValueInDynamicTextarea(WebDriver driver, String fieldName) {
+		waitForElementVisible(driver, AbstractPageUI.DYNAMIC_TEXTAREA, fieldName);
+		return getTextElement(driver, AbstractPageUI.DYNAMIC_TEXTAREA, fieldName);
+	}
+	
+	public void selectItemInDynamicDropdown(WebDriver driver, String valueToSelect, String fieldName) {
+		waitForElementVisible(driver, AbstractPageUI.DYNAMIC_DROPDOWN_LIST, fieldName);
+		selectItemInHtmlDropdownByVisibleText(driver, AbstractPageUI.DYNAMIC_DROPDOWN_LIST, valueToSelect, fieldName);
+	}
+	
+	public String getCurrentSelectedItemInDynamicDropdown(WebDriver driver, String fieldName) {
+		waitForElementVisible(driver, AbstractPageUI.DYNAMIC_DROPDOWN_LIST, fieldName);
+		return getCurrentSelectedItemInHtmlDropdown(driver, AbstractPageUI.DYNAMIC_DROPDOWN_LIST, fieldName).getText();
 	}
 }

@@ -10,4 +10,8 @@ public class MiniStatementPageObject extends AbstractPage{
 		this.driver = driver;
 	}
 
+	public String getMiniStatementPageURL() {
+		return getCurrentPageURL(driver);
+	}
+
 }

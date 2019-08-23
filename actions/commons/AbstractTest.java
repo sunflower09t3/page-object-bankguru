@@ -1,14 +1,17 @@
 package commons;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.logging.Log;
-import org.openqa.selenium.WebDriver;
 import org.apache.commons.logging.LogFactory;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.safari.SafariDriver;
 import org.testng.Assert;
 import org.testng.Reporter;
 
@@ -17,7 +20,7 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 public class AbstractTest {
 	private WebDriver driver;
 	protected final Log log;
-	
+
 	protected AbstractTest() {
 		log = LogFactory.getLog(getClass());
 	}
@@ -34,6 +37,8 @@ public class AbstractTest {
 			options.addArguments("headless");
 			options.addArguments("window-size=1366x768");
 			driver = new ChromeDriver(options);
+		} else if (browserName.equalsIgnoreCase("Safari")) {
+			driver = new SafariDriver();
 		} else {
 			System.out.println("The browser type is invalid");
 		}
@@ -51,10 +56,10 @@ public class AbstractTest {
 
 		try {
 			Assert.assertTrue(condition);
-			log.info("==PASSED==");
+			log.info("============================ PASSED ============================");
 		} catch (Throwable e) {
 			result = false;
-			log.info("==FAILED==");
+			log.info("============================ FAILED ============================");
 
 			// Add loi vao ReportNG
 			VerificationFailures.getFailures().addFailureForTest(Reporter.getCurrentTestResult(), e);
@@ -73,11 +78,11 @@ public class AbstractTest {
 
 		try {
 			Assert.assertFalse(condition);
-			log.info("==PASSED==");
+			log.info("============================ PASSED ============================");
 
 		} catch (Throwable e) {
 			result = false;
-			log.info("==FAILED==");
+			log.info("============================ FAILED ============================");
 
 			// Add loi vao ReportNG
 			VerificationFailures.getFailures().addFailureForTest(Reporter.getCurrentTestResult(), e);
@@ -94,13 +99,20 @@ public class AbstractTest {
 		boolean result = true;
 
 		try {
+			if (actual instanceof String && expected instanceof String) {
+				actual = actual.toString().trim();
+				expected = expected.toString().trim();
+			}
+
 			log.info("Actual: " + actual);
 			log.info("Expected: " + expected);
-			Assert.assertEquals(actual, expected);
-			log.info("==PASSED==");
+
+			Assert.assertEquals(actual, expected, "Values are not matching");
+			log.info("============================ PASSED ============================");
+
 		} catch (Throwable e) {
 			result = false;
-			log.info("==FAILED==");
+			log.info("============================ FAILED ============================");
 
 			// Add loi vao ReportNG
 			VerificationFailures.getFailures().addFailureForTest(Reporter.getCurrentTestResult(), e);
@@ -112,29 +124,29 @@ public class AbstractTest {
 	protected boolean verifyEquals(Object actual, Object expected) {
 		return checkEquals(actual, expected);
 	}
-	
+
 	public int randomNumber() {
 		Random random = new Random();
 		return random.nextInt(1000000);
 	}
-	
+
 	public void closeBrowserAndDriver(WebDriver driver) {
 		try {
 			String osName = System.getProperty("os.name").toLowerCase();
 			log.info("os Name = " + osName);
-			
-			String cmd="";
-			if(driver != null) {
+
+			String cmd = "";
+			if (driver != null) {
 				driver.quit();
 			}
-			
+
 			if (driver.toString().toLowerCase().contains("chrome")) {
 				if (osName.toLowerCase().contains("mac")) {
 					cmd = "pkill chromedriver";
 				} else if (osName.toLowerCase().contains("windows")) {
 					cmd = "taskkill /F /FI \"IMAGENAME eq chromedriver*\"";
 				}
-				
+
 				Process process = Runtime.getRuntime().exec(cmd);
 				process.waitFor();
 			}
@@ -143,16 +155,21 @@ public class AbstractTest {
 				if (osName.toLowerCase().contains("windows")) {
 					cmd = "taskkill /F /FI \"IMAGENAME eq IEDriverServer*\"";
 				}
-				
+
 				Process process = Runtime.getRuntime().exec(cmd);
 				process.waitFor();
 			}
-			
+
 			log.info("---------- QUIT BROWSER SUCCESS ----------");
-				
-		}catch(Exception e) {
+
+		} catch (Exception e) {
 			log.error(e.getMessage());
 		}
-		
+
+	}
+	
+	public String formatDate(Date date, String pattern) {
+		SimpleDateFormat formater = new SimpleDateFormat(pattern);
+		return formater.format(date);
 	}
 }

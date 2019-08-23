@@ -19,14 +19,15 @@ public class Validation_09_FundTransfer extends AbstractTest {
 	String payerAccountNoContainingCharacter, payerAccountNoContainSpecialCharacter;
 	String payeeAccountNoContainingCharacter, payeeAccountNoContainSpecialCharacter;
 	String amountContainingCharacter, amountContainSpecialCharacter;
-	
+	String fundTransferPageURL;
+
 	LoginPageObject loginPage;
 	HomePageObject homePage;
 	FundTransferPageObject fundTransferPage;
 
 	@Parameters("browser")
 	@BeforeClass
-	public void beforeClass(String browserName) {
+	public void setup(String browserName) {
 		driver = openMultipleBrowser(browserName);
 
 		// Data
@@ -36,110 +37,149 @@ public class Validation_09_FundTransfer extends AbstractTest {
 		payeeAccountNoContainSpecialCharacter = "123&*(";
 		amountContainingCharacter = "123amount";
 		amountContainSpecialCharacter = "123$";
-	
-		
+
 		loginPage = PageGeneratorManager.getLoginPage(driver);
 
 		loginPage.inputToDynamicTextbox(driver, "uid", Common_01_RegisterToSystem.username);
 		loginPage.inputToDynamicTextbox(driver, "password", Common_01_RegisterToSystem.password);
 		homePage = loginPage.clickLoginButton();
 
-		homePage.openMultiplePage(driver, "Fund Transfer");
-		fundTransferPage = PageGeneratorManager.getFundTransferPage(driver);
 	}
 
 	@Test
 	public void TC_01_PayerAccountNoMustNotBeBlank() {
-		log.info("Validate Payer Account No field with blank value - STEP 01: Do not input a value in Payer Account No field and press Tab key");
+		log.info("TC_01_PayerAccountNoMustNotBeBlank - STEP 01: Open Fund Transfer form");
+		homePage.openMultiplePage(driver, "Fund Transfer");
+		fundTransferPage = PageGeneratorManager.getFundTransferPage(driver);
+		verifyTrue(fundTransferPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Fund transfer"));
+		fundTransferPageURL = fundTransferPage.getFundTransferPageURL();
+
+		log.info("TC_01_PayerAccountNoMustNotBeBlank - STEP 02: Do not input a value in Payer Account No field and press Tab key");
 		fundTransferPage.pressTabToDynamicTextbox(driver, "payersaccount");
-		
-		log.info("Validate Payer Account No field with blank value - STEP 02: Verify 'Payers Account Number must not be blank' message is displayed");
+
+		log.info("TC_01_PayerAccountNoMustNotBeBlank - STEP 03: Verify 'Payers Account Number must not be blank' message is displayed");
 		verifyEquals(fundTransferPage.getErrorMessageOfDynamicField(driver, "Payers account no"), "Payers Account Number must not be blank");
 	}
-	
+
 	@Test
 	public void TC_02_PayerAccountNoMustNotContainCharacter() {
-		log.info("Validate Payer Account No field with character - STEP 01: Input character into Payer Account No field");
+		log.info("TC_02_PayerAccountNoMustNotContainCharacter - STEP 01: Open Fund Transfer form");
+		fundTransferPage.openURL(driver, fundTransferPageURL);
+		verifyTrue(fundTransferPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Fund transfer"));
+
+		log.info("TC_02_PayerAccountNoMustNotContainCharacter - STEP 02: Input character into Payer Account No field");
 		fundTransferPage.inputToDynamicTextbox(driver, "payersaccount", payerAccountNoContainingCharacter);
-		
-		log.info("Validate Payer Account No field with blank value - STEP 02: Verify 'Characters are not allowed' message is displayed");
+
+		log.info("TC_02_PayerAccountNoMustNotContainCharacter - STEP 03: Verify 'Characters are not allowed' message is displayed");
 		verifyEquals(fundTransferPage.getErrorMessageOfDynamicField(driver, "Payers account no"), "Characters are not allowed");
 	}
-	
+
 	@Test
 	public void TC_03_PayerAccountNoMustNotContainSpecialCharacter() {
-		log.info("Validate Payer Account No field with special character - STEP 01: Input special character into Payer Account No field");
+		log.info("TC_03_PayerAccountNoMustNotContainSpecialCharacter - STEP 01: Open Fund Transfer form");
+		fundTransferPage.openURL(driver, fundTransferPageURL);
+		verifyTrue(fundTransferPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Fund transfer"));
+
+		log.info("TC_03_PayerAccountNoMustNotContainSpecialCharacter - STEP 02: Input special character into Payer Account No field");
 		fundTransferPage.inputToDynamicTextbox(driver, "payersaccount", payerAccountNoContainSpecialCharacter);
-		
-		log.info("Validate Payer Account No field with special character - STEP 02: Verify 'Special characters are not allowed' message is displayed");
+
+		log.info("TC_03_PayerAccountNoMustNotContainSpecialCharacter - STEP 03: Verify 'Special characters are not allowed' message is displayed");
 		verifyEquals(fundTransferPage.getErrorMessageOfDynamicField(driver, "Payers account no"), "Special characters are not allowed");
 	}
-			
+
 	@Test
 	public void TC_04_PayeeAccountNoMustNotBeBlank() {
-		log.info("Validate Payee Account No field with blank value - STEP 01: Do not input a value in Payee Account No field and press Tab key");
-		fundTransferPage.pressTabToDynamicTextbox(driver, "payeeaccount");
+		log.info("TC_04_PayeeAccountNoMustNotBeBlank - STEP 01: Open Fund Transfer form");
+		fundTransferPage.openURL(driver, fundTransferPageURL);
+		verifyTrue(fundTransferPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Fund transfer"));
 		
-		log.info("Validate Payee Account No field with blank value - STEP 02: Verify 'Payees Account Number must not be blank' message is displayed");
+		log.info("TC_04_PayeeAccountNoMustNotBeBlank - STEP 02: Do not input a value in Payee Account No field and press Tab key");
+		fundTransferPage.pressTabToDynamicTextbox(driver, "payeeaccount");
+
+		log.info("TC_04_PayeeAccountNoMustNotBeBlank - STEP 03: Verify 'Payees Account Number must not be blank' message is displayed");
 		verifyEquals(fundTransferPage.getErrorMessageOfDynamicField(driver, "Payees account no"), "Payees Account Number must not be blank");
 	}
-	
+
 	@Test
 	public void TC_05_PayeeAccountNoMustNotContainCharacter() {
-		log.info("Validate Payee Account No field with character - STEP 01: Input character into Payee Account No field");
-		fundTransferPage.inputToDynamicTextbox(driver, "payeeaccount", payeeAccountNoContainingCharacter);
+		log.info("TC_05_PayeeAccountNoMustNotContainCharacter - STEP 01: Open Fund Transfer form");
+		fundTransferPage.openURL(driver, fundTransferPageURL);
+		verifyTrue(fundTransferPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Fund transfer"));
 		
-		log.info("Validate Payee Account No field with blank value - STEP 02: Verify 'Characters are not allowed' message is displayed");
+		log.info("TC_05_PayeeAccountNoMustNotContainCharacter - STEP 02: Input character into Payee Account No field");
+		fundTransferPage.inputToDynamicTextbox(driver, "payeeaccount", payeeAccountNoContainingCharacter);
+
+		log.info("TC_05_PayeeAccountNoMustNotContainCharacter - STEP 03: Verify 'Characters are not allowed' message is displayed");
 		verifyEquals(fundTransferPage.getErrorMessageOfDynamicField(driver, "Payees account no"), "Characters are not allowed");
 	}
-	
+
 	@Test
 	public void TC_06_PayeeAccountNoMustNotContainSpecialCharacter() {
-		log.info("Validate Payee Account No field with special character - STEP 01: Input special character into Payee Account No field");
-		fundTransferPage.inputToDynamicTextbox(driver, "payeeaccount", payeeAccountNoContainSpecialCharacter);
+		log.info("TC_06_PayeeAccountNoMustNotContainSpecialCharacter - STEP 01: Open Fund Transfer form");
+		fundTransferPage.openURL(driver, fundTransferPageURL);
+		verifyTrue(fundTransferPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Fund transfer"));
 		
-		log.info("Validate Payee Account No field with special character - STEP 02: Verify 'Special characters are not allowed' message is displayed");
+		log.info("TC_06_PayeeAccountNoMustNotContainSpecialCharacter - STEP 02: Input special character into Payee Account No field");
+		fundTransferPage.inputToDynamicTextbox(driver, "payeeaccount", payeeAccountNoContainSpecialCharacter);
+
+		log.info("TC_06_PayeeAccountNoMustNotContainSpecialCharacter - STEP 03: Verify 'Special characters are not allowed' message is displayed");
 		verifyEquals(fundTransferPage.getErrorMessageOfDynamicField(driver, "Payees account no"), "Special characters are not allowed");
 	}
-	
+
 	@Test
 	public void TC_07_AmountMustNotBeBlank() {
-		log.info("Validate Amount field with blank value - STEP 01: Do not input a value in Amount field and press Tab key");
-		fundTransferPage.pressTabToDynamicTextbox(driver, "ammount");
+		log.info("TC_07_AmountMustNotBeBlank - STEP 01: Open Fund Transfer form");
+		fundTransferPage.openURL(driver, fundTransferPageURL);
+		verifyTrue(fundTransferPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Fund transfer"));
 		
-		log.info("Validate Amount field with blank value - STEP 02: Verify 'Amount field must not be blank' message is displayed");
+		log.info("TC_07_AmountMustNotBeBlank - STEP 02: Do not input a value in Amount field and press Tab key");
+		fundTransferPage.pressTabToDynamicTextbox(driver, "ammount");
+
+		log.info("TC_07_AmountMustNotBeBlank - STEP 03: Verify 'Amount field must not be blank' message is displayed");
 		verifyEquals(fundTransferPage.getErrorMessageOfDynamicField(driver, "Amount"), "Amount field must not be blank");
 	}
-	
+
 	@Test
 	public void TC_08_AmountMustNotContainCharacter() {
-		log.info("Validate Amount field with character - STEP 01: Input character into Amount field");
-		fundTransferPage.inputToDynamicTextbox(driver, "ammount", amountContainingCharacter);
+		log.info("TC_08_AmountMustNotContainCharacter - STEP 01: Open Fund Transfer form");
+		fundTransferPage.openURL(driver, fundTransferPageURL);
+		verifyTrue(fundTransferPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Fund transfer"));
 		
-		log.info("Validate Amount No field with blank value - STEP 02: Verify 'Characters are not allowed' message is displayed");
+		log.info("TC_08_AmountMustNotContainCharacter - STEP 02: Input character into Amount field");
+		fundTransferPage.inputToDynamicTextbox(driver, "ammount", amountContainingCharacter);
+
+		log.info("TC_08_AmountMustNotContainCharacter - STEP 03: Verify 'Characters are not allowed' message is displayed");
 		verifyEquals(fundTransferPage.getErrorMessageOfDynamicField(driver, "Amount"), "Characters are not allowed");
 	}
-	
+
 	@Test
 	public void TC_09_AmountMustNotContainSpecialCharacter() {
-		log.info("Validate Amount field with special character - STEP 01: Input special character into Amount field");
-		fundTransferPage.inputToDynamicTextbox(driver, "ammount", amountContainSpecialCharacter);
+		log.info("TC_09_AmountMustNotContainSpecialCharacter - STEP 01: Open Fund Transfer form");
+		fundTransferPage.openURL(driver, fundTransferPageURL);
+		verifyTrue(fundTransferPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Fund transfer"));
 		
-		log.info("Validate Amount field with special character - STEP 02: Verify 'Special characters are not allowed' message is displayed");
+		log.info("TC_09_AmountMustNotContainSpecialCharacter - STEP 02: Input special character into Amount field");
+		fundTransferPage.inputToDynamicTextbox(driver, "ammount", amountContainSpecialCharacter);
+
+		log.info("TC_09_AmountMustNotContainSpecialCharacter - STEP 03: Verify 'Special characters are not allowed' message is displayed");
 		verifyEquals(fundTransferPage.getErrorMessageOfDynamicField(driver, "Amount"), "Special characters are not allowed");
 	}
-	
+
 	@Test
 	public void TC_10_DescriptionMustNotBeBlank() {
-		log.info("Validate Description field with blank value - STEP 01: Do not input a value in Description field and press Tab key");
-		fundTransferPage.pressTabToDynamicTextbox(driver, "desc");
+		log.info("TC_10_DescriptionMustNotBeBlank - STEP 01: Open Fund Transfer form");
+		fundTransferPage.openURL(driver, fundTransferPageURL);
+		verifyTrue(fundTransferPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Fund transfer"));
 		
-		log.info("Validate Description field with blank value - STEP 02: Verify 'Description can not be blank' message is displayed");
+		log.info("TC_10_DescriptionMustNotBeBlank - STEP 02: Do not input a value in Description field and press Tab key");
+		fundTransferPage.pressTabToDynamicTextbox(driver, "desc");
+
+		log.info("TC_10_DescriptionMustNotBeBlank - STEP 03: Verify 'Description can not be blank' message is displayed");
 		verifyEquals(fundTransferPage.getErrorMessageOfDynamicField(driver, "Description"), "Description can not be blank");
 	}
 
-	@AfterClass (alwaysRun=true)
-	public void afterClass() {
+	@AfterClass(alwaysRun = true)
+	public void tearDown() {
 		closeBrowserAndDriver(driver);
 	}
 

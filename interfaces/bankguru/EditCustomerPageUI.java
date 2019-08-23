@@ -16,7 +16,4 @@ public class EditCustomerPageUI {
 	public static final String ACC_SUBMIT_BUTTON = "//input[@name='AccSubmit']";
 	public static final String SUBMIT_BUTTON = "//input[@name='sub']";
 	
-	// Text
-	public static final String EDIT_CUSTOMER_HEADING = "//p[@class='heading3' and text()='Edit Customer']";
-	public static final String CUSTOMER_UPDATE_RESULT = "//P[@class='heading3']";
 }

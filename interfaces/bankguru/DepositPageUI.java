@@ -9,7 +9,4 @@ public class DepositPageUI {
 	// Button
 	public static final String SUBMIT_BUTTON = "//input[@name='AccSubmit']";
 	
-	// Text
-	public static final String TRANSACTION_RESULT_MESSAGE = "//p[@class='heading3']";
-	public static final String CURRENT_BALANCE_TEXT_IN_TABLE = "//td[text()='Current Balance']/following-sibling::td";
 }

@@ -10,8 +10,4 @@ public class EditAccountPageUI {
 	// Dropdown list
 	public static final String ACCOUNT_TYPE_DROPDOWN = "//select[@name='a_type']";
 	
-	// Text
-	public static final String ACCOUNT_UPDATE_RESULT = "//p[@class='heading3']";
-	public static final String ACCOUNT_TYPE_TEXT_IN_TABLE = "//td[text()='Account Type']/following-sibling::td";
-	public static final String EDIT_ACCOUNT_ENTRY_FORM_TEXT = "//p[@class='heading3' and text()='Edit Account Entry Form']";
 }

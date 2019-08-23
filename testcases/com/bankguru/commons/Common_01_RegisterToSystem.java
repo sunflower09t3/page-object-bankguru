@@ -22,9 +22,11 @@ public class Common_01_RegisterToSystem extends AbstractTest {
 		log.info("Register - STEP 01: Open Login page");
 		driver = openMultipleBrowser(browserName);
 		loginPage = PageGeneratorManager.getLoginPage(driver);
+		verifyTrue(loginPage.isLoginFormDisplayed());
 		
 		log.info("Register - STEP 02: Click Here link");
 		registerPage = loginPage.clickHereLink();
+		verifyTrue(registerPage.isRegisterFormDisplayed());
 		
 		log.info("Register - STEP 03: Input to Email textbox");
 		email =  "randomemail" + randomNumber() + "@gmail.com";

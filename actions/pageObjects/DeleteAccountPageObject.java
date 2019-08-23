@@ -27,4 +27,8 @@ public class DeleteAccountPageObject extends AbstractPage {
 		return PageGeneratorManager.getHomePage(driver);
 	}
 
+	public String getDeleteAccountPageURL() {
+		return getCurrentPageURL(driver);
+	}
+
 }

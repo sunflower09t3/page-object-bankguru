@@ -27,4 +27,9 @@ public class RegisterPageObject extends AbstractPage{
 		openURL(driver, url);
 	}
 
+	public boolean isRegisterFormDisplayed() {
+		waitForElementVisible(driver, RegisterPageUI.HEADLINE_TEXT);
+		return isControlDisplayed(driver, RegisterPageUI.HEADLINE_TEXT);
+	}
+
 }

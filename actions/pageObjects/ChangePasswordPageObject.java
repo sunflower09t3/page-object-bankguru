@@ -10,4 +10,8 @@ public class ChangePasswordPageObject extends AbstractPage {
 		this.driver = driver;
 	}
 
+	public String getChangePasswordPageURL() {
+		return getCurrentPageURL(driver);
+	}
+
 }

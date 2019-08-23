@@ -27,4 +27,8 @@ public class DeleteCustomerPageObject extends AbstractPage {
 		return PageGeneratorManager.getHomePage(driver);
 	}
 
+	public String getDeleteCustomerPageURL() {
+		return getCurrentPageURL(driver);
+	}
+
 }

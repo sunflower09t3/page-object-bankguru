@@ -19,7 +19,4 @@ public class NewCustomerPageUI {
 	public static final String FEMALE_GENDER_RADIO_BUTTON = "//input[@name='rad1' and @value='f']";
 	public static final String SUBMIT_BUTTON = "//input[@name='sub']";
 	
-	// Text
-	public static final String ADD_CUSTOMER_RESULT = "//p[@class='heading3']";
-	public static final String CUSTOMER_ID_TEXT_IN_TABLE = "//td[text()='Customer ID']/following-sibling::td";
 }

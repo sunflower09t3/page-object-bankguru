@@ -17,7 +17,7 @@ public class LoginPageObject extends AbstractPage {
 		clickToElement(driver, LoginPageUI.HERE_LINK);
 		return PageGeneratorManager.getRegisterPage(driver);
 	}
-
+	
 	public String getLoginPageURL() {
 		return getCurrentPageURL(driver);
 	}
@@ -27,4 +27,11 @@ public class LoginPageObject extends AbstractPage {
 		clickToElement(driver, LoginPageUI.LOGIN_BUTTON);
 		return PageGeneratorManager.getHomePage(driver);
 	}
+
+	public boolean isLoginFormDisplayed() {
+		waitForElementVisible(driver, LoginPageUI.LOGIN_BUTTON);
+		return isControlDisplayed(driver, LoginPageUI.LOGIN_BUTTON);
+	}
+	
+	
 }
