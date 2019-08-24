@@ -11,12 +11,7 @@ public class EditCustomerPageObject extends AbstractPage {
 		this.driver = driver;
 	}
 
-	public String getAlertMessage() {
-		waitForAlertPresent(driver);
-		return getTextAlert(driver);
-	}
-
-	public void acceptCustomerNotExistInformationAlert() {
+	public void acceptCustomerNotExistAlert() {
 		waitForAlertPresent(driver);
 		acceptAlert(driver);
 	}

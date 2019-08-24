@@ -11,12 +11,7 @@ public class EditAccountPageObject extends AbstractPage {
 		this.driver = driver;
 	}
 
-	public String getAlertMessage() {
-		waitForAlertPresent(driver);
-		return getTextAlert(driver);
-	}
-
-	public void acceptAccountNotExistInformationAlert() {
+	public void acceptAccountNotExistAlert() {
 		waitForAlertPresent(driver);
 		acceptAlert(driver);
 	}

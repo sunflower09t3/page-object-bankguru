@@ -111,7 +111,7 @@ public class AbstractPage {
 		select = new Select(element);
 		select.selectByValue(valueToSelect);
 	}
-	
+
 	public void selectItemInHtmlDropdownByValue(WebDriver driver, String locator, String valueToSelect, String... dynamicValuesOfLocator) {
 		locator = String.format(locator, (Object[]) dynamicValuesOfLocator);
 		element = driver.findElement(By.xpath(locator));
@@ -124,7 +124,7 @@ public class AbstractPage {
 		select = new Select(element);
 		select.selectByVisibleText(textToSelect);
 	}
-	
+
 	public void selectItemInHtmlDropdownByVisibleText(WebDriver driver, String locator, String textToSelect, String... dynamicValuesOfLocator) {
 		locator = String.format(locator, (Object[]) dynamicValuesOfLocator);
 		element = driver.findElement(By.xpath(locator));
@@ -168,7 +168,7 @@ public class AbstractPage {
 		return select.getFirstSelectedOption();
 
 	}
-	
+
 	public WebElement getCurrentSelectedItemInHtmlDropdown(WebDriver driver, String locator, String... dynamicValuesOfLocator) {
 		locator = String.format(locator, (Object[]) dynamicValuesOfLocator);
 		element = driver.findElement(By.xpath(locator));
@@ -181,9 +181,9 @@ public class AbstractPage {
 		element = driver.findElement(By.xpath(locator));
 		return element.getAttribute(attributeName);
 	}
-	
-	public String getAttributeValue(WebDriver driver, String locator, String attributeName, String ... dynamicValue) {
-		locator = String.format(locator, (Object[]) dynamicValue); 
+
+	public String getAttributeValue(WebDriver driver, String locator, String attributeName, String... dynamicValue) {
+		locator = String.format(locator, (Object[]) dynamicValue);
 		element = driver.findElement(By.xpath(locator));
 		return element.getAttribute(attributeName);
 	}
@@ -198,7 +198,7 @@ public class AbstractPage {
 		element = driver.findElement(By.xpath(locator));
 		return element.getText().trim();
 	}
-	
+
 	public int countElementNumber(WebDriver driver, String locator) {
 		elements = driver.findElements(By.xpath(locator));
 		return elements.size();
@@ -226,18 +226,18 @@ public class AbstractPage {
 		element = driver.findElement(By.xpath(locator));
 		return element.isDisplayed();
 	}
-	
+
 	public boolean isControlUndisplayed(WebDriver driver, String locator) {
 		overrideGlobalTimeout(driver, Constants.SHORT_TIMEOUT);
 		elements = driver.findElements(By.xpath(locator));
 		overrideGlobalTimeout(driver, Constants.LONG_TIMEOUT);
-		
+
 		// Elelment is not present in DOM
-		if(elements.size() == 0) {
+		if (elements.size() == 0) {
 			return true;
 		}
 		// Element is present in DOM but NOT visible
-		else if(elements.size() > 0 && !elements.get(0).isDisplayed()) {
+		else if (elements.size() > 0 && !elements.get(0).isDisplayed()) {
 			return true;
 		}
 		// Element is present in DOM and visible
@@ -245,19 +245,19 @@ public class AbstractPage {
 			return false;
 		}
 	}
-	
+
 	public boolean isControlUndisplayed(WebDriver driver, String locator, String... dynanicValues) {
 		overrideGlobalTimeout(driver, Constants.SHORT_TIMEOUT);
 		locator = String.format(locator, (Object[]) dynanicValues);
 		elements = driver.findElements(By.xpath(locator));
 		overrideGlobalTimeout(driver, Constants.LONG_TIMEOUT);
-		
+
 		// Elelment is not present in DOM
-		if(elements.size() == 0) {
+		if (elements.size() == 0) {
 			return true;
 		}
 		// Element is present in DOM but NOT visible
-		else if(elements.size() > 0 && !elements.get(0).isDisplayed()) {
+		else if (elements.size() > 0 && !elements.get(0).isDisplayed()) {
 			return true;
 		}
 		// Element is present in DOM and visible
@@ -265,8 +265,7 @@ public class AbstractPage {
 			return false;
 		}
 	}
-	
-	
+
 	public void overrideGlobalTimeout(WebDriver driver, int timeout) {
 		driver.manage().timeouts().implicitlyWait(timeout, TimeUnit.SECONDS);
 	}
@@ -275,7 +274,7 @@ public class AbstractPage {
 		element = driver.findElement(By.xpath(locator));
 		return element.isSelected();
 	}
-	
+
 	public boolean isControlSelected(WebDriver driver, String locator, String... dynamicValuesOfLocator) {
 		locator = String.format(locator, (Object[]) dynamicValuesOfLocator);
 		element = driver.findElement(By.xpath(locator));
@@ -361,8 +360,8 @@ public class AbstractPage {
 		action = new Actions(driver);
 		action.sendKeys(element, keys).perform();
 	}
-	
-	public void sendKeyBoardToElement(WebDriver driver, String locator, CharSequence keys, String ... dynamicValuesOfLocator) {
+
+	public void sendKeyBoardToElement(WebDriver driver, String locator, CharSequence keys, String... dynamicValuesOfLocator) {
 		locator = String.format(locator, (Object[]) dynamicValuesOfLocator);
 		element = driver.findElement(By.xpath(locator));
 		action = new Actions(driver);
@@ -406,17 +405,13 @@ public class AbstractPage {
 	public boolean checkImageLoaded(WebDriver driver, String locator) {
 		element = driver.findElement(By.xpath(locator));
 		javascriptExecutor = (JavascriptExecutor) driver;
-		boolean status = (boolean) javascriptExecutor.executeScript(
-				"return arguments[0].complete "
-						+ "&& typeof arguments[0].naturalWidth!=\"undefined\" && arguments[0].naturalWidth > 0",
-				element);
+		boolean status = (boolean) javascriptExecutor.executeScript("return arguments[0].complete " + "&& typeof arguments[0].naturalWidth!=\"undefined\" && arguments[0].naturalWidth > 0", element);
 		return status;
 	}
 
 	public boolean verifyTextInInnerText(WebDriver driver, String expectedText) {
 		javascriptExecutor = (JavascriptExecutor) driver;
-		String actualText = (String) javascriptExecutor
-				.executeScript("return document.documentElement.innerText.match('" + expectedText + "')[0]");
+		String actualText = (String) javascriptExecutor.executeScript("return document.documentElement.innerText.match('" + expectedText + "')[0]");
 		return actualText.equals(expectedText);
 
 	}
@@ -459,8 +454,7 @@ public class AbstractPage {
 		explicitWait.until(ExpectedConditions.alertIsPresent());
 	}
 
-	public void uploadFiles(WebDriver driver, String selectFileButtonXpath, String uploadFileButtonXpath,
-			String[] files) {
+	public void uploadFiles(WebDriver driver, String selectFileButtonXpath, String uploadFileButtonXpath, String[] files) {
 
 		String allFilesPath = "";
 		for (int i = 0; i < files.length; i++) {
@@ -476,8 +470,7 @@ public class AbstractPage {
 		element.click();
 	}
 
-	public void uploadFilesByRobotClass(WebDriver driver, String selectFileButton, String uploadFileButtonXpath,
-			String[] files) throws InterruptedException, AWTException {
+	public void uploadFilesByRobotClass(WebDriver driver, String selectFileButton, String uploadFileButtonXpath, String[] files) throws InterruptedException, AWTException {
 		Clipboard clipboard;
 		StringSelection strSelection;
 
@@ -508,117 +501,109 @@ public class AbstractPage {
 
 	// switch page functions
 
-	// 1st way: Initialize and return PageObject at AbstractPage class. 
+	// 1st way: Initialize and return PageObject at AbstractPage class.
 	// Apply when number of pages is 10-20 pages
-	/*public AbstractPage openMultiplePage(WebDriver driver, String pageName) {
-		waitForElementVisible(driver, AbstractPageUI.DYNAMIC_MENU_LINK, pageName);
-		clickToElement(driver, AbstractPageUI.DYNAMIC_MENU_LINK, pageName);
-		
-		switch (pageName) {
-		case "New Customer":
-			return PageGeneratorManager.getNewCustomerPage(driver);
-		case "Edit Customer":
-			return PageGeneratorManager.getEditCustomerPage(driver);
-		case "Delete Customer":
-			return PageGeneratorManager.getDeleteCustomerPage(driver);
-		case "New Account":
-			return PageGeneratorManager.getNewAccountPage(driver);
-		case "Edit Account":
-			return PageGeneratorManager.getEditAccountPage(driver);
-		case "Delete Account":
-			return PageGeneratorManager.getDeleteAccountpage(driver);
-		case "Deposit":
-			return PageGeneratorManager.getDepositPage(driver);
-		case "WithDrawal":
-			return PageGeneratorManager.getWithdrawlPage(driver);
-		case "Fund Transfer":
-			return PageGeneratorManager.getFunTransferPage(driver);
-		case "Change Password":
-			return PageGeneratorManager.getChangePasswordPage(driver);
-		case "Balance Enquiry":
-			return PageGeneratorManager.getBalanceEnquiryPage(driver);
-		case "Mini Statement":
-			return PageGeneratorManager.getMiniStatementPage(driver);
-		case "Customised Statement":
-			return PageGeneratorManager.getCustomisedStatementPage(driver);
-		case "Log out":
-			return PageGeneratorManager.getLogoutPage(driver);
-		default:
-			return PageGeneratorManager.getHomePage(driver);
-		}
-	}*/
-	
-	// 2nd way: Initialize PageObject at test case layer. 
+	/*
+	 * public AbstractPage openMultiplePage(WebDriver driver, String pageName) {
+	 * waitForElementVisible(driver, AbstractPageUI.DYNAMIC_MENU_LINK, pageName);
+	 * clickToElement(driver, AbstractPageUI.DYNAMIC_MENU_LINK, pageName);
+	 * 
+	 * switch (pageName) { case "New Customer": return
+	 * PageGeneratorManager.getNewCustomerPage(driver); case "Edit Customer": return
+	 * PageGeneratorManager.getEditCustomerPage(driver); case "Delete Customer":
+	 * return PageGeneratorManager.getDeleteCustomerPage(driver); case
+	 * "New Account": return PageGeneratorManager.getNewAccountPage(driver); case
+	 * "Edit Account": return PageGeneratorManager.getEditAccountPage(driver); case
+	 * "Delete Account": return PageGeneratorManager.getDeleteAccountpage(driver);
+	 * case "Deposit": return PageGeneratorManager.getDepositPage(driver); case
+	 * "WithDrawal": return PageGeneratorManager.getWithdrawlPage(driver); case
+	 * "Fund Transfer": return PageGeneratorManager.getFunTransferPage(driver); case
+	 * "Change Password": return PageGeneratorManager.getChangePasswordPage(driver);
+	 * case "Balance Enquiry": return
+	 * PageGeneratorManager.getBalanceEnquiryPage(driver); case "Mini Statement":
+	 * return PageGeneratorManager.getMiniStatementPage(driver); case
+	 * "Customised Statement": return
+	 * PageGeneratorManager.getCustomisedStatementPage(driver); case "Log out":
+	 * return PageGeneratorManager.getLogoutPage(driver); default: return
+	 * PageGeneratorManager.getHomePage(driver); } }
+	 */
+
+	// 2nd way: Initialize PageObject at test case layer.
 	// Apply when there are lots of pages (100-1000 pages)
 	public void openMultiplePage(WebDriver driver, String pageName) {
 		waitForElementVisible(driver, AbstractPageUI.DYNAMIC_MENU_LINK, pageName);
 		clickToElement(driver, AbstractPageUI.DYNAMIC_MENU_LINK, pageName);
 	}
-	
+
 	public void pressTabToDynamicTextbox(WebDriver driver, String fieldName) {
 		waitForElementVisible(driver, AbstractPageUI.DYNAMIC_TEXTBOX, fieldName);
 		sendKeyBoardToElement(driver, AbstractPageUI.DYNAMIC_TEXTBOX, Keys.TAB, fieldName);
 	}
-	
+
 	public void pressTabToDynamicTextarea(WebDriver driver, String fieldName) {
 		waitForElementVisible(driver, AbstractPageUI.DYNAMIC_TEXTAREA, fieldName);
 		sendKeyBoardToElement(driver, AbstractPageUI.DYNAMIC_TEXTAREA, Keys.TAB, fieldName);
 	}
-	
+
 	public void inputToDynamicTextbox(WebDriver driver, String fieldName, String text) {
 		waitForElementVisible(driver, AbstractPageUI.DYNAMIC_TEXTBOX, fieldName);
 		sendKeyToElement(driver, AbstractPageUI.DYNAMIC_TEXTBOX, text, fieldName);
 	}
-	
+
 	public void inputToDynamicTextarea(WebDriver driver, String fieldName, String text) {
 		waitForElementVisible(driver, AbstractPageUI.DYNAMIC_TEXTAREA, fieldName);
 		sendKeyToElement(driver, AbstractPageUI.DYNAMIC_TEXTAREA, text, fieldName);
 	}
-	
+
 	public void clickDynamicButton(WebDriver driver, String fieldName) {
 		waitForElementVisible(driver, AbstractPageUI.DYNAMIC_BUTTON, fieldName);
 		clickToElement(driver, AbstractPageUI.DYNAMIC_BUTTON, fieldName);
 	}
-	
+
 	public String getErrorMessageOfDynamicField(WebDriver driver, String fieldLable) {
 		waitForElementVisible(driver, AbstractPageUI.DYNAMIC_ERROR_MESSAGE_OF_FIELD, fieldLable);
 		return getTextElement(driver, AbstractPageUI.DYNAMIC_ERROR_MESSAGE_OF_FIELD, fieldLable);
 	}
-	
+
 	public void selectDynamicRadioButton(WebDriver driver, String valueToSelect) {
 		waitForElementVisible(driver, AbstractPageUI.DYNAMIC_RADIO_BUTTON, valueToSelect);
-		if(!isControlSelected(driver, AbstractPageUI.DYNAMIC_RADIO_BUTTON, valueToSelect)) {
+		if (!isControlSelected(driver, AbstractPageUI.DYNAMIC_RADIO_BUTTON, valueToSelect)) {
 			clickToElement(driver, AbstractPageUI.DYNAMIC_RADIO_BUTTON, valueToSelect);
 		}
 	}
-	
+
 	public boolean isPageTitleOrTableHeaderMessageDisplayed(WebDriver driver, String message) {
 		waitForElementVisible(driver, AbstractPageUI.DYNAMIC_PAGE_NAME_OR_TABLE_HEADER_MESSAGE, message);
 		return isControlDisplayed(driver, AbstractPageUI.DYNAMIC_PAGE_NAME_OR_TABLE_HEADER_MESSAGE, message);
 	}
-	
+
 	public String getDanymicDataInTable(WebDriver driver, String rowName) {
 		waitForElementVisible(driver, AbstractPageUI.DYNAMIC_DATA_IN_TABLE, rowName);
 		return getTextElement(driver, AbstractPageUI.DYNAMIC_DATA_IN_TABLE, rowName);
 	}
-	
+
 	public String getTextValueInDynamicTextbox(WebDriver driver, String fieldName) {
 		waitForElementVisible(driver, AbstractPageUI.DYNAMIC_TEXTBOX, fieldName);
 		return getAttributeValue(driver, AbstractPageUI.DYNAMIC_TEXTBOX, "value", fieldName);
 	}
-	
+
 	public String getTextValueInDynamicTextarea(WebDriver driver, String fieldName) {
 		waitForElementVisible(driver, AbstractPageUI.DYNAMIC_TEXTAREA, fieldName);
 		return getTextElement(driver, AbstractPageUI.DYNAMIC_TEXTAREA, fieldName);
 	}
-	
+
 	public void selectItemInDynamicDropdown(WebDriver driver, String valueToSelect, String fieldName) {
 		waitForElementVisible(driver, AbstractPageUI.DYNAMIC_DROPDOWN_LIST, fieldName);
 		selectItemInHtmlDropdownByVisibleText(driver, AbstractPageUI.DYNAMIC_DROPDOWN_LIST, valueToSelect, fieldName);
 	}
-	
+
 	public String getCurrentSelectedItemInDynamicDropdown(WebDriver driver, String fieldName) {
 		waitForElementVisible(driver, AbstractPageUI.DYNAMIC_DROPDOWN_LIST, fieldName);
 		return getCurrentSelectedItemInHtmlDropdown(driver, AbstractPageUI.DYNAMIC_DROPDOWN_LIST, fieldName).getText();
+	}
+
+	public boolean isDynamicAlertDisplayed(WebDriver driver, String alertMessage) {
+		waitForAlertPresent(driver);
+		return getTextAlert(driver).equals(alertMessage);
 	}
 }

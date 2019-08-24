@@ -3,10 +3,15 @@ package commons;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
+import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -168,8 +173,19 @@ public class AbstractTest {
 
 	}
 	
-	public String formatDate(Date date, String pattern) {
-		SimpleDateFormat formater = new SimpleDateFormat(pattern);
-		return formater.format(date);
+	public DateTime getCurrentDate() {
+		DateTime currentDate = new DateTime(DateTimeZone.UTC);
+		currentDate = DateTime.now();
+		return currentDate;
+	}
+	
+	public DateTime getParticularDate(int year, int month, int day) {
+		DateTime particularDate = new DateTime(year, month, day, 0, 0, 0, 0, DateTimeZone.UTC);
+		return particularDate;
+	}
+	
+	public String formatDate(DateTime date, String formatPattern) {
+		DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern(formatPattern);
+		return date.toString(dateTimeFormatter);
 	}
 }

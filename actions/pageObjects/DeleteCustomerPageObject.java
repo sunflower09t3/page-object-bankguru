@@ -16,12 +16,7 @@ public class DeleteCustomerPageObject extends AbstractPage {
 		acceptAlert(driver);
 	}
 
-	public String getAlertMessage() {
-		waitForAlertPresent(driver);
-		return getTextAlert(driver);
-	}
-
-	public HomePageObject acceptCustomerDeletedInformationAlert() {
+	public HomePageObject acceptCustomerDeletedSuccessfullyAlert() {
 		waitForAlertPresent(driver);
 		acceptAlert(driver);
 		return PageGeneratorManager.getHomePage(driver);
