@@ -8,6 +8,7 @@ import org.testng.annotations.Test;
 
 import com.bankguru.commons.Common_01_RegisterToSystem;
 
+import bankguru.ValidationData;
 import commons.AbstractTest;
 import commons.PageGeneratorManager;
 import pageObjects.CustomisedStatementPageObject;
@@ -16,12 +17,7 @@ import pageObjects.LoginPageObject;
 
 public class Validation_08_CustomisedStatement extends AbstractTest {
 	WebDriver driver;
-	String accountNoContainingCharacter, accountNoContainingSpecialCharacter;
-	String accountNoContainingSpace, accountNoBeginWithSpace;
-	String minimumTransactionValueContainingCharacter, minimumTransactionValueContainingSpecialCharacter;
-	String minimumTransactionValueContainingSpace, minimumTransactionValueBeginWithSpace;
-	String numOfTransactionContainingCharacter, numOfTransactionContainingSpecialCharacter;
-	String numOfTransactionContainingSpace, numOfTransactionBeginWithSpace;
+
 	String customisedStatementPageURL;
 
 	LoginPageObject loginPage;
@@ -32,20 +28,6 @@ public class Validation_08_CustomisedStatement extends AbstractTest {
 	@BeforeClass
 	public void setup(String browserName) {
 		driver = openMultipleBrowser(browserName);
-
-		// Data
-		accountNoContainingCharacter = "123Acc";
-		accountNoContainingSpecialCharacter = "123$%^";
-		accountNoContainingSpace = "123 456";
-		accountNoBeginWithSpace = " ";
-		minimumTransactionValueContainingCharacter = "123Acc";
-		minimumTransactionValueContainingSpecialCharacter = "123#$%";
-		minimumTransactionValueContainingSpace = "123 456";
-		minimumTransactionValueBeginWithSpace = " ";
-		numOfTransactionContainingCharacter = "123Acc";
-		numOfTransactionContainingSpecialCharacter = "123#$%";
-		numOfTransactionContainingSpace = "123 456";
-		numOfTransactionBeginWithSpace = " ";
 
 		loginPage = PageGeneratorManager.getLoginPage(driver);
 
@@ -77,7 +59,7 @@ public class Validation_08_CustomisedStatement extends AbstractTest {
 		verifyTrue(customisedStatementPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Customized Statement Form"));
 
 		log.info("TC_02_AccountNoMustNotContainCharacter - STEP 02: Input character into Account No field");
-		customisedStatementPage.inputToDynamicTextbox(driver, "accountno", accountNoContainingCharacter);
+		customisedStatementPage.inputToDynamicTextbox(driver, "accountno", ValidationData.CustomisedStatement.ACCOUNT_NO_CONTAIN_CHARACTER);
 
 		log.info("TC_02_AccountNoMustNotContainCharacter - STEP 03: Verify 'Characters are not allowed' message is displayed");
 		verifyEquals(customisedStatementPage.getErrorMessageOfDynamicField(driver, "Account No"), "Characters are not allowed");
@@ -90,7 +72,7 @@ public class Validation_08_CustomisedStatement extends AbstractTest {
 		verifyTrue(customisedStatementPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Customized Statement Form"));
 
 		log.info("TC_03_AccountNoMustNotContainSpecialCharacter - STEP 02: Input special character into Account No field");
-		customisedStatementPage.inputToDynamicTextbox(driver, "accountno", accountNoContainingSpecialCharacter);
+		customisedStatementPage.inputToDynamicTextbox(driver, "accountno", ValidationData.CustomisedStatement.ACCOUNT_NO_CONTAIN_SPECIAL_CHARACTER);
 
 		log.info("TC_03_AccountNoMustNotContainSpecialCharacter - STEP 03: Verify 'Special characters are not allowed' message is displayed");
 		verifyEquals(customisedStatementPage.getErrorMessageOfDynamicField(driver, "Account No"), "Special characters are not allowed");
@@ -103,7 +85,7 @@ public class Validation_08_CustomisedStatement extends AbstractTest {
 		verifyTrue(customisedStatementPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Customized Statement Form"));
 
 		log.info("TC_04_AccountNoMustNotContainSpace - STEP 02: Input a space into Account No field");
-		customisedStatementPage.inputToDynamicTextbox(driver, "accountno", accountNoContainingSpace);
+		customisedStatementPage.inputToDynamicTextbox(driver, "accountno", ValidationData.CustomisedStatement.ACCOUNT_NO_CONTAIN_SPACE);
 
 		log.info("TC_05_AccountNoMustNotBeginWithSpace - STEP 03: Verify 'Characters are not allowed' message is displayed");
 		verifyEquals(customisedStatementPage.getErrorMessageOfDynamicField(driver, "Account No"), "Characters are not allowed");
@@ -116,7 +98,7 @@ public class Validation_08_CustomisedStatement extends AbstractTest {
 		verifyTrue(customisedStatementPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Customized Statement Form"));
 
 		log.info("TC_05_AccountNoMustNotBeginWithSpace - STEP 02: Input a space into Account No field");
-		customisedStatementPage.inputToDynamicTextbox(driver, "accountno", accountNoBeginWithSpace);
+		customisedStatementPage.inputToDynamicTextbox(driver, "accountno", ValidationData.CustomisedStatement.ACCOUNT_NO_BEGIN_WITH_SPACE);
 
 		log.info("TC_05_AccountNoMustNotBeginWithSpace - STEP 03: Verify 'Characters are not allowed' message is displayed");
 		verifyEquals(customisedStatementPage.getErrorMessageOfDynamicField(driver, "Account No"), "Characters are not allowed");
@@ -129,7 +111,7 @@ public class Validation_08_CustomisedStatement extends AbstractTest {
 		verifyTrue(customisedStatementPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Customized Statement Form"));
 
 		log.info("TC_06_MinimumTransactionValueMustNotContainCharacter - STEP 02: Input character into Minimum Transaction Value field");
-		customisedStatementPage.inputToDynamicTextbox(driver, "amountlowerlimit", minimumTransactionValueContainingCharacter);
+		customisedStatementPage.inputToDynamicTextbox(driver, "amountlowerlimit", ValidationData.CustomisedStatement.MINIMUM_TRANSACTION_VALUE_CONTAIN_CHARACTER);
 
 		log.info("Validate Minimum Transaction Value field with blank value - STEP 03: Verify 'Characters are not allowed' message is displayed");
 		verifyEquals(customisedStatementPage.getErrorMessageOfDynamicField(driver, "Minimum Transaction Value"), "Characters are not allowed");
@@ -142,7 +124,7 @@ public class Validation_08_CustomisedStatement extends AbstractTest {
 		verifyTrue(customisedStatementPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Customized Statement Form"));
 
 		log.info("TC_07_MinimumTransactionValueNoMustNotContainSpecialCharacter - STEP 02: Input special character into Minimum Transaction Value field");
-		customisedStatementPage.inputToDynamicTextbox(driver, "amountlowerlimit", minimumTransactionValueContainingSpecialCharacter);
+		customisedStatementPage.inputToDynamicTextbox(driver, "amountlowerlimit", ValidationData.CustomisedStatement.MINIMUM_TRANSACTION_VALUE_CONTAIN_SPECIAL_CHARACTER);
 
 		log.info("TC_07_MinimumTransactionValueNoMustNotContainSpecialCharacter - STEP 03: Verify 'Special characters are not allowed' message is displayed");
 		verifyEquals(customisedStatementPage.getErrorMessageOfDynamicField(driver, "Minimum Transaction Value"), "Special characters are not allowed");
@@ -155,7 +137,7 @@ public class Validation_08_CustomisedStatement extends AbstractTest {
 		verifyTrue(customisedStatementPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Customized Statement Form"));
 
 		log.info("TC_08_MinimumTransactionValueMustNotContainSpace - STEP 02: Input a number which contains a space into Minimum Transaction Value field");
-		customisedStatementPage.inputToDynamicTextbox(driver, "amountlowerlimit", minimumTransactionValueContainingSpace);
+		customisedStatementPage.inputToDynamicTextbox(driver, "amountlowerlimit", ValidationData.CustomisedStatement.MINIMUM_TRANSACTION_VALUE_CONTAIN_SPACE);
 
 		log.info("TC_08_MinimumTransactionValueMustNotContainSpace - STEP 03: Verify 'Characters are not allowed' message is displayed");
 		verifyEquals(customisedStatementPage.getErrorMessageOfDynamicField(driver, "Minimum Transaction Value"), "Characters are not allowed");
@@ -168,7 +150,7 @@ public class Validation_08_CustomisedStatement extends AbstractTest {
 		verifyTrue(customisedStatementPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Customized Statement Form"));
 
 		log.info("TC_09_MinimumTransactionValueoMustNotBeginWithSpace - STEP 02: Input first character as a space");
-		customisedStatementPage.inputToDynamicTextbox(driver, "amountlowerlimit", minimumTransactionValueBeginWithSpace);
+		customisedStatementPage.inputToDynamicTextbox(driver, "amountlowerlimit", ValidationData.CustomisedStatement.MINIMUM_TRANSACTION_VALUE_BEGIN_WITH_SPACE);
 
 		log.info("TC_09_MinimumTransactionValueoMustNotBeginWithSpace - STEP 03: Verify 'Characters are not allowed' message is displayed");
 		verifyEquals(customisedStatementPage.getErrorMessageOfDynamicField(driver, "Minimum Transaction Value"), "Characters are not allowed");
@@ -181,7 +163,7 @@ public class Validation_08_CustomisedStatement extends AbstractTest {
 		verifyTrue(customisedStatementPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Customized Statement Form"));
 
 		log.info("TC_10_NumberOfTransactionMustNotContainCharacter - STEP 02: Input character into Number of Transaction field");
-		customisedStatementPage.inputToDynamicTextbox(driver, "numtransaction", numOfTransactionContainingCharacter);
+		customisedStatementPage.inputToDynamicTextbox(driver, "numtransaction", ValidationData.CustomisedStatement.NUM_OFT_RANSACTION_CONTAIN_CHARACTER);
 
 		log.info("Validate Number of Transaction field with blank value - STEP 03: Verify 'Characters are not allowed' message is displayed");
 		verifyEquals(customisedStatementPage.getErrorMessageOfDynamicField(driver, "Number of Transaction"), "Characters are not allowed");
@@ -194,7 +176,7 @@ public class Validation_08_CustomisedStatement extends AbstractTest {
 		verifyTrue(customisedStatementPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Customized Statement Form"));
 
 		log.info("TC_11_NumberOfTransactionValueNoMustNotContainSpecialCharacter - STEP 02: Input special character into Number of Transaction field");
-		customisedStatementPage.inputToDynamicTextbox(driver, "numtransaction", numOfTransactionContainingSpecialCharacter);
+		customisedStatementPage.inputToDynamicTextbox(driver, "numtransaction", ValidationData.CustomisedStatement.NUM_OF_TRANSACTION_CONTAIN_SPECIAL_CHARACTER);
 
 		log.info("TC_11_NumberOfTransactionValueNoMustNotContainSpecialCharacter - STEP 03: Verify 'Special characters are not allowed' message is displayed");
 		verifyEquals(customisedStatementPage.getErrorMessageOfDynamicField(driver, "Number of Transaction"), "Special characters are not allowed");
@@ -207,7 +189,7 @@ public class Validation_08_CustomisedStatement extends AbstractTest {
 		verifyTrue(customisedStatementPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Customized Statement Form"));
 
 		log.info("TC_12_NumberOfTransactionValueMustNotContainSpace - STEP 02: Input a number which contains a space into Number of Transaction field");
-		customisedStatementPage.inputToDynamicTextbox(driver, "numtransaction", numOfTransactionContainingSpace);
+		customisedStatementPage.inputToDynamicTextbox(driver, "numtransaction", ValidationData.CustomisedStatement.NUM_OF_TRANSACTION_CONTAIN_SPACE);
 
 		log.info("TC_12_NumberOfTransactionValueMustNotContainSpace - STEP 03: Verify 'Characters are not allowed' message is displayed");
 		verifyEquals(customisedStatementPage.getErrorMessageOfDynamicField(driver, "Number of Transaction"), "Characters are not allowed");
@@ -220,7 +202,7 @@ public class Validation_08_CustomisedStatement extends AbstractTest {
 		verifyTrue(customisedStatementPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Customized Statement Form"));
 
 		log.info("TC_13_NumberOfTransactionValueoMustNotBeginWithSpace - STEP 02: Input first character as a space");
-		customisedStatementPage.inputToDynamicTextbox(driver, "numtransaction", numOfTransactionBeginWithSpace);
+		customisedStatementPage.inputToDynamicTextbox(driver, "numtransaction", ValidationData.CustomisedStatement.NUM_OF_TRANSACTION_BEGIN_WITH_SPACE);
 
 		log.info("TC_13_NumberOfTransactionValueoMustNotBeginWithSpace - STEP 03: Verify 'Characters are not allowed' message is displayed");
 		verifyEquals(customisedStatementPage.getErrorMessageOfDynamicField(driver, "Number of Transaction"), "Characters are not allowed");

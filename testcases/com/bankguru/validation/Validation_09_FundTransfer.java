@@ -8,6 +8,7 @@ import org.testng.annotations.Test;
 
 import com.bankguru.commons.Common_01_RegisterToSystem;
 
+import bankguru.ValidationData;
 import commons.AbstractTest;
 import commons.PageGeneratorManager;
 import pageObjects.FundTransferPageObject;
@@ -16,9 +17,7 @@ import pageObjects.LoginPageObject;
 
 public class Validation_09_FundTransfer extends AbstractTest {
 	WebDriver driver;
-	String payerAccountNoContainingCharacter, payerAccountNoContainSpecialCharacter;
-	String payeeAccountNoContainingCharacter, payeeAccountNoContainSpecialCharacter;
-	String amountContainingCharacter, amountContainSpecialCharacter;
+	
 	String fundTransferPageURL;
 
 	LoginPageObject loginPage;
@@ -29,14 +28,6 @@ public class Validation_09_FundTransfer extends AbstractTest {
 	@BeforeClass
 	public void setup(String browserName) {
 		driver = openMultipleBrowser(browserName);
-
-		// Data
-		payerAccountNoContainingCharacter = "123payer";
-		payerAccountNoContainSpecialCharacter = "123@#$";
-		payeeAccountNoContainingCharacter = "123payee";
-		payeeAccountNoContainSpecialCharacter = "123&*(";
-		amountContainingCharacter = "123amount";
-		amountContainSpecialCharacter = "123$";
 
 		loginPage = PageGeneratorManager.getLoginPage(driver);
 
@@ -68,7 +59,7 @@ public class Validation_09_FundTransfer extends AbstractTest {
 		verifyTrue(fundTransferPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Fund transfer"));
 
 		log.info("TC_02_PayerAccountNoMustNotContainCharacter - STEP 02: Input character into Payer Account No field");
-		fundTransferPage.inputToDynamicTextbox(driver, "payersaccount", payerAccountNoContainingCharacter);
+		fundTransferPage.inputToDynamicTextbox(driver, "payersaccount", ValidationData.FundTransfer.PAYER_ACCOUNT_NO_CONTAIN_CHARACTER);
 
 		log.info("TC_02_PayerAccountNoMustNotContainCharacter - STEP 03: Verify 'Characters are not allowed' message is displayed");
 		verifyEquals(fundTransferPage.getErrorMessageOfDynamicField(driver, "Payers account no"), "Characters are not allowed");
@@ -81,7 +72,7 @@ public class Validation_09_FundTransfer extends AbstractTest {
 		verifyTrue(fundTransferPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Fund transfer"));
 
 		log.info("TC_03_PayerAccountNoMustNotContainSpecialCharacter - STEP 02: Input special character into Payer Account No field");
-		fundTransferPage.inputToDynamicTextbox(driver, "payersaccount", payerAccountNoContainSpecialCharacter);
+		fundTransferPage.inputToDynamicTextbox(driver, "payersaccount", ValidationData.FundTransfer.PAYER_ACCOUNT_NO_CONTAIN_SPECIAL_CHARACTER);
 
 		log.info("TC_03_PayerAccountNoMustNotContainSpecialCharacter - STEP 03: Verify 'Special characters are not allowed' message is displayed");
 		verifyEquals(fundTransferPage.getErrorMessageOfDynamicField(driver, "Payers account no"), "Special characters are not allowed");
@@ -107,7 +98,7 @@ public class Validation_09_FundTransfer extends AbstractTest {
 		verifyTrue(fundTransferPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Fund transfer"));
 		
 		log.info("TC_05_PayeeAccountNoMustNotContainCharacter - STEP 02: Input character into Payee Account No field");
-		fundTransferPage.inputToDynamicTextbox(driver, "payeeaccount", payeeAccountNoContainingCharacter);
+		fundTransferPage.inputToDynamicTextbox(driver, "payeeaccount", ValidationData.FundTransfer.PAYEE_ACCOUNT_NO_CONTAIN_CHARACTER);
 
 		log.info("TC_05_PayeeAccountNoMustNotContainCharacter - STEP 03: Verify 'Characters are not allowed' message is displayed");
 		verifyEquals(fundTransferPage.getErrorMessageOfDynamicField(driver, "Payees account no"), "Characters are not allowed");
@@ -120,7 +111,7 @@ public class Validation_09_FundTransfer extends AbstractTest {
 		verifyTrue(fundTransferPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Fund transfer"));
 		
 		log.info("TC_06_PayeeAccountNoMustNotContainSpecialCharacter - STEP 02: Input special character into Payee Account No field");
-		fundTransferPage.inputToDynamicTextbox(driver, "payeeaccount", payeeAccountNoContainSpecialCharacter);
+		fundTransferPage.inputToDynamicTextbox(driver, "payeeaccount", ValidationData.FundTransfer.PAYEE_ACCOUNT_NO_CONTAIN_SPECIAL_CHARACTER);
 
 		log.info("TC_06_PayeeAccountNoMustNotContainSpecialCharacter - STEP 03: Verify 'Special characters are not allowed' message is displayed");
 		verifyEquals(fundTransferPage.getErrorMessageOfDynamicField(driver, "Payees account no"), "Special characters are not allowed");
@@ -146,7 +137,7 @@ public class Validation_09_FundTransfer extends AbstractTest {
 		verifyTrue(fundTransferPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Fund transfer"));
 		
 		log.info("TC_08_AmountMustNotContainCharacter - STEP 02: Input character into Amount field");
-		fundTransferPage.inputToDynamicTextbox(driver, "ammount", amountContainingCharacter);
+		fundTransferPage.inputToDynamicTextbox(driver, "ammount", ValidationData.FundTransfer.AMOUNT_CONTAIN_CHARACTER);
 
 		log.info("TC_08_AmountMustNotContainCharacter - STEP 03: Verify 'Characters are not allowed' message is displayed");
 		verifyEquals(fundTransferPage.getErrorMessageOfDynamicField(driver, "Amount"), "Characters are not allowed");
@@ -159,7 +150,7 @@ public class Validation_09_FundTransfer extends AbstractTest {
 		verifyTrue(fundTransferPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Fund transfer"));
 		
 		log.info("TC_09_AmountMustNotContainSpecialCharacter - STEP 02: Input special character into Amount field");
-		fundTransferPage.inputToDynamicTextbox(driver, "ammount", amountContainSpecialCharacter);
+		fundTransferPage.inputToDynamicTextbox(driver, "ammount", ValidationData.FundTransfer.AMOUNT_CONTAIN_SPECIAL_CHARACTER);
 
 		log.info("TC_09_AmountMustNotContainSpecialCharacter - STEP 03: Verify 'Special characters are not allowed' message is displayed");
 		verifyEquals(fundTransferPage.getErrorMessageOfDynamicField(driver, "Amount"), "Special characters are not allowed");

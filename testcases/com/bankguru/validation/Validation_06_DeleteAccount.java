@@ -8,6 +8,7 @@ import org.testng.annotations.Test;
 
 import com.bankguru.commons.Common_01_RegisterToSystem;
 
+import bankguru.ValidationData;
 import commons.AbstractTest;
 import commons.PageGeneratorManager;
 import pageObjects.DeleteAccountPageObject;
@@ -16,8 +17,7 @@ import pageObjects.LoginPageObject;
 
 public class Validation_06_DeleteAccount extends AbstractTest {
 	WebDriver driver;
-	String accountNoContainingCharacter, accountNoContainingSpecialCharacter;
-	String accountNoContainingSpace, accountNoBeginWithSpace;
+	
 	String deleteAccountPageURL;
 
 	LoginPageObject loginPage;
@@ -28,12 +28,6 @@ public class Validation_06_DeleteAccount extends AbstractTest {
 	@BeforeClass
 	public void setup(String browserName) {
 		driver = openMultipleBrowser(browserName);
-
-		// Data
-		accountNoContainingCharacter = "123Acc";
-		accountNoContainingSpecialCharacter = "123$%^";
-		accountNoContainingSpace = "123 456";
-		accountNoBeginWithSpace = " ";
 
 		loginPage = PageGeneratorManager.getLoginPage(driver);
 
@@ -65,7 +59,7 @@ public class Validation_06_DeleteAccount extends AbstractTest {
 		verifyTrue(deleteAccountPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Delete Account Form"));
 
 		log.info("TC_02_AccountNoMustNotContainCharacter - STEP 02: Input character into Account No field");
-		deleteAccountPage.inputToDynamicTextbox(driver, "accountno", accountNoContainingCharacter);
+		deleteAccountPage.inputToDynamicTextbox(driver, "accountno", ValidationData.DeleteAccount.ACCOUNT_NO_CONTAIN_CHARACTER);
 
 		log.info("TC_02_AccountNoMustNotContainCharacter - STEP 03: Verify 'Characters are not allowed' message is displayed");
 		verifyEquals(deleteAccountPage.getErrorMessageOfDynamicField(driver, "Account No"), "Characters are not allowed");
@@ -78,7 +72,7 @@ public class Validation_06_DeleteAccount extends AbstractTest {
 		verifyTrue(deleteAccountPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Delete Account Form"));
 
 		log.info("TC_03_AccountNoMustNotContainSpecialCharacter - STEP 02: Input special character into Account No field");
-		deleteAccountPage.inputToDynamicTextbox(driver, "accountno", accountNoContainingSpecialCharacter);
+		deleteAccountPage.inputToDynamicTextbox(driver, "accountno", ValidationData.DeleteAccount.ACCOUNT_NO_CONTAIN_SPECIAL_CHARACTER);
 
 		log.info("TC_03_AccountNoMustNotContainSpecialCharacter - STEP 03: Verify 'Special characters are not allowed' message is displayed");
 		verifyEquals(deleteAccountPage.getErrorMessageOfDynamicField(driver, "Account No"), "Special characters are not allowed");
@@ -91,7 +85,7 @@ public class Validation_06_DeleteAccount extends AbstractTest {
 		verifyTrue(deleteAccountPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Delete Account Form"));
 
 		log.info("TC_04_AccountNoMustNotContainSpace - STEP 02: Input a number which contains a space into Account No field");
-		deleteAccountPage.inputToDynamicTextbox(driver, "accountno", accountNoContainingSpace);
+		deleteAccountPage.inputToDynamicTextbox(driver, "accountno", ValidationData.DeleteAccount.ACCOUNT_NO_CONTAIN_SPACE);
 
 		log.info("TC_04_AccountNoMustNotContainSpace - STEP 03: Verify 'Characters are not allowed' message is displayed");
 		verifyEquals(deleteAccountPage.getErrorMessageOfDynamicField(driver, "Account No"), "Characters are not allowed");
@@ -104,7 +98,7 @@ public class Validation_06_DeleteAccount extends AbstractTest {
 		verifyTrue(deleteAccountPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Delete Account Form"));
 
 		log.info("TC_05_AccountNoMustNotBeginWithSpace - STEP 02: Input first character as a space");
-		deleteAccountPage.inputToDynamicTextbox(driver, "accountno", accountNoBeginWithSpace);
+		deleteAccountPage.inputToDynamicTextbox(driver, "accountno", ValidationData.DeleteAccount.ACCOUNT_NO_BEGIN_WITH_SPACE);
 
 		log.info("TC_05_AccountNoMustNotBeginWithSpace - STEP 03: Verify 'Characters are not allowed' message is displayed");
 		verifyEquals(deleteAccountPage.getErrorMessageOfDynamicField(driver, "Account No"), "Characters are not allowed");

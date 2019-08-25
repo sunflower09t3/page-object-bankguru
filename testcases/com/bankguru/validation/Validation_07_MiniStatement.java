@@ -8,6 +8,7 @@ import org.testng.annotations.Test;
 
 import com.bankguru.commons.Common_01_RegisterToSystem;
 
+import bankguru.ValidationData;
 import commons.AbstractTest;
 import commons.PageGeneratorManager;
 import pageObjects.HomePageObject;
@@ -16,8 +17,7 @@ import pageObjects.MiniStatementPageObject;
 
 public class Validation_07_MiniStatement extends AbstractTest {
 	WebDriver driver;
-	String accountNoContainingCharacter, accountNoContainingSpecialCharacter;
-	String accountNoContainingSpace, accountNoBeginWithSpace;
+
 	String miniStatementPageURL;
 
 	LoginPageObject loginPage;
@@ -28,12 +28,6 @@ public class Validation_07_MiniStatement extends AbstractTest {
 	@BeforeClass
 	public void setup(String browserName) {
 		driver = openMultipleBrowser(browserName);
-
-		// Data
-		accountNoContainingCharacter = "123Acc";
-		accountNoContainingSpecialCharacter = "123$%^";
-		accountNoContainingSpace = "123 456";
-		accountNoBeginWithSpace = " ";
 
 		loginPage = PageGeneratorManager.getLoginPage(driver);
 
@@ -65,7 +59,7 @@ public class Validation_07_MiniStatement extends AbstractTest {
 		verifyTrue(miniStatementPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Mini Statement Form"));
 
 		log.info("TC_02_AccountNoMustNotContainCharacter - STEP 02: Input character into Account No field");
-		miniStatementPage.inputToDynamicTextbox(driver, "accountno", accountNoContainingCharacter);
+		miniStatementPage.inputToDynamicTextbox(driver, "accountno", ValidationData.MiniStatement.ACCOUNT_NO_CONTAIN_CHARACTER);
 
 		log.info("TC_02_AccountNoMustNotContainCharacter - STEP 03: Verify 'Characters are not allowed' message is displayed");
 		verifyEquals(miniStatementPage.getErrorMessageOfDynamicField(driver, "Account No"), "Characters are not allowed");
@@ -78,7 +72,7 @@ public class Validation_07_MiniStatement extends AbstractTest {
 		verifyTrue(miniStatementPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Mini Statement Form"));
 
 		log.info("TC_03_AccountNoMustNotContainSpecialCharacter - STEP 02: Input special character into Account No field");
-		miniStatementPage.inputToDynamicTextbox(driver, "accountno", accountNoContainingSpecialCharacter);
+		miniStatementPage.inputToDynamicTextbox(driver, "accountno", ValidationData.MiniStatement.ACCOUNT_NO_CONTAIN_SPECIAL_CHARACTER);
 
 		log.info("TC_03_AccountNoMustNotContainSpecialCharacter - STEP 03: Verify 'Special characters are not allowed' message is displayed");
 		verifyEquals(miniStatementPage.getErrorMessageOfDynamicField(driver, "Account No"), "Special characters are not allowed");
@@ -91,7 +85,7 @@ public class Validation_07_MiniStatement extends AbstractTest {
 		verifyTrue(miniStatementPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Mini Statement Form"));
 
 		log.info("TC_04_AccountNoMustNotContainSpace - STEP 02: Input a number which contains a space into Account No field");
-		miniStatementPage.inputToDynamicTextbox(driver, "accountno", accountNoContainingSpace);
+		miniStatementPage.inputToDynamicTextbox(driver, "accountno", ValidationData.MiniStatement.ACCOUNT_NO_CONTAIN_SPACE);
 
 		log.info("TC_04_AccountNoMustNotContainSpace - STEP 03: Verify 'Characters are not allowed' message is displayed");
 		verifyEquals(miniStatementPage.getErrorMessageOfDynamicField(driver, "Account No"), "Characters are not allowed");
@@ -104,7 +98,7 @@ public class Validation_07_MiniStatement extends AbstractTest {
 		verifyTrue(miniStatementPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Mini Statement Form"));
 
 		log.info("TC_05_AccountNoMustNotBeginWithSpace - STEP 02: Input first character as a space");
-		miniStatementPage.inputToDynamicTextbox(driver, "accountno", accountNoBeginWithSpace);
+		miniStatementPage.inputToDynamicTextbox(driver, "accountno", ValidationData.MiniStatement.ACCOUNT_NO_BEGIN_WITH_SPACE);
 
 		log.info("TC_05_AccountNoMustNotBeginWithSpace - STEP 03: Verify 'Characters are not allowed' message is displayed");
 		verifyEquals(miniStatementPage.getErrorMessageOfDynamicField(driver, "Account No"), "Characters are not allowed");

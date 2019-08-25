@@ -8,6 +8,9 @@ import org.testng.annotations.Test;
 
 import com.bankguru.commons.Common_01_RegisterToSystem;
 
+import bankguru.AccountData;
+import bankguru.CustomerData;
+import bankguru.ValidationData;
 import commons.AbstractTest;
 import commons.PageGeneratorManager;
 import pageObjects.EditAccountPageObject;
@@ -18,13 +21,9 @@ import pageObjects.NewCustomerPageObject;
 
 public class Validation_05_EditAccount extends AbstractTest {
 	WebDriver driver;
-	String newCustomerID, newCustomerName, newCustomerDateOfBirth, newCustomerAddress, newCustomerState;
-	String newCustomerCity, newCustomerPIN, newCustomerTelephone, newCustomerEmail, newCustomerPassword;
-	String newAccountID, newAccountAccType;
-	String accountNoContainingCharacter, accountNoContainingSpecialCharacter;
-	String accountNoContainingSpace, accountNoBeginWithSpace;
-	String editAccountPageURL;
-	int newAccountInitialDeposit;
+	
+	String editAccountPageURL, newCustomerID, newAccountID, forthCustomerEmail;
+	
 	LoginPageObject loginPage;
 	HomePageObject homePage;
 	EditAccountPageObject editAccountPage;
@@ -34,28 +33,9 @@ public class Validation_05_EditAccount extends AbstractTest {
 	@Parameters("browser")
 	@BeforeClass
 	public void setup(String browserName) {
+		forthCustomerEmail = String.format(CustomerData.NewCustomer.FORTH_CUSTOMER_EMAIL, randomNumber());
+		
 		driver = openMultipleBrowser(browserName);
-
-		// Data
-		accountNoContainingCharacter = "123Acc";
-		accountNoContainingSpecialCharacter = "123$%^";
-		accountNoContainingSpace = "123 456";
-		accountNoBeginWithSpace = " ";
-
-		// New customer data
-		newCustomerName = "first customer";
-		newCustomerDateOfBirth = "01/01/1989";
-		newCustomerAddress = "PO Box 911 8331 Duis Avenue";
-		newCustomerState = "FL";
-		newCustomerCity = "Tampa";
-		newCustomerPIN = "466250";
-		newCustomerTelephone = "4555442476";
-		newCustomerEmail = "firstcustomer" + randomNumber() + "@gmail.com";
-		newCustomerPassword = "firstcustomerpassword";
-
-		// New account data
-		newAccountAccType = "Savings";
-		newAccountInitialDeposit = 50000;
 
 		loginPage = PageGeneratorManager.getLoginPage(driver);
 
@@ -87,7 +67,7 @@ public class Validation_05_EditAccount extends AbstractTest {
 		verifyTrue(editAccountPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Edit Account Form"));
 
 		log.info("TC_02_AccountNoMustNotContainCharacter - STEP 02: Input character into Account No field");
-		editAccountPage.inputToDynamicTextbox(driver, "accountno", accountNoContainingCharacter);
+		editAccountPage.inputToDynamicTextbox(driver, "accountno", ValidationData.EditAccount.ACCOUNT_NO_CONTAIN_CHARACTER);
 
 		log.info("TC_02_AccountNoMustNotContainCharacter - STEP 03: Verify 'Characters are not allowed' message is displayed");
 		verifyEquals(editAccountPage.getErrorMessageOfDynamicField(driver, "Account No"), "Characters are not allowed");
@@ -100,7 +80,7 @@ public class Validation_05_EditAccount extends AbstractTest {
 		verifyTrue(editAccountPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Edit Account Form"));
 
 		log.info("TC_03_AccountNoMustNotContainSpecialCharacter - STEP 02: Input special character into Account No field");
-		editAccountPage.inputToDynamicTextbox(driver, "accountno", accountNoContainingSpecialCharacter);
+		editAccountPage.inputToDynamicTextbox(driver, "accountno", ValidationData.EditAccount.ACCOUNT_NO_CONTAIN_SPECIAL_CHARACTER);
 
 		log.info("TC_03_AccountNoMustNotContainSpecialCharacter - STEP 03: Verify 'Special characters are not allowed' message is displayed");
 		verifyEquals(editAccountPage.getErrorMessageOfDynamicField(driver, "Account No"), "Special characters are not allowed");
@@ -113,7 +93,7 @@ public class Validation_05_EditAccount extends AbstractTest {
 		verifyTrue(editAccountPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Edit Account Form"));
 
 		log.info("TC_04_AccountNoMustNotContainSpace - STEP 02: Input a number which contains a space into Account No field");
-		editAccountPage.inputToDynamicTextbox(driver, "accountno", accountNoContainingSpace);
+		editAccountPage.inputToDynamicTextbox(driver, "accountno", ValidationData.EditAccount.ACCOUNT_NO_CONTAIN_SPACE);
 
 		log.info("TC_04_AccountNoMustNotContainSpace - STEP 03: Verify 'Characters are not allowed' message is displayed");
 		verifyEquals(editAccountPage.getErrorMessageOfDynamicField(driver, "Account No"), "Characters are not allowed");
@@ -126,7 +106,7 @@ public class Validation_05_EditAccount extends AbstractTest {
 		verifyTrue(editAccountPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Edit Account Form"));
 
 		log.info("TC_05_AccountNoMustNotBeginWithSpace - STEP 02: Input first character as a space");
-		editAccountPage.inputToDynamicTextbox(driver, "accountno", accountNoBeginWithSpace);
+		editAccountPage.inputToDynamicTextbox(driver, "accountno", ValidationData.EditAccount.ACCOUNT_NO_BEGIN_WITH_SPACE);
 
 		log.info("TC_05_AccountNoMustNotBeginWithSpace - STEP 03: Verify 'Characters are not allowed' message is displayed");
 		verifyEquals(editAccountPage.getErrorMessageOfDynamicField(driver, "Account No"), "Characters are not allowed");
@@ -140,16 +120,16 @@ public class Validation_05_EditAccount extends AbstractTest {
 		verifyTrue(newCustomerPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Add New Customer"));
 
 		log.info("TC_06_validAccountNo - STEP 02: Input valid data to New Customer form");
-		newCustomerPage.inputToDynamicTextbox(driver, "name", newCustomerName);
-		newCustomerPage.selectDynamicRadioButton(driver, "f");
-		newCustomerPage.inputToDynamicTextbox(driver, "dob", newCustomerDateOfBirth);
-		newCustomerPage.inputToDynamicTextarea(driver, "addr", newCustomerAddress);
-		newCustomerPage.inputToDynamicTextbox(driver, "city", newCustomerCity);
-		newCustomerPage.inputToDynamicTextbox(driver, "state", newCustomerState);
-		newCustomerPage.inputToDynamicTextbox(driver, "pinno", newCustomerPIN);
-		newCustomerPage.inputToDynamicTextbox(driver, "telephoneno", newCustomerTelephone);
-		newCustomerPage.inputToDynamicTextbox(driver, "emailid", newCustomerEmail);
-		newCustomerPage.inputToDynamicTextbox(driver, "password", newCustomerPassword);
+		newCustomerPage.inputToDynamicTextbox(driver, "name", CustomerData.NewCustomer.FORTH_CUSTOMER_NAME);
+		newCustomerPage.selectDynamicRadioButton(driver, CustomerData.NewCustomer.FORTH_CUSTOMER_GENDER.substring(0, 1));
+		newCustomerPage.inputToDynamicTextbox(driver, "dob", CustomerData.NewCustomer.FORTH_CUSTOMER_DATE_OF_BIRTH);
+		newCustomerPage.inputToDynamicTextarea(driver, "addr", CustomerData.NewCustomer.FORTH_CUSTOMER_ADDRESS);
+		newCustomerPage.inputToDynamicTextbox(driver, "city", CustomerData.NewCustomer.FORTH_CUSTOMER_CITY);
+		newCustomerPage.inputToDynamicTextbox(driver, "state", CustomerData.NewCustomer.FORTH_CUSTOMER_STATE);
+		newCustomerPage.inputToDynamicTextbox(driver, "pinno", CustomerData.NewCustomer.FORTH_CUSTOMER_PIN);
+		newCustomerPage.inputToDynamicTextbox(driver, "telephoneno", CustomerData.NewCustomer.FORTH_CUSTOMER_TELEPHONE);
+		newCustomerPage.inputToDynamicTextbox(driver, "emailid", forthCustomerEmail);
+		newCustomerPage.inputToDynamicTextbox(driver, "password", CustomerData.NewCustomer.FORTH_CUSTOMER_PASSWORD);
 
 		log.info("TC_06_validAccountNo - STEP 03: Click Submit button");
 		newCustomerPage.clickDynamicButton(driver, "sub");
@@ -162,8 +142,8 @@ public class Validation_05_EditAccount extends AbstractTest {
 
 		log.info("TC_06_validAccountNo - STEP 05: Fill in New Account page");
 		newAccountPage.inputToDynamicTextbox(driver, "cusid", newCustomerID);
-		newAccountPage.selectItemInDynamicDropdown(driver, newAccountAccType, "selaccount");
-		newAccountPage.inputToDynamicTextbox(driver, "inideposit", String.valueOf(newAccountInitialDeposit));
+		newAccountPage.selectItemInDynamicDropdown(driver, AccountData.NewAccount.FIRST_ACCOUNT_TYPE, "selaccount");
+		newAccountPage.inputToDynamicTextbox(driver, "inideposit", String.valueOf(AccountData.NewAccount.FIRST_ACCOUNT_INITIAL_DEPOSIT));
 
 		log.info("TC_06_validAccountNo - STEP 06: Click Submit button");
 		newAccountPage.clickDynamicButton(driver, "button2");

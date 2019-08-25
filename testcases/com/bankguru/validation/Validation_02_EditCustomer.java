@@ -6,6 +6,9 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import com.bankguru.commons.Common_01_RegisterToSystem;
+
+import bankguru.CustomerData;
+import bankguru.ValidationData;
 import commons.AbstractTest;
 import commons.PageGeneratorManager;
 import pageObjects.EditCustomerPageObject;
@@ -15,15 +18,7 @@ import pageObjects.NewCustomerPageObject;
 
 public class Validation_02_EditCustomer extends AbstractTest {
 	WebDriver driver;
-	String customerIDWithCharacter, customerIDWithSpecialCharacter;
-	String cityWithNumber, cityWithSpecialCharacter;
-	String stateWithSpecialCharacter, stateWithNumber;
-	String pinWithCharacter, emptyPin, pinWithLessThan6Digits, pinWithMoreThan6Digits, pinWithSpecialCharacter;
-	String telephoneWithSpecialCharacter;
-	String invalidEmail;
-	String newCustomerID, newCustomerName, newCustomerDateOfBirth, newCustomerAddress, newCustomerState;
-	String newCustomerCity, newCustomerPIN, newCustomerTelephone, newCustomerEmail, newCustomerPassword;
-	String editCustomerPageURL;
+	String editCustomerPageURL, newCustomerID, thirdCustomerEmail;
 
 	HomePageObject homePage;
 	LoginPageObject loginPage;
@@ -33,36 +28,12 @@ public class Validation_02_EditCustomer extends AbstractTest {
 	@Parameters("browser")
 	@BeforeClass
 	public void setup(String browserName) {
+		thirdCustomerEmail = String.format(CustomerData.NewCustomer.THIRD_CUSTOMER_EMAIL, randomNumber());
+		
 		driver = openMultipleBrowser(browserName);
 
 		loginPage = PageGeneratorManager.getLoginPage(driver);
 
-		// Data
-		customerIDWithCharacter = "123acc";
-		customerIDWithSpecialCharacter = "123$%^";
-		cityWithNumber = "city123";
-		cityWithSpecialCharacter = "city@#%";
-		stateWithSpecialCharacter = "state#$%";
-		stateWithNumber = "state123";
-		pinWithCharacter = "123abc";
-		pinWithLessThan6Digits = "123";
-		pinWithMoreThan6Digits = "123456789";
-		pinWithSpecialCharacter = "123%$@";
-		telephoneWithSpecialCharacter = "123456789$%";
-		invalidEmail = "tuongvi@";
-
-		// New customer data
-		newCustomerName = "first customer";
-		newCustomerDateOfBirth = "01/01/1989";
-		newCustomerAddress = "PO Box 911 8331 Duis Avenue";
-		newCustomerState = "FL";
-		newCustomerCity = "Tampa";
-		newCustomerPIN = "466250";
-		newCustomerTelephone = "4555442476";
-		newCustomerEmail = "firstcustomer" + randomNumber() + "@gmail.com";
-		newCustomerPassword = "firstcustomerpassword";
-
-		// Login
 		loginPage.inputToDynamicTextbox(driver, "uid", Common_01_RegisterToSystem.username);
 		loginPage.inputToDynamicTextbox(driver, "password", Common_01_RegisterToSystem.password);
 		homePage = loginPage.clickLoginButton();
@@ -89,9 +60,9 @@ public class Validation_02_EditCustomer extends AbstractTest {
 		log.info("TC_02_CustomerIDCannotContainCharacter - STEP 01: Open Edit Customer page");
 		editCustomerPage.openURL(driver, editCustomerPageURL);
 		verifyTrue(editCustomerPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Edit Customer Form"));
-		
+
 		log.info("TC_02_CustomerIDCannotContainCharacter - STEP 02: Input to Customer ID field");
-		editCustomerPage.inputToDynamicTextbox(driver, "cusid", customerIDWithCharacter);
+		editCustomerPage.inputToDynamicTextbox(driver, "cusid", ValidationData.EditCustomer.CUSTOMER_ID_WITH_CHARACTER);
 
 		log.info("TC_02_CustomerIDCannotContainCharacter - STEP 03: Verify 'Characters are not allowed' message is displayed");
 		verifyEquals(editCustomerPage.getErrorMessageOfDynamicField(driver, "Customer ID"), "Characters are not allowed");
@@ -102,9 +73,9 @@ public class Validation_02_EditCustomer extends AbstractTest {
 		log.info("TC_03_CustomerIDCannotContainSpecialCharacter - STEP 01: Open Edit Customer page");
 		editCustomerPage.openURL(driver, editCustomerPageURL);
 		verifyTrue(editCustomerPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Edit Customer Form"));
-		
+
 		log.info("TC_03_CustomerIDCannotContainSpecialCharacter STEP 02: Input to Customer ID field");
-		editCustomerPage.inputToDynamicTextbox(driver, "cusid", customerIDWithSpecialCharacter);
+		editCustomerPage.inputToDynamicTextbox(driver, "cusid", ValidationData.EditCustomer.CUSTOMER_ID_WITH_SPECIAL_CHARACTER);
 
 		log.info("TC_03_CustomerIDCannotContainSpecialCharacter STEP 03: Verify 'Special characters are not allowed' message is displayed");
 		verifyEquals(editCustomerPage.getErrorMessageOfDynamicField(driver, "Customer ID"), "Special characters are not allowed");
@@ -118,16 +89,16 @@ public class Validation_02_EditCustomer extends AbstractTest {
 		verifyTrue(newCustomerPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Add New Customer"));
 
 		log.info("TC_04_ValidCustomerID - STEP 02: Input valid data to Add New Customer form");
-		newCustomerPage.inputToDynamicTextbox(driver, "name", newCustomerName);
-		newCustomerPage.selectDynamicRadioButton(driver, "f");
-		newCustomerPage.inputToDynamicTextbox(driver, "dob", newCustomerDateOfBirth);
-		newCustomerPage.inputToDynamicTextarea(driver, "addr", newCustomerAddress);
-		newCustomerPage.inputToDynamicTextbox(driver, "city", newCustomerCity);
-		newCustomerPage.inputToDynamicTextbox(driver, "state", newCustomerState);
-		newCustomerPage.inputToDynamicTextbox(driver, "pinno", newCustomerPIN);
-		newCustomerPage.inputToDynamicTextbox(driver, "telephoneno", newCustomerTelephone);
-		newCustomerPage.inputToDynamicTextbox(driver, "emailid", newCustomerEmail);
-		newCustomerPage.inputToDynamicTextbox(driver, "password", newCustomerPassword);
+		newCustomerPage.inputToDynamicTextbox(driver, "name", CustomerData.NewCustomer.THIRD_CUSTOMER_NAME);
+		newCustomerPage.selectDynamicRadioButton(driver, CustomerData.NewCustomer.THIRD_CUSTOMER_GENDER.substring(0, 1));
+		newCustomerPage.inputToDynamicTextbox(driver, "dob", CustomerData.NewCustomer.THIRD_CUSTOMER_DATE_OF_BIRTH);
+		newCustomerPage.inputToDynamicTextarea(driver, "addr", CustomerData.NewCustomer.THIRD_CUSTOMER_ADDRESS);
+		newCustomerPage.inputToDynamicTextbox(driver, "city", CustomerData.NewCustomer.THIRD_CUSTOMER_CITY);
+		newCustomerPage.inputToDynamicTextbox(driver, "state", CustomerData.NewCustomer.THIRD_CUSTOMER_STATE);
+		newCustomerPage.inputToDynamicTextbox(driver, "pinno", CustomerData.NewCustomer.THIRD_CUSTOMER_PIN);
+		newCustomerPage.inputToDynamicTextbox(driver, "telephoneno", CustomerData.NewCustomer.THIRD_CUSTOMER_TELEPHONE);
+		newCustomerPage.inputToDynamicTextbox(driver, "emailid", thirdCustomerEmail);
+		newCustomerPage.inputToDynamicTextbox(driver, "password", CustomerData.NewCustomer.THIRD_CUSTOMER_PASSWORD);
 
 		log.info("TC_04_ValidCustomerID - STEP 03: Click Submit button");
 		newCustomerPage.clickDynamicButton(driver, "sub");
@@ -148,18 +119,18 @@ public class Validation_02_EditCustomer extends AbstractTest {
 		verifyTrue(editCustomerPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Edit Customer"));
 	}
 
-	@Test 
+	@Test
 	public void TC_05_AddressCannotBeBlank() {
 		log.info("TC_05_AddressCannotBeBlank - STEP 01: Open Edit Customer page");
 		editCustomerPage.openURL(driver, editCustomerPageURL);
 		verifyTrue(editCustomerPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Edit Customer Form"));
-		
+
 		log.info("TC_05_AddressCannotBeBlank - STEP 02: Input to Customer ID textbox");
 		editCustomerPage.inputToDynamicTextbox(driver, "cusid", newCustomerID);
-		
+
 		log.info("TC_05_AddressCannotBeBlank - STEP 03: Click Submit button");
 		editCustomerPage.clickDynamicButton(driver, "AccSubmit");
-		
+
 		log.info("TC_05_AddressCannotBeBlank - STEP 04: Do not input a value into Address field and press Tab key");
 		editCustomerPage.inputToDynamicTextarea(driver, "addr", "");
 		editCustomerPage.pressTabToDynamicTextarea(driver, "addr");
@@ -168,18 +139,18 @@ public class Validation_02_EditCustomer extends AbstractTest {
 		verifyEquals(editCustomerPage.getErrorMessageOfDynamicField(driver, "Address"), "Address Field must not be blank");
 	}
 
-	@Test 
+	@Test
 	public void TC_06_CityCannotBeBlank() {
 		log.info("TC_06_CityCannotBeBlank - STEP 01: Open Edit Customer page");
 		editCustomerPage.openURL(driver, editCustomerPageURL);
 		verifyTrue(editCustomerPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Edit Customer Form"));
-		
+
 		log.info("TC_06_CityCannotBeBlank - STEP 02: Input to Customer ID textbox");
 		editCustomerPage.inputToDynamicTextbox(driver, "cusid", newCustomerID);
-		
+
 		log.info("TC_06_CityCannotBeBlank - STEP 03: Click Submit button");
 		editCustomerPage.clickDynamicButton(driver, "AccSubmit");
-		
+
 		log.info("TC_06_CityCannotBeBlank - STEP 04: Do not input a value into City field and press Tab key");
 		editCustomerPage.inputToDynamicTextbox(driver, "city", "");
 		editCustomerPage.pressTabToDynamicTextbox(driver, "city");
@@ -188,56 +159,56 @@ public class Validation_02_EditCustomer extends AbstractTest {
 		verifyEquals(editCustomerPage.getErrorMessageOfDynamicField(driver, "City"), "City Field must not be blank");
 	}
 
-	@Test 
+	@Test
 	public void TC_07_CityCannotContainNumber() {
 		log.info("TC_07_CityCannotContainNumber - STEP 01: Open Edit Customer page");
 		editCustomerPage.openURL(driver, editCustomerPageURL);
 		verifyTrue(editCustomerPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Edit Customer Form"));
-		
+
 		log.info("TC_07_CityCannotContainNumber - STEP 02: Input to Customer ID textbox");
 		editCustomerPage.inputToDynamicTextbox(driver, "cusid", newCustomerID);
-		
+
 		log.info("TC_07_CityCannotContainNumber - STEP 03: Click Submit button");
 		editCustomerPage.clickDynamicButton(driver, "AccSubmit");
-		
+
 		log.info("TC_07_CityCannotContainNumber - STEP 04: Input to City field");
-		editCustomerPage.inputToDynamicTextbox(driver, "city", cityWithNumber);
+		editCustomerPage.inputToDynamicTextbox(driver, "city", ValidationData.EditCustomer.CITY_WITH_NUMBER);
 
 		log.info("TC_07_CityCannotContainNumber - STEP 05: Verify 'Numbers are not allowed' message is displayed");
 		verifyEquals(editCustomerPage.getErrorMessageOfDynamicField(driver, "City"), "Numbers are not allowed");
 	}
 
-	@Test 
+	@Test
 	public void TC_08_CityCannotContainSpecialCharacter() {
 		log.info("TC_08_CityCannotContainSpecialCharacter - STEP 01: Open Edit Customer page");
 		editCustomerPage.openURL(driver, editCustomerPageURL);
 		verifyTrue(editCustomerPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Edit Customer Form"));
-		
+
 		log.info("TC_08_CityCannotContainSpecialCharacter - STEP 02: Input to Customer ID textbox");
 		editCustomerPage.inputToDynamicTextbox(driver, "cusid", newCustomerID);
-		
+
 		log.info("TC_08_CityCannotContainSpecialCharacter - STEP 03: Click Submit button");
 		editCustomerPage.clickDynamicButton(driver, "AccSubmit");
-		
+
 		log.info("TC_08_CityCannotContainSpecialCharacter - STEP 04: Input to City field");
-		editCustomerPage.inputToDynamicTextbox(driver, "city", cityWithSpecialCharacter);
+		editCustomerPage.inputToDynamicTextbox(driver, "city", ValidationData.EditCustomer.CITY_WITH_SPECIAL_CHARACTER);
 
 		log.info("TC_08_CityCannotContainSpecialCharacter - STEP 05: Verify 'Special characters are not allowed' message is displayed");
 		verifyEquals(editCustomerPage.getErrorMessageOfDynamicField(driver, "City"), "Special characters are not allowed");
 	}
 
-	@Test 
+	@Test
 	public void TC_09_StateCannotBeBlank() {
 		log.info("TC_09_StateCannotBeBlank - STEP 01: Open Edit Customer page");
 		editCustomerPage.openURL(driver, editCustomerPageURL);
 		verifyTrue(editCustomerPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Edit Customer Form"));
-		
+
 		log.info("TC_09_StateCannotBeBlank - STEP 02: Input to Customer ID textbox");
 		editCustomerPage.inputToDynamicTextbox(driver, "cusid", newCustomerID);
-		
+
 		log.info("TC_09_StateCannotBeBlank - STEP 03: Click Submit button");
 		editCustomerPage.clickDynamicButton(driver, "AccSubmit");
-		
+
 		log.info("TC_09_StateCannotBeBlank - STEP 04: Do not input a value into State field and press Tab key");
 		editCustomerPage.inputToDynamicTextbox(driver, "state", "");
 		editCustomerPage.pressTabToDynamicTextbox(driver, "state");
@@ -246,75 +217,75 @@ public class Validation_02_EditCustomer extends AbstractTest {
 		verifyEquals(editCustomerPage.getErrorMessageOfDynamicField(driver, "State"), "State must not be blank");
 	}
 
-	@Test 
+	@Test
 	public void TC_10_StateCannotContainNumber() {
 		log.info("TC_10_StateCannotContainNumber - STEP 01: Open Edit Customer page");
 		editCustomerPage.openURL(driver, editCustomerPageURL);
 		verifyTrue(editCustomerPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Edit Customer Form"));
-		
+
 		log.info("TC_10_StateCannotContainNumber - STEP 02: Input to Customer ID textbox");
 		editCustomerPage.inputToDynamicTextbox(driver, "cusid", newCustomerID);
-		
+
 		log.info("TC_10_StateCannotContainNumber - STEP 03: Click Submit button");
 		editCustomerPage.clickDynamicButton(driver, "AccSubmit");
-		
+
 		log.info("TC_10_StateCannotContainNumber - STEP 04: Input to State field");
-		editCustomerPage.inputToDynamicTextbox(driver, "state", stateWithNumber);
+		editCustomerPage.inputToDynamicTextbox(driver, "state", ValidationData.EditCustomer.STATE_WITH_NUMBER);
 
 		log.info("TC_10_StateCannotContainNumber - STEP 05: Verify 'Numbers are not allowed' message is displayed");
 		verifyEquals(editCustomerPage.getErrorMessageOfDynamicField(driver, "State"), "Numbers are not allowed");
 	}
 
-	@Test 
+	@Test
 	public void TC_11_StateCannotContainSpecialCharacter() {
 		log.info("TC_11_StateCannotContainSpecialCharacter - STEP 01: Open Edit Customer page");
 		editCustomerPage.openURL(driver, editCustomerPageURL);
 		verifyTrue(editCustomerPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Edit Customer Form"));
-		
+
 		log.info("TC_11_StateCannotContainSpecialCharacter - STEP 02: Input to Customer ID textbox");
 		editCustomerPage.inputToDynamicTextbox(driver, "cusid", newCustomerID);
-		
+
 		log.info("TC_11_StateCannotContainSpecialCharacter - STEP 03: Click Submit button");
 		editCustomerPage.clickDynamicButton(driver, "AccSubmit");
-		
+
 		log.info("TC_11_StateCannotContainSpecialCharacter - STEP 04: Input to State field");
-		editCustomerPage.inputToDynamicTextbox(driver, "state", stateWithSpecialCharacter);
+		editCustomerPage.inputToDynamicTextbox(driver, "state", ValidationData.EditCustomer.STATE_WITH_SPECIAL_CHARACTER);
 
 		log.info("TC_11_StateCannotContainSpecialCharacter - STEP 05: Verify 'Special characters are not allowed' message is displayed");
 		verifyEquals(editCustomerPage.getErrorMessageOfDynamicField(driver, "State"), "Special characters are not allowed");
 	}
 
-	@Test 
+	@Test
 	public void TC_12_PinCannotContainCharacter() {
 		log.info("TC_12_PinCannotContainCharacter - STEP 01: Open Edit Customer page");
 		editCustomerPage.openURL(driver, editCustomerPageURL);
 		verifyTrue(editCustomerPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Edit Customer Form"));
-		
+
 		log.info("TC_12_PinCannotContainCharacter - STEP 02: Input to Customer ID textbox");
 		editCustomerPage.inputToDynamicTextbox(driver, "cusid", newCustomerID);
-		
+
 		log.info("TC_12_PinCannotContainCharacter - STEP 03: Click Submit button");
 		editCustomerPage.clickDynamicButton(driver, "AccSubmit");
-		
+
 		log.info("TC_12_PinCannotContainCharacter - STEP 04: Input to Pin field");
-		editCustomerPage.inputToDynamicTextbox(driver, "pinno", pinWithCharacter);
+		editCustomerPage.inputToDynamicTextbox(driver, "pinno", ValidationData.EditCustomer.PIN_WITH_CHARACTER);
 
 		log.info("TC_12_PinCannotContainCharacter - STEP 05: Verify 'Characters are not allowed' message is displayed");
 		verifyEquals(editCustomerPage.getErrorMessageOfDynamicField(driver, "PIN"), "Characters are not allowed");
 	}
 
-	@Test 
+	@Test
 	public void TC_13_PinCannotBeBlank() {
 		log.info("TC_13_PinCannotBeBlank - STEP 01: Open Edit Customer page");
 		editCustomerPage.openURL(driver, editCustomerPageURL);
 		verifyTrue(editCustomerPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Edit Customer Form"));
-		
+
 		log.info("TC_13_PinCannotBeBlank - STEP 02: Input to Customer ID textbox");
 		editCustomerPage.inputToDynamicTextbox(driver, "cusid", newCustomerID);
-		
+
 		log.info("TC_13_PinCannotBeBlank - STEP 03: Click Submit button");
 		editCustomerPage.clickDynamicButton(driver, "AccSubmit");
-		
+
 		log.info("TC_13_PinCannotBeBlank - STEP 04: Do not input a value into Pin field and press Tab key");
 		editCustomerPage.inputToDynamicTextbox(driver, "pinno", "");
 		editCustomerPage.pressTabToDynamicTextbox(driver, "pinno");
@@ -328,51 +299,51 @@ public class Validation_02_EditCustomer extends AbstractTest {
 		log.info("TC_14_PinCannotLessThan6Digits - STEP 01: Open Edit Customer page");
 		editCustomerPage.openURL(driver, editCustomerPageURL);
 		verifyTrue(editCustomerPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Edit Customer Form"));
-		
+
 		log.info("TC_14_PinCannotLessThan6Digits - STEP 02: Input to Customer ID textbox");
 		editCustomerPage.inputToDynamicTextbox(driver, "cusid", newCustomerID);
-		
+
 		log.info("TC_14_PinCannotLessThan6Digits - STEP 03: Click Submit button");
 		editCustomerPage.clickDynamicButton(driver, "AccSubmit");
-		
+
 		log.info("TC_14_PinCannotLessThan6Digits - STEP 04: Input to Pin field");
-		editCustomerPage.inputToDynamicTextbox(driver, "pinno", pinWithLessThan6Digits);
+		editCustomerPage.inputToDynamicTextbox(driver, "pinno", ValidationData.EditCustomer.PIN_WITH_LESS_THAN_6_DIGITS);
 
 		log.info("TC_14_PinCannotLessThan6Digits - STEP 05: Verify 'PIN Code must have 6 Digits' message is displayed");
 		verifyEquals(editCustomerPage.getErrorMessageOfDynamicField(driver, "PIN"), "PIN Code must have 6 Digits");
 	}
 
-	@Test 
+	@Test
 	public void TC_15_PinCannotHaveSpecialCharacter() {
 		log.info("TC_15_PinCannotHaveSpecialCharacter - STEP 01: Open Edit Customer page");
 		editCustomerPage.openURL(driver, editCustomerPageURL);
 		verifyTrue(editCustomerPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Edit Customer Form"));
-		
+
 		log.info("TC_15_PinCannotHaveSpecialCharacter - STEP 02: Input to Customer ID textbox");
 		editCustomerPage.inputToDynamicTextbox(driver, "cusid", newCustomerID);
-		
+
 		log.info("TC_15_PinCannotHaveSpecialCharacter - STEP 03: Click Submit button");
 		editCustomerPage.clickDynamicButton(driver, "AccSubmit");
-		
+
 		log.info("TC_15_PinCannotHaveSpecialCharacter - STEP 04: Input to Pin field");
-		editCustomerPage.inputToDynamicTextbox(driver, "pinno", pinWithSpecialCharacter);
+		editCustomerPage.inputToDynamicTextbox(driver, "pinno", ValidationData.EditCustomer.PIN_WITH_SPECIAL_CHARACTER);
 
 		log.info("TC_15_PinCannotHaveSpecialCharacter - STEP 05: Verify 'Special characters are not allowed' message is displayed");
 		verifyEquals(editCustomerPage.getErrorMessageOfDynamicField(driver, "PIN"), "Special characters are not allowed");
 	}
 
-	@Test 
+	@Test
 	public void TC_16_TelephoneCannotBeBlank() {
 		log.info("TC_16_TelephoneCannotBeBlank - STEP 01: Open Edit Customer page");
 		editCustomerPage.openURL(driver, editCustomerPageURL);
 		verifyTrue(editCustomerPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Edit Customer Form"));
-		
+
 		log.info("TC_16_TelephoneCannotBeBlank - STEP 02: Input to Customer ID textbox");
 		editCustomerPage.inputToDynamicTextbox(driver, "cusid", newCustomerID);
-		
+
 		log.info("TC_16_TelephoneCannotBeBlank - STEP 03: Click Submit button");
 		editCustomerPage.clickDynamicButton(driver, "AccSubmit");
-		
+
 		log.info("TC_16_TelephoneCannotBeBlank - STEP 04: Do not input a value into Telephone field and press Tab key");
 		editCustomerPage.inputToDynamicTextbox(driver, "telephoneno", "");
 		editCustomerPage.pressTabToDynamicTextbox(driver, "telephoneno");
@@ -381,37 +352,37 @@ public class Validation_02_EditCustomer extends AbstractTest {
 		verifyEquals(editCustomerPage.getErrorMessageOfDynamicField(driver, "Mobile Number"), "Mobile no must not be blank");
 	}
 
-	@Test 
+	@Test
 	public void TC_17_TelephoneCannotContainSpecialCharacter() {
 		log.info("TC_17_TelephoneCannotContainSpecialCharacter - STEP 01: Open Edit Customer page");
 		editCustomerPage.openURL(driver, editCustomerPageURL);
 		verifyTrue(editCustomerPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Edit Customer Form"));
-		
+
 		log.info("TC_17_TelephoneCannotContainSpecialCharacter - STEP 02: Input to Customer ID textbox");
 		editCustomerPage.inputToDynamicTextbox(driver, "cusid", newCustomerID);
-		
+
 		log.info("TC_17_TelephoneCannotContainSpecialCharacter - STEP 03: Click Submit button");
 		editCustomerPage.clickDynamicButton(driver, "AccSubmit");
-		
+
 		log.info("TC_17_TelephoneCannotContainSpecialCharacter - STEP 04: Input to Telephone field");
-		editCustomerPage.inputToDynamicTextbox(driver, "telephoneno", telephoneWithSpecialCharacter);
+		editCustomerPage.inputToDynamicTextbox(driver, "telephoneno", ValidationData.EditCustomer.TELEPHONE_WITH_SPECIAL_CHARACTER);
 
 		log.info("TC_17_TelephoneCannotContainSpecialCharacter - STEP 05: Verify 'Special characters are not allowed' message is displayed");
 		verifyEquals(editCustomerPage.getErrorMessageOfDynamicField(driver, "Mobile Number"), "Special characters are not allowed");
 	}
 
-	@Test 
+	@Test
 	public void TC_18_EmailCannotBeBlank() {
 		log.info("TC_18_EmailCannotBeBlank - STEP 01: Open Edit Customer page");
 		editCustomerPage.openURL(driver, editCustomerPageURL);
 		verifyTrue(editCustomerPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Edit Customer Form"));
-		
+
 		log.info("TC_18_EmailCannotBeBlank - STEP 02: Input to Customer ID textbox");
 		editCustomerPage.inputToDynamicTextbox(driver, "cusid", newCustomerID);
-		
+
 		log.info("TC_18_EmailCannotBeBlank - STEP 03: Click Submit button");
 		editCustomerPage.clickDynamicButton(driver, "AccSubmit");
-		
+
 		log.info("TC_18_EmailCannotBeBlank - STEP 04: Do not input a value into Email field and press Tab key");
 		editCustomerPage.inputToDynamicTextbox(driver, "emailid", "");
 		editCustomerPage.pressTabToDynamicTextbox(driver, "emailid");
@@ -420,20 +391,20 @@ public class Validation_02_EditCustomer extends AbstractTest {
 		verifyEquals(editCustomerPage.getErrorMessageOfDynamicField(driver, "E-mail"), "Email-ID must not be blank");
 	}
 
-	@Test 
+	@Test
 	public void TC_19_EmaitCannotBeInvalidFormat() {
 		log.info("TC_19_EmaitCannotBeInvalidFormat - STEP 01: Open Edit Customer page");
 		editCustomerPage.openURL(driver, editCustomerPageURL);
 		verifyTrue(editCustomerPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Edit Customer Form"));
-		
+
 		log.info("TC_19_EmaitCannotBeInvalidFormat - STEP 02: Input to Customer ID textbox");
 		editCustomerPage.inputToDynamicTextbox(driver, "cusid", newCustomerID);
-		
+
 		log.info("TC_19_EmaitCannotBeInvalidFormat - STEP 03: Click Submit button");
 		editCustomerPage.clickDynamicButton(driver, "AccSubmit");
-		
+
 		log.info("TC_19_EmaitCannotBeInvalidFormat - STEP 04: Input to Email field");
-		editCustomerPage.inputToDynamicTextbox(driver, "emailid", invalidEmail);
+		editCustomerPage.inputToDynamicTextbox(driver, "emailid", ValidationData.EditCustomer.INVALID_EMAIL);
 
 		log.info("TC_19_EmaitCannotBeInvalidFormat - STEP 05: Verify 'Email-ID is not valid' message is displayed");
 		verifyEquals(editCustomerPage.getErrorMessageOfDynamicField(driver, "E-mail"), "Email-ID is not valid");

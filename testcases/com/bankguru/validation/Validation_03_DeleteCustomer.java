@@ -8,6 +8,7 @@ import org.testng.annotations.Test;
 
 import com.bankguru.commons.Common_01_RegisterToSystem;
 
+import bankguru.ValidationData;
 import commons.AbstractTest;
 import commons.PageGeneratorManager;
 import pageObjects.DeleteCustomerPageObject;
@@ -16,8 +17,9 @@ import pageObjects.LoginPageObject;
 
 public class Validation_03_DeleteCustomer extends AbstractTest {
 	WebDriver driver;
-	String customerIDContainingCharacter, customerIDContainingSpecialCharacter, customerIDContainingSpace, customerIDBeginWithSpace;
+	
 	String deleteCustomerPageURL;
+	
 	LoginPageObject loginPage;
 	HomePageObject homePage;
 	DeleteCustomerPageObject deleteCustomerPage;
@@ -26,12 +28,6 @@ public class Validation_03_DeleteCustomer extends AbstractTest {
 	@BeforeClass
 	public void setup(String browserName) {
 		driver = openMultipleBrowser(browserName);
-
-		// Data
-		customerIDContainingCharacter = "123abc";
-		customerIDContainingSpecialCharacter = "123$%^";
-		customerIDContainingSpace = "123 45";
-		customerIDBeginWithSpace = " 123";
 
 		loginPage = PageGeneratorManager.getLoginPage(driver);
 
@@ -63,7 +59,7 @@ public class Validation_03_DeleteCustomer extends AbstractTest {
 		verifyTrue(deleteCustomerPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Delete Customer Form"));
 
 		log.info("TC_02_CustomerIDMustNotContainCharacter - STEP 02: Input to Customer ID field");
-		deleteCustomerPage.inputToDynamicTextbox(driver, "cusid", customerIDContainingCharacter);
+		deleteCustomerPage.inputToDynamicTextbox(driver, "cusid", ValidationData.DeleteCustomer.CUSTOMER_ID_CONTAIN_CHARACTER);
 
 		log.info("TC_02_CustomerIDMustNotContainCharacter - STEP 03: Verify 'Characters are not allowed' message is displayed");
 		verifyEquals(deleteCustomerPage.getErrorMessageOfDynamicField(driver, "Customer ID"), "Characters are not allowed");
@@ -76,7 +72,7 @@ public class Validation_03_DeleteCustomer extends AbstractTest {
 		verifyTrue(deleteCustomerPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Delete Customer Form"));
 
 		log.info("TC_03_CustomerIDMustNotContainSpecialCharacter - STEP 02: Input to Customer ID field");
-		deleteCustomerPage.inputToDynamicTextbox(driver, "cusid", customerIDContainingSpecialCharacter);
+		deleteCustomerPage.inputToDynamicTextbox(driver, "cusid", ValidationData.DeleteCustomer.CUSTOMER_ID_CONTAIN_SPECIAL_CHARACTER);
 
 		log.info("TC_03_CustomerIDMustNotContainSpecialCharacter - STEP 03: Verify 'Special characters are not allowed' message is displayed");
 		verifyEquals(deleteCustomerPage.getErrorMessageOfDynamicField(driver, "Customer ID"), "Special characters are not allowed");
@@ -89,7 +85,7 @@ public class Validation_03_DeleteCustomer extends AbstractTest {
 		verifyTrue(deleteCustomerPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Delete Customer Form"));
 
 		log.info("TC_04_CustomerIDMustNotContainSpace - STEP 02: Input to Customer ID field");
-		deleteCustomerPage.inputToDynamicTextbox(driver, "cusid", customerIDContainingSpace);
+		deleteCustomerPage.inputToDynamicTextbox(driver, "cusid", ValidationData.DeleteCustomer.CUSTOMER_ID_CONTAIN_SPACE);
 
 		log.info("TC_04_CustomerIDMustNotContainSpace - STEP 03: Verify 'Characters are not allowed' message is displayed");
 		verifyEquals(deleteCustomerPage.getErrorMessageOfDynamicField(driver, "Customer ID"), "Characters are not allowed");
@@ -102,7 +98,7 @@ public class Validation_03_DeleteCustomer extends AbstractTest {
 		verifyTrue(deleteCustomerPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Delete Customer Form"));
 
 		log.info("TC_05_CustomerIDMustNotBeginWithSpace - STEP 01: Input to Customer ID field");
-		deleteCustomerPage.inputToDynamicTextbox(driver, "cusid", customerIDBeginWithSpace);
+		deleteCustomerPage.inputToDynamicTextbox(driver, "cusid", ValidationData.DeleteCustomer.CUSTOMER_ID_BEGIN_WITH_SPACE);
 
 		log.info("TC_05_CustomerIDMustNotBeginWithSpace - STEP 02: Verify 'First character can not have space' message is displayed");
 		verifyEquals(deleteCustomerPage.getErrorMessageOfDynamicField(driver, "Customer ID"), "First character can not have space");
