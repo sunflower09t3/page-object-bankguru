@@ -4,6 +4,7 @@
 		<listener class-name="org.uncommons.reportng.HTMLReporter"></listener>
 		<listener class-name="org.uncommons.reportng.JUnitXMLReporter"></listener>
 		<listener class-name="commons.ExtentReportListener"></listener>
+		<listener class-name="commons.AnnotationTransfomer"></listener>
 	</listeners>
 
 	<test name="Run on Firefox">
@@ -20,7 +21,7 @@
 			<class name = "com.bankguru.validation.Validation_08_CustomisedStatement"/>
 			<class name = "com.bankguru.validation.Validation_09_FundTransfer"/>
 			<class name = "com.bankguru.validation.Validation_10_ChangePassword"/> 
-			<class name = "com.bankguru.payment.Payment" />
+			<class name = "com.bankguru.payment.Payment_Workflow" />
 		</classes>
 	</test>
 
@@ -38,7 +39,7 @@
 			<class name = "com.bankguru.validation.Validation_08_CustomisedStatement"/>
 			<class name = "com.bankguru.validation.Validation_09_FundTransfer"/>
 			<class name = "com.bankguru.validation.Validation_10_ChangePassword"/> 
-			<class name = "com.bankguru.payment.Payment" />  
+			<class name = "com.bankguru.payment.Payment_Workflow" />  
 		</classes>
 	</test>
 
@@ -56,8 +57,8 @@
 			<class name = "com.bankguru.validation.Validation_08_CustomisedStatement"/>
 			<class name = "com.bankguru.validation.Validation_09_FundTransfer"/>
 			<class name = "com.bankguru.validation.Validation_10_ChangePassword"/>
-			<class name = "com.bankguru.payment.Payment" />
+			<class name = "com.bankguru.payment.Payment_Workflow" />
 		</classes>
-	</test>  -->
+	</test>
 
 </suite> <!-- Suite -->
