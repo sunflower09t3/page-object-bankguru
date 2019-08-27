@@ -1,5 +1,7 @@
 package com.bankguru.validation;
 
+import java.io.IOException;
+
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -7,8 +9,10 @@ import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import com.bankguru.commons.Common_01_RegisterToSystem;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 
-import bankguru.ValidationData;
+import bankguru.ValidationDataJson;
 import commons.AbstractTest;
 import commons.PageGeneratorManager;
 import pageObjects.FundTransferPageObject;
@@ -17,16 +21,17 @@ import pageObjects.LoginPageObject;
 
 public class Validation_09_FundTransfer extends AbstractTest {
 	WebDriver driver;
-	
 	String fundTransferPageURL;
-
 	LoginPageObject loginPage;
 	HomePageObject homePage;
 	FundTransferPageObject fundTransferPage;
+	ValidationDataJson validationData;
 
-	@Parameters("browser")
+	@Parameters({"browser", "validationData"})
 	@BeforeClass
-	public void setup(String browserName) {
+	public void setup(String browserName, String validationDataFilePath) throws JsonParseException, JsonMappingException, IOException {
+		validationData = ValidationDataJson.get(validationDataFilePath);
+		
 		driver = openMultipleBrowser(browserName);
 
 		loginPage = PageGeneratorManager.getLoginPage(driver);
@@ -59,7 +64,7 @@ public class Validation_09_FundTransfer extends AbstractTest {
 		verifyTrue(fundTransferPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Fund transfer"));
 
 		log.info("TC_02_PayerAccountNoMustNotContainCharacter - STEP 02: Input character into Payer Account No field");
-		fundTransferPage.inputToDynamicTextbox(driver, "payersaccount", ValidationData.FundTransfer.PAYER_ACCOUNT_NO_CONTAIN_CHARACTER);
+		fundTransferPage.inputToDynamicTextbox(driver, "payersaccount", validationData.getPayerAccountNoContainCharacter());
 
 		log.info("TC_02_PayerAccountNoMustNotContainCharacter - STEP 03: Verify 'Characters are not allowed' message is displayed");
 		verifyEquals(fundTransferPage.getErrorMessageOfDynamicField(driver, "Payers account no"), "Characters are not allowed");
@@ -72,7 +77,7 @@ public class Validation_09_FundTransfer extends AbstractTest {
 		verifyTrue(fundTransferPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Fund transfer"));
 
 		log.info("TC_03_PayerAccountNoMustNotContainSpecialCharacter - STEP 02: Input special character into Payer Account No field");
-		fundTransferPage.inputToDynamicTextbox(driver, "payersaccount", ValidationData.FundTransfer.PAYER_ACCOUNT_NO_CONTAIN_SPECIAL_CHARACTER);
+		fundTransferPage.inputToDynamicTextbox(driver, "payersaccount", validationData.getPayerAccountNoContainSpecialCharacter());
 
 		log.info("TC_03_PayerAccountNoMustNotContainSpecialCharacter - STEP 03: Verify 'Special characters are not allowed' message is displayed");
 		verifyEquals(fundTransferPage.getErrorMessageOfDynamicField(driver, "Payers account no"), "Special characters are not allowed");
@@ -98,7 +103,7 @@ public class Validation_09_FundTransfer extends AbstractTest {
 		verifyTrue(fundTransferPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Fund transfer"));
 		
 		log.info("TC_05_PayeeAccountNoMustNotContainCharacter - STEP 02: Input character into Payee Account No field");
-		fundTransferPage.inputToDynamicTextbox(driver, "payeeaccount", ValidationData.FundTransfer.PAYEE_ACCOUNT_NO_CONTAIN_CHARACTER);
+		fundTransferPage.inputToDynamicTextbox(driver, "payeeaccount", validationData.getPayeeAccountNoContainCharacter());
 
 		log.info("TC_05_PayeeAccountNoMustNotContainCharacter - STEP 03: Verify 'Characters are not allowed' message is displayed");
 		verifyEquals(fundTransferPage.getErrorMessageOfDynamicField(driver, "Payees account no"), "Characters are not allowed");
@@ -111,7 +116,7 @@ public class Validation_09_FundTransfer extends AbstractTest {
 		verifyTrue(fundTransferPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Fund transfer"));
 		
 		log.info("TC_06_PayeeAccountNoMustNotContainSpecialCharacter - STEP 02: Input special character into Payee Account No field");
-		fundTransferPage.inputToDynamicTextbox(driver, "payeeaccount", ValidationData.FundTransfer.PAYEE_ACCOUNT_NO_CONTAIN_SPECIAL_CHARACTER);
+		fundTransferPage.inputToDynamicTextbox(driver, "payeeaccount", validationData.getPayeeAccountNoContainSpecialCharacter());
 
 		log.info("TC_06_PayeeAccountNoMustNotContainSpecialCharacter - STEP 03: Verify 'Special characters are not allowed' message is displayed");
 		verifyEquals(fundTransferPage.getErrorMessageOfDynamicField(driver, "Payees account no"), "Special characters are not allowed");
@@ -137,7 +142,7 @@ public class Validation_09_FundTransfer extends AbstractTest {
 		verifyTrue(fundTransferPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Fund transfer"));
 		
 		log.info("TC_08_AmountMustNotContainCharacter - STEP 02: Input character into Amount field");
-		fundTransferPage.inputToDynamicTextbox(driver, "ammount", ValidationData.FundTransfer.AMOUNT_CONTAIN_CHARACTER);
+		fundTransferPage.inputToDynamicTextbox(driver, "ammount", validationData.getFundtransferamountContainCharacter());
 
 		log.info("TC_08_AmountMustNotContainCharacter - STEP 03: Verify 'Characters are not allowed' message is displayed");
 		verifyEquals(fundTransferPage.getErrorMessageOfDynamicField(driver, "Amount"), "Characters are not allowed");
@@ -150,7 +155,7 @@ public class Validation_09_FundTransfer extends AbstractTest {
 		verifyTrue(fundTransferPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Fund transfer"));
 		
 		log.info("TC_09_AmountMustNotContainSpecialCharacter - STEP 02: Input special character into Amount field");
-		fundTransferPage.inputToDynamicTextbox(driver, "ammount", ValidationData.FundTransfer.AMOUNT_CONTAIN_SPECIAL_CHARACTER);
+		fundTransferPage.inputToDynamicTextbox(driver, "ammount", validationData.getFundtransferamountContainSpecialCharacter());
 
 		log.info("TC_09_AmountMustNotContainSpecialCharacter - STEP 03: Verify 'Special characters are not allowed' message is displayed");
 		verifyEquals(fundTransferPage.getErrorMessageOfDynamicField(driver, "Amount"), "Special characters are not allowed");

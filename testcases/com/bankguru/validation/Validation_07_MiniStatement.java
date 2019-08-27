@@ -1,5 +1,7 @@
 package com.bankguru.validation;
 
+import java.io.IOException;
+
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -7,8 +9,10 @@ import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import com.bankguru.commons.Common_01_RegisterToSystem;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 
-import bankguru.ValidationData;
+import bankguru.ValidationDataJson;
 import commons.AbstractTest;
 import commons.PageGeneratorManager;
 import pageObjects.HomePageObject;
@@ -17,16 +21,17 @@ import pageObjects.MiniStatementPageObject;
 
 public class Validation_07_MiniStatement extends AbstractTest {
 	WebDriver driver;
-
 	String miniStatementPageURL;
-
 	LoginPageObject loginPage;
 	HomePageObject homePage;
 	MiniStatementPageObject miniStatementPage;
+	ValidationDataJson validationData;
 
-	@Parameters("browser")
+	@Parameters({"browser", "validationData"})
 	@BeforeClass
-	public void setup(String browserName) {
+	public void setup(String browserName, String validationDataFilePath) throws JsonParseException, JsonMappingException, IOException  {
+		validationData = ValidationDataJson.get(validationDataFilePath);
+		
 		driver = openMultipleBrowser(browserName);
 
 		loginPage = PageGeneratorManager.getLoginPage(driver);
@@ -59,7 +64,7 @@ public class Validation_07_MiniStatement extends AbstractTest {
 		verifyTrue(miniStatementPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Mini Statement Form"));
 
 		log.info("TC_02_AccountNoMustNotContainCharacter - STEP 02: Input character into Account No field");
-		miniStatementPage.inputToDynamicTextbox(driver, "accountno", ValidationData.MiniStatement.ACCOUNT_NO_CONTAIN_CHARACTER);
+		miniStatementPage.inputToDynamicTextbox(driver, "accountno", validationData.getAccountNoContainCharacter());
 
 		log.info("TC_02_AccountNoMustNotContainCharacter - STEP 03: Verify 'Characters are not allowed' message is displayed");
 		verifyEquals(miniStatementPage.getErrorMessageOfDynamicField(driver, "Account No"), "Characters are not allowed");
@@ -72,7 +77,7 @@ public class Validation_07_MiniStatement extends AbstractTest {
 		verifyTrue(miniStatementPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Mini Statement Form"));
 
 		log.info("TC_03_AccountNoMustNotContainSpecialCharacter - STEP 02: Input special character into Account No field");
-		miniStatementPage.inputToDynamicTextbox(driver, "accountno", ValidationData.MiniStatement.ACCOUNT_NO_CONTAIN_SPECIAL_CHARACTER);
+		miniStatementPage.inputToDynamicTextbox(driver, "accountno", validationData.getAccountNoContainSpecialCharacter());
 
 		log.info("TC_03_AccountNoMustNotContainSpecialCharacter - STEP 03: Verify 'Special characters are not allowed' message is displayed");
 		verifyEquals(miniStatementPage.getErrorMessageOfDynamicField(driver, "Account No"), "Special characters are not allowed");
@@ -85,7 +90,7 @@ public class Validation_07_MiniStatement extends AbstractTest {
 		verifyTrue(miniStatementPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Mini Statement Form"));
 
 		log.info("TC_04_AccountNoMustNotContainSpace - STEP 02: Input a number which contains a space into Account No field");
-		miniStatementPage.inputToDynamicTextbox(driver, "accountno", ValidationData.MiniStatement.ACCOUNT_NO_CONTAIN_SPACE);
+		miniStatementPage.inputToDynamicTextbox(driver, "accountno", validationData.getAccountNoContainSpace());
 
 		log.info("TC_04_AccountNoMustNotContainSpace - STEP 03: Verify 'Characters are not allowed' message is displayed");
 		verifyEquals(miniStatementPage.getErrorMessageOfDynamicField(driver, "Account No"), "Characters are not allowed");
@@ -98,7 +103,7 @@ public class Validation_07_MiniStatement extends AbstractTest {
 		verifyTrue(miniStatementPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Mini Statement Form"));
 
 		log.info("TC_05_AccountNoMustNotBeginWithSpace - STEP 02: Input first character as a space");
-		miniStatementPage.inputToDynamicTextbox(driver, "accountno", ValidationData.MiniStatement.ACCOUNT_NO_BEGIN_WITH_SPACE);
+		miniStatementPage.inputToDynamicTextbox(driver, "accountno", validationData.getAccountNoBeginWithSpace());
 
 		log.info("TC_05_AccountNoMustNotBeginWithSpace - STEP 03: Verify 'Characters are not allowed' message is displayed");
 		verifyEquals(miniStatementPage.getErrorMessageOfDynamicField(driver, "Account No"), "Characters are not allowed");

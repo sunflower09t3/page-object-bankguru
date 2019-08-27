@@ -1,16 +1,18 @@
 package com.bankguru.validation;
 
+import java.io.IOException;
+
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
-
 import com.bankguru.commons.Common_01_RegisterToSystem;
-
-import bankguru.AccountData;
-import bankguru.CustomerData;
-import bankguru.ValidationData;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import bankguru.AccountDataJson;
+import bankguru.CustomerDataJson;
+import bankguru.ValidationDataJson;
 import commons.AbstractTest;
 import commons.PageGeneratorManager;
 import pageObjects.EditAccountPageObject;
@@ -21,19 +23,24 @@ import pageObjects.NewCustomerPageObject;
 
 public class Validation_05_EditAccount extends AbstractTest {
 	WebDriver driver;
-	
 	String editAccountPageURL, newCustomerID, newAccountID, forthCustomerEmail;
-	
 	LoginPageObject loginPage;
 	HomePageObject homePage;
 	EditAccountPageObject editAccountPage;
 	NewCustomerPageObject newCustomerPage;
 	NewAccountPageObject newAccountPage;
+	ValidationDataJson validationData;
+	CustomerDataJson customerData;
+	AccountDataJson accountData;
 
-	@Parameters("browser")
+	@Parameters({"browser", "validationData", "customerData", "accountData"})
 	@BeforeClass
-	public void setup(String browserName) {
-		forthCustomerEmail = String.format(CustomerData.NewCustomer.FORTH_CUSTOMER_EMAIL, randomNumber());
+	public void setup(String browserName, String validationDataFilePath, String customerDataFilePath, String accountDataFilePath) throws JsonParseException, JsonMappingException, IOException {
+		validationData = ValidationDataJson.get(validationDataFilePath);
+		customerData = CustomerDataJson.get(customerDataFilePath);
+		accountData = AccountDataJson.get(accountDataFilePath);
+		
+		forthCustomerEmail = String.format(customerData.getForthCustomerEmail(), randomNumber());
 		
 		driver = openMultipleBrowser(browserName);
 
@@ -67,7 +74,7 @@ public class Validation_05_EditAccount extends AbstractTest {
 		verifyTrue(editAccountPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Edit Account Form"));
 
 		log.info("TC_02_AccountNoMustNotContainCharacter - STEP 02: Input character into Account No field");
-		editAccountPage.inputToDynamicTextbox(driver, "accountno", ValidationData.EditAccount.ACCOUNT_NO_CONTAIN_CHARACTER);
+		editAccountPage.inputToDynamicTextbox(driver, "accountno", validationData.getAccountNoContainCharacter());
 
 		log.info("TC_02_AccountNoMustNotContainCharacter - STEP 03: Verify 'Characters are not allowed' message is displayed");
 		verifyEquals(editAccountPage.getErrorMessageOfDynamicField(driver, "Account No"), "Characters are not allowed");
@@ -80,7 +87,7 @@ public class Validation_05_EditAccount extends AbstractTest {
 		verifyTrue(editAccountPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Edit Account Form"));
 
 		log.info("TC_03_AccountNoMustNotContainSpecialCharacter - STEP 02: Input special character into Account No field");
-		editAccountPage.inputToDynamicTextbox(driver, "accountno", ValidationData.EditAccount.ACCOUNT_NO_CONTAIN_SPECIAL_CHARACTER);
+		editAccountPage.inputToDynamicTextbox(driver, "accountno", validationData.getAccountNoContainSpecialCharacter());
 
 		log.info("TC_03_AccountNoMustNotContainSpecialCharacter - STEP 03: Verify 'Special characters are not allowed' message is displayed");
 		verifyEquals(editAccountPage.getErrorMessageOfDynamicField(driver, "Account No"), "Special characters are not allowed");
@@ -93,7 +100,7 @@ public class Validation_05_EditAccount extends AbstractTest {
 		verifyTrue(editAccountPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Edit Account Form"));
 
 		log.info("TC_04_AccountNoMustNotContainSpace - STEP 02: Input a number which contains a space into Account No field");
-		editAccountPage.inputToDynamicTextbox(driver, "accountno", ValidationData.EditAccount.ACCOUNT_NO_CONTAIN_SPACE);
+		editAccountPage.inputToDynamicTextbox(driver, "accountno", validationData.getAccountNoContainSpace());
 
 		log.info("TC_04_AccountNoMustNotContainSpace - STEP 03: Verify 'Characters are not allowed' message is displayed");
 		verifyEquals(editAccountPage.getErrorMessageOfDynamicField(driver, "Account No"), "Characters are not allowed");
@@ -106,7 +113,7 @@ public class Validation_05_EditAccount extends AbstractTest {
 		verifyTrue(editAccountPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Edit Account Form"));
 
 		log.info("TC_05_AccountNoMustNotBeginWithSpace - STEP 02: Input first character as a space");
-		editAccountPage.inputToDynamicTextbox(driver, "accountno", ValidationData.EditAccount.ACCOUNT_NO_BEGIN_WITH_SPACE);
+		editAccountPage.inputToDynamicTextbox(driver, "accountno", validationData.getAccountNoBeginWithSpace());
 
 		log.info("TC_05_AccountNoMustNotBeginWithSpace - STEP 03: Verify 'Characters are not allowed' message is displayed");
 		verifyEquals(editAccountPage.getErrorMessageOfDynamicField(driver, "Account No"), "Characters are not allowed");
@@ -120,16 +127,16 @@ public class Validation_05_EditAccount extends AbstractTest {
 		verifyTrue(newCustomerPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Add New Customer"));
 
 		log.info("TC_06_validAccountNo - STEP 02: Input valid data to New Customer form");
-		newCustomerPage.inputToDynamicTextbox(driver, "name", CustomerData.NewCustomer.FORTH_CUSTOMER_NAME);
-		newCustomerPage.selectDynamicRadioButton(driver, CustomerData.NewCustomer.FORTH_CUSTOMER_GENDER.substring(0, 1));
-		newCustomerPage.inputToDynamicTextbox(driver, "dob", CustomerData.NewCustomer.FORTH_CUSTOMER_DATE_OF_BIRTH);
-		newCustomerPage.inputToDynamicTextarea(driver, "addr", CustomerData.NewCustomer.FORTH_CUSTOMER_ADDRESS);
-		newCustomerPage.inputToDynamicTextbox(driver, "city", CustomerData.NewCustomer.FORTH_CUSTOMER_CITY);
-		newCustomerPage.inputToDynamicTextbox(driver, "state", CustomerData.NewCustomer.FORTH_CUSTOMER_STATE);
-		newCustomerPage.inputToDynamicTextbox(driver, "pinno", CustomerData.NewCustomer.FORTH_CUSTOMER_PIN);
-		newCustomerPage.inputToDynamicTextbox(driver, "telephoneno", CustomerData.NewCustomer.FORTH_CUSTOMER_TELEPHONE);
+		newCustomerPage.inputToDynamicTextbox(driver, "name", customerData.getForthCustomerName());
+		newCustomerPage.selectDynamicRadioButton(driver, customerData.getForthCustomerGender().substring(0, 1));
+		newCustomerPage.inputToDynamicTextbox(driver, "dob", customerData.getForthCustomerDateOfBirth());
+		newCustomerPage.inputToDynamicTextarea(driver, "addr", customerData.getForthCustomerAddress());
+		newCustomerPage.inputToDynamicTextbox(driver, "city", customerData.getForthCustomerCity());
+		newCustomerPage.inputToDynamicTextbox(driver, "state", customerData.getForthCustomerState());
+		newCustomerPage.inputToDynamicTextbox(driver, "pinno", customerData.getForthCustomerPin());
+		newCustomerPage.inputToDynamicTextbox(driver, "telephoneno", customerData.getForthCustomerTelephone());
 		newCustomerPage.inputToDynamicTextbox(driver, "emailid", forthCustomerEmail);
-		newCustomerPage.inputToDynamicTextbox(driver, "password", CustomerData.NewCustomer.FORTH_CUSTOMER_PASSWORD);
+		newCustomerPage.inputToDynamicTextbox(driver, "password", customerData.getForthCustomerPassword());
 
 		log.info("TC_06_validAccountNo - STEP 03: Click Submit button");
 		newCustomerPage.clickDynamicButton(driver, "sub");
@@ -142,8 +149,8 @@ public class Validation_05_EditAccount extends AbstractTest {
 
 		log.info("TC_06_validAccountNo - STEP 05: Fill in New Account page");
 		newAccountPage.inputToDynamicTextbox(driver, "cusid", newCustomerID);
-		newAccountPage.selectItemInDynamicDropdown(driver, AccountData.NewAccount.FIRST_ACCOUNT_TYPE, "selaccount");
-		newAccountPage.inputToDynamicTextbox(driver, "inideposit", String.valueOf(AccountData.NewAccount.FIRST_ACCOUNT_INITIAL_DEPOSIT));
+		newAccountPage.selectItemInDynamicDropdown(driver, accountData.getThirdAccountType(), "selaccount");
+		newAccountPage.inputToDynamicTextbox(driver, "inideposit", String.valueOf(accountData.getThirdAccountInitialDeposit()));
 
 		log.info("TC_06_validAccountNo - STEP 06: Click Submit button");
 		newAccountPage.clickDynamicButton(driver, "button2");

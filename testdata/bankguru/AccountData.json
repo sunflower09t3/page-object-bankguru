@@ -1,0 +1,29 @@
+{
+	"firstAccount": {
+		"accountType": "Savings",
+		"initialDeposit": 50000,
+		"edit": {
+			"editedAccountType": "Current"
+		},
+		"deposit": {
+			"amount": 5000,
+			"description": "Deposit"
+		},
+		"withdrawal": {
+			"amount": 15000,
+			"description": "Withdraw"
+		},
+		"fundTransfer": {
+			"amount": 10000,
+			"description": "Transfer"
+		}
+	},
+	"secondAccount": {
+		"accountType": "Savings",
+		"initialDeposit": 100000
+	},
+	"thirdAccount": {
+		"accountType": "Current",
+		"initialDeposit": 500000
+	}
+}

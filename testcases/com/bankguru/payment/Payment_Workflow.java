@@ -1,16 +1,17 @@
 package com.bankguru.payment;
 
+import java.io.IOException;
+
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
-
 import com.bankguru.commons.Common_01_RegisterToSystem;
-
-import bankguru.AccountData;
-import bankguru.CustomerData;
-import bankguru.PaymentData;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import bankguru.AccountDataJson;
+import bankguru.CustomerDataJson;
 import commons.AbstractTest;
 import commons.PageGeneratorManager;
 import pageObjects.BalanceEnquiryPageObject;
@@ -29,9 +30,10 @@ import pageObjects.WithdrawalPageObject;
 public class Payment_Workflow extends AbstractTest {
 	WebDriver driver;
 	String firstCustomerID, secondCustomerID, secondAccountID, firstAccountID, firstAccountOpeningDate;
-	String firstCustomerEmail, secondCustomerEmail;
+	String firstCustomerEmail, firstCustomerEditedEmail, secondCustomerEmail;
 	int expectedBalance;
-	
+	CustomerDataJson customerData;
+	AccountDataJson accountData;
 	LoginPageObject loginPage;
 	HomePageObject homePage;
 	NewCustomerPageObject newCustomerPage;
@@ -45,17 +47,20 @@ public class Payment_Workflow extends AbstractTest {
 	DeleteAccountPageObject deleteAccountPage;
 	DeleteCustomerPageObject deleteCustomerPage;
 
-	@Parameters("browser")
+	@Parameters({"browser","customerData", "accountData"})
 	@BeforeClass
-	public void setup(String browserName) {
-		firstCustomerEmail = String.format(CustomerData.NewCustomer.FIRST_CUSTOMER_EMAIL, randomNumber());
-		secondCustomerEmail = String.format(CustomerData.NewCustomer.SECOND_CUSTOMER_EMAIL, randomNumber());
+	public void setup(String browserName, String customerDataFilePath, String accountDataFilePath) throws JsonParseException, JsonMappingException, IOException {
+		customerData = CustomerDataJson.get(customerDataFilePath);
+		accountData = AccountDataJson.get(accountDataFilePath);
+		
+		firstCustomerEmail = String.format(customerData.getFirstCustomerEmail(), randomNumber());
+		secondCustomerEmail = String.format(customerData.getSecondCustomerEmail(), randomNumber());
+		firstCustomerEditedEmail = String.format(customerData.getFirstCustomerEditedEmail(), randomNumber());
 		
 		driver = openMultipleBrowser(browserName);
 
 		loginPage = PageGeneratorManager.getLoginPage(driver);
 		
-
 		loginPage.inputToDynamicTextbox(driver, "uid", Common_01_RegisterToSystem.username);
 		loginPage.inputToDynamicTextbox(driver, "password", Common_01_RegisterToSystem.password);
 
@@ -72,30 +77,30 @@ public class Payment_Workflow extends AbstractTest {
 		verifyTrue(newCustomerPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Add New Customer"));
 
 		log.info("TC_01_CreateNewCustomer - STEP 02: Input valid data to Add New Customer form and click Submit button");
-		newCustomerPage.inputToDynamicTextbox(driver, "name", CustomerData.NewCustomer.FIRST_CUSTOMER_NAME);
-		newCustomerPage.selectDynamicRadioButton(driver, CustomerData.NewCustomer.FIRST_CUSTOMER_GENDER.substring(0, 1));
-		newCustomerPage.inputToDynamicTextbox(driver, "dob", CustomerData.NewCustomer.FIRST_CUSTOMER_DATE_OF_BIRTH);
-		newCustomerPage.inputToDynamicTextarea(driver, "addr", CustomerData.NewCustomer.FIRST_CUSTOMER_ADDRESS);
-		newCustomerPage.inputToDynamicTextbox(driver, "city", CustomerData.NewCustomer.FIRST_CUSTOMER_CITY);
-		newCustomerPage.inputToDynamicTextbox(driver, "state", CustomerData.NewCustomer.FIRST_CUSTOMER_STATE);
-		newCustomerPage.inputToDynamicTextbox(driver, "pinno", CustomerData.NewCustomer.FIRST_CUSTOMER_PIN);
-		newCustomerPage.inputToDynamicTextbox(driver, "telephoneno", CustomerData.NewCustomer.FIRST_CUSTOMER_TELEPHONE);
+		newCustomerPage.inputToDynamicTextbox(driver, "name", customerData.getFirstCustomerName());
+		newCustomerPage.selectDynamicRadioButton(driver, customerData.getFirstCustomerGender().substring(0, 1));
+		newCustomerPage.inputToDynamicTextbox(driver, "dob", customerData.getFirstCustomerDateOfBirth());
+		newCustomerPage.inputToDynamicTextarea(driver, "addr", customerData.getFirstCustomerAddress());
+		newCustomerPage.inputToDynamicTextbox(driver, "city", customerData.getFirstCustomerCity());
+		newCustomerPage.inputToDynamicTextbox(driver, "state", customerData.getFirstCustomerState());
+		newCustomerPage.inputToDynamicTextbox(driver, "pinno", customerData.getFirstCustomerPin());
+		newCustomerPage.inputToDynamicTextbox(driver, "telephoneno", customerData.getFirstCustomerTelephone());
 		newCustomerPage.inputToDynamicTextbox(driver, "emailid", firstCustomerEmail);
-		newCustomerPage.inputToDynamicTextbox(driver, "password", CustomerData.NewCustomer.FIRST_CUSTOMER_PASSWORD);
+		newCustomerPage.inputToDynamicTextbox(driver, "password", customerData.getFirstCustomerPassword());
 		newCustomerPage.clickDynamicButton(driver, "sub");
 
 		log.info("TC_01_CreateNewCustomer - STEP 03: Verify 'Customer Registered Successfully!!!' message is displayed");
 		verifyTrue(newCustomerPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Customer Registered Successfully!!!"));
 
 		log.info("TC_01_CreateNewCustomer - STEP 04: Verify actual data and expected data are matching");
-		verifyEquals(newCustomerPage.getDanymicDataInTable(driver, "Customer Name"), CustomerData.NewCustomer.FIRST_CUSTOMER_NAME);
-		verifyEquals(newCustomerPage.getDanymicDataInTable(driver, "Gender"), CustomerData.NewCustomer.FIRST_CUSTOMER_GENDER);
-		verifyEquals(newCustomerPage.getDanymicDataInTable(driver, "Birthdate"), CustomerData.NewCustomer.FIRST_CUSTOMER_DATE_OF_BIRTH);
-		verifyEquals(newCustomerPage.getDanymicDataInTable(driver, "Address"), CustomerData.NewCustomer.FIRST_CUSTOMER_ADDRESS);
-		verifyEquals(newCustomerPage.getDanymicDataInTable(driver, "City"), CustomerData.NewCustomer.FIRST_CUSTOMER_CITY);
-		verifyEquals(newCustomerPage.getDanymicDataInTable(driver, "State"), CustomerData.NewCustomer.FIRST_CUSTOMER_STATE);
-		verifyEquals(newCustomerPage.getDanymicDataInTable(driver, "Pin"), CustomerData.NewCustomer.FIRST_CUSTOMER_PIN);
-		verifyEquals(newCustomerPage.getDanymicDataInTable(driver, "Mobile No."), CustomerData.NewCustomer.FIRST_CUSTOMER_TELEPHONE);
+		verifyEquals(newCustomerPage.getDanymicDataInTable(driver, "Customer Name"), customerData.getFirstCustomerName());
+		verifyEquals(newCustomerPage.getDanymicDataInTable(driver, "Gender"), customerData.getFirstCustomerGender());
+		verifyEquals(newCustomerPage.getDanymicDataInTable(driver, "Birthdate"), customerData.getFirstCustomerDateOfBirth());
+		verifyEquals(newCustomerPage.getDanymicDataInTable(driver, "Address"), customerData.getFirstCustomerAddress());
+		verifyEquals(newCustomerPage.getDanymicDataInTable(driver, "City"), customerData.getFirstCustomerCity());
+		verifyEquals(newCustomerPage.getDanymicDataInTable(driver, "State"), customerData.getFirstCustomerState());
+		verifyEquals(newCustomerPage.getDanymicDataInTable(driver, "Pin"), customerData.getFirstCustomerPin());
+		verifyEquals(newCustomerPage.getDanymicDataInTable(driver, "Mobile No."), customerData.getFirstCustomerTelephone());
 		verifyEquals(newCustomerPage.getDanymicDataInTable(driver, "Email"), firstCustomerEmail);
 		firstCustomerID = newCustomerPage.getDanymicDataInTable(driver, "Customer ID");
 		
@@ -107,30 +112,30 @@ public class Payment_Workflow extends AbstractTest {
 		verifyTrue(newCustomerPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Add New Customer"));
 		
 		log.info("TC_01_CreateNewCustomer - STEP 06: Input valid data to Add New Customer form and click Submit button");
-		newCustomerPage.inputToDynamicTextbox(driver, "name", CustomerData.NewCustomer.SECOND_CUSTOMER_NAME);
-		newCustomerPage.selectDynamicRadioButton(driver, CustomerData.NewCustomer.SECOND_CUSTOMER_GENDER.substring(0, 1));
-		newCustomerPage.inputToDynamicTextbox(driver, "dob", CustomerData.NewCustomer.SECOND_CUSTOMER_DATE_OF_BIRTH);
-		newCustomerPage.inputToDynamicTextarea(driver, "addr", CustomerData.NewCustomer.SECOND_CUSTOMER_ADDRESS);
-		newCustomerPage.inputToDynamicTextbox(driver, "city", CustomerData.NewCustomer.SECOND_CUSTOMER_CITY);
-		newCustomerPage.inputToDynamicTextbox(driver, "state", CustomerData.NewCustomer.SECOND_CUSTOMER_STATE);
-		newCustomerPage.inputToDynamicTextbox(driver, "pinno", CustomerData.NewCustomer.SECOND_CUSTOMER_PIN);
-		newCustomerPage.inputToDynamicTextbox(driver, "telephoneno", CustomerData.NewCustomer.SECOND_CUSTOMER_TELEPHONE);
+		newCustomerPage.inputToDynamicTextbox(driver, "name", customerData.getSecondCustomerName());
+		newCustomerPage.selectDynamicRadioButton(driver, customerData.getSecondCustomerGender().substring(0, 1));
+		newCustomerPage.inputToDynamicTextbox(driver, "dob", customerData.getSecondCustomerDateOfBirth());
+		newCustomerPage.inputToDynamicTextarea(driver, "addr", customerData.getSecondCustomerAddress());
+		newCustomerPage.inputToDynamicTextbox(driver, "city", customerData.getSecondCustomerCity());
+		newCustomerPage.inputToDynamicTextbox(driver, "state", customerData.getSecondCustomerState());
+		newCustomerPage.inputToDynamicTextbox(driver, "pinno", customerData.getSecondCustomerPin());
+		newCustomerPage.inputToDynamicTextbox(driver, "telephoneno", customerData.getSecondCustomerTelephone());
 		newCustomerPage.inputToDynamicTextbox(driver, "emailid", secondCustomerEmail);
-		newCustomerPage.inputToDynamicTextbox(driver, "password", CustomerData.NewCustomer.SECOND_CUSTOMER_PASSWORD);
+		newCustomerPage.inputToDynamicTextbox(driver, "password", customerData.getSecondCustomerPassword());
 		newCustomerPage.clickDynamicButton(driver, "sub");
 		
 		log.info("TC_01_CreateNewCustomer - STEP 07: Verify 'Customer Registered Successfully!!!' message is displayed");
 		verifyTrue(newCustomerPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Customer Registered Successfully!!!"));
 
 		log.info("TC_01_CreateNewCustomer - STEP 08: Verify actual data and expected data are matching");
-		verifyEquals(newCustomerPage.getDanymicDataInTable(driver, "Customer Name"), CustomerData.NewCustomer.SECOND_CUSTOMER_NAME);
-		verifyEquals(newCustomerPage.getDanymicDataInTable(driver, "Gender"), CustomerData.NewCustomer.SECOND_CUSTOMER_GENDER);
-		verifyEquals(newCustomerPage.getDanymicDataInTable(driver, "Birthdate"), CustomerData.NewCustomer.SECOND_CUSTOMER_DATE_OF_BIRTH);
-		verifyEquals(newCustomerPage.getDanymicDataInTable(driver, "Address"), CustomerData.NewCustomer.SECOND_CUSTOMER_ADDRESS);
-		verifyEquals(newCustomerPage.getDanymicDataInTable(driver, "City"), CustomerData.NewCustomer.SECOND_CUSTOMER_CITY);
-		verifyEquals(newCustomerPage.getDanymicDataInTable(driver, "State"), CustomerData.NewCustomer.SECOND_CUSTOMER_STATE);
-		verifyEquals(newCustomerPage.getDanymicDataInTable(driver, "Pin"), CustomerData.NewCustomer.SECOND_CUSTOMER_PIN);
-		verifyEquals(newCustomerPage.getDanymicDataInTable(driver, "Mobile No."), CustomerData.NewCustomer.SECOND_CUSTOMER_TELEPHONE);
+		verifyEquals(newCustomerPage.getDanymicDataInTable(driver, "Customer Name"), customerData.getSecondCustomerName());
+		verifyEquals(newCustomerPage.getDanymicDataInTable(driver, "Gender"), customerData.getSecondCustomerGender());
+		verifyEquals(newCustomerPage.getDanymicDataInTable(driver, "Birthdate"), customerData.getSecondCustomerDateOfBirth());
+		verifyEquals(newCustomerPage.getDanymicDataInTable(driver, "Address"), customerData.getSecondCustomerAddress());
+		verifyEquals(newCustomerPage.getDanymicDataInTable(driver, "City"), customerData.getSecondCustomerCity());
+		verifyEquals(newCustomerPage.getDanymicDataInTable(driver, "State"), customerData.getSecondCustomerState());
+		verifyEquals(newCustomerPage.getDanymicDataInTable(driver, "Pin"), customerData.getSecondCustomerPin());
+		verifyEquals(newCustomerPage.getDanymicDataInTable(driver, "Mobile No."), customerData.getSecondCustomerTelephone());
 		verifyEquals(newCustomerPage.getDanymicDataInTable(driver, "Email"), secondCustomerEmail);
 		secondCustomerID = newCustomerPage.getDanymicDataInTable(driver, "Customer ID");
 
@@ -150,38 +155,38 @@ public class Payment_Workflow extends AbstractTest {
 		editCustomerPage.clickDynamicButton(driver, "AccSubmit");
 		
 		log.info("TC_02_EditCustomer - STEP 03: Verify actual data and expected data are matching");
-		verifyEquals(editCustomerPage.getTextValueInDynamicTextbox(driver, "name"), CustomerData.NewCustomer.FIRST_CUSTOMER_NAME);
-		verifyEquals(editCustomerPage.getTextValueInDynamicTextbox(driver, "gender"), CustomerData.NewCustomer.FIRST_CUSTOMER_GENDER);
-		verifyEquals(editCustomerPage.getTextValueInDynamicTextbox(driver, "dob"), CustomerData.NewCustomer.FIRST_CUSTOMER_DATE_OF_BIRTH);
-		verifyEquals(editCustomerPage.getTextValueInDynamicTextarea(driver, "addr"), CustomerData.NewCustomer.FIRST_CUSTOMER_ADDRESS);
-		verifyEquals(editCustomerPage.getTextValueInDynamicTextbox(driver, "city"), CustomerData.NewCustomer.FIRST_CUSTOMER_CITY);
-		verifyEquals(editCustomerPage.getTextValueInDynamicTextbox(driver, "state"), CustomerData.NewCustomer.FIRST_CUSTOMER_STATE);
-		verifyEquals(editCustomerPage.getTextValueInDynamicTextbox(driver, "pinno"), CustomerData.NewCustomer.FIRST_CUSTOMER_PIN);
-		verifyEquals(editCustomerPage.getTextValueInDynamicTextbox(driver, "telephoneno"), CustomerData.NewCustomer.FIRST_CUSTOMER_TELEPHONE);
+		verifyEquals(editCustomerPage.getTextValueInDynamicTextbox(driver, "name"), customerData.getFirstCustomerName());
+		verifyEquals(editCustomerPage.getTextValueInDynamicTextbox(driver, "gender"), customerData.getFirstCustomerGender());
+		verifyEquals(editCustomerPage.getTextValueInDynamicTextbox(driver, "dob"), customerData.getFirstCustomerDateOfBirth());
+		verifyEquals(editCustomerPage.getTextValueInDynamicTextarea(driver, "addr"), customerData.getFirstCustomerAddress());
+		verifyEquals(editCustomerPage.getTextValueInDynamicTextbox(driver, "city"), customerData.getFirstCustomerCity());
+		verifyEquals(editCustomerPage.getTextValueInDynamicTextbox(driver, "state"), customerData.getFirstCustomerState());
+		verifyEquals(editCustomerPage.getTextValueInDynamicTextbox(driver, "pinno"), customerData.getFirstCustomerPin());
+		verifyEquals(editCustomerPage.getTextValueInDynamicTextbox(driver, "telephoneno"), customerData.getFirstCustomerTelephone());
 		verifyEquals(editCustomerPage.getTextValueInDynamicTextbox(driver, "emailid"), firstCustomerEmail);
 
 		log.info("TC_02_EditCustomer - STEP 04: Input to all editable fields and click Submit");
-		editCustomerPage.inputToDynamicTextarea(driver, "addr", CustomerData.EditCustomer.ADDRESS);
-		editCustomerPage.inputToDynamicTextbox(driver, "city", CustomerData.EditCustomer.CITY);
-		editCustomerPage.inputToDynamicTextbox(driver, "state", CustomerData.EditCustomer.STATE);
-		editCustomerPage.inputToDynamicTextbox(driver, "pinno", CustomerData.EditCustomer.PIN);
-		editCustomerPage.inputToDynamicTextbox(driver, "telephoneno", CustomerData.EditCustomer.TELEPHONE);
-		editCustomerPage.inputToDynamicTextbox(driver, "emailid", CustomerData.EditCustomer.EMAIL);
+		editCustomerPage.inputToDynamicTextarea(driver, "addr", customerData.getFirstCustomerEditedAddress());
+		editCustomerPage.inputToDynamicTextbox(driver, "city", customerData.getFirstCustomerEditedCity());
+		editCustomerPage.inputToDynamicTextbox(driver, "state", customerData.getFirstCustomerEditedState());
+		editCustomerPage.inputToDynamicTextbox(driver, "pinno", customerData.getFirstCustomerEditedPin());
+		editCustomerPage.inputToDynamicTextbox(driver, "telephoneno", customerData.getFirstCustomerEditedTelephone());
+		editCustomerPage.inputToDynamicTextbox(driver, "emailid", firstCustomerEditedEmail);
 		editCustomerPage.clickDynamicButton(driver, "sub");
 
 		log.info("TC_02_EditCustomer - STEP 05: Verify 'Customer details updated Successfully!!!' message is displayed");
 		verifyTrue(editCustomerPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Customer details updated Successfully!!!"));
 
 		log.info("TC_02_EditCustomer - STEP 06: Verify actual data and expected data are matching");
-		verifyEquals(editCustomerPage.getDanymicDataInTable(driver, "Address"), CustomerData.EditCustomer.ADDRESS);
-		verifyEquals(editCustomerPage.getDanymicDataInTable(driver, "City"), CustomerData.EditCustomer.CITY);
-		verifyEquals(editCustomerPage.getDanymicDataInTable(driver, "State"), CustomerData.EditCustomer.STATE);
-		verifyEquals(editCustomerPage.getDanymicDataInTable(driver, "Pin"), CustomerData.EditCustomer.PIN);
-		verifyEquals(editCustomerPage.getDanymicDataInTable(driver, "Mobile No."), CustomerData.EditCustomer.TELEPHONE);
-		verifyEquals(editCustomerPage.getDanymicDataInTable(driver, "Email"), CustomerData.EditCustomer.EMAIL);
+		verifyEquals(editCustomerPage.getDanymicDataInTable(driver, "Address"), customerData.getFirstCustomerEditedAddress());
+		verifyEquals(editCustomerPage.getDanymicDataInTable(driver, "City"), customerData.getFirstCustomerEditedCity());
+		verifyEquals(editCustomerPage.getDanymicDataInTable(driver, "State"), customerData.getFirstCustomerEditedState());
+		verifyEquals(editCustomerPage.getDanymicDataInTable(driver, "Pin"), customerData.getFirstCustomerEditedPin());
+		verifyEquals(editCustomerPage.getDanymicDataInTable(driver, "Mobile No."), customerData.getFirstCustomerEditedTelephone());
+		verifyEquals(editCustomerPage.getDanymicDataInTable(driver, "Email"), firstCustomerEditedEmail);
 		verifyEquals(editCustomerPage.getDanymicDataInTable(driver, "Customer ID"), firstCustomerID);
-		verifyEquals(editCustomerPage.getDanymicDataInTable(driver, "Customer Name"), CustomerData.NewCustomer.FIRST_CUSTOMER_NAME);
-		verifyEquals(editCustomerPage.getDanymicDataInTable(driver, "Gender"), CustomerData.NewCustomer.FIRST_CUSTOMER_GENDER);
+		verifyEquals(editCustomerPage.getDanymicDataInTable(driver, "Customer Name"), customerData.getFirstCustomerName());
+		verifyEquals(editCustomerPage.getDanymicDataInTable(driver, "Gender"), customerData.getFirstCustomerGender());
 	}
 
 	@Test
@@ -195,8 +200,8 @@ public class Payment_Workflow extends AbstractTest {
 
 		log.info("TC_03_CreateNewAccount - STEP 02: Input valid data to Add New Account form and click Submit");
 		newAccountPage.inputToDynamicTextbox(driver, "cusid", firstCustomerID);
-		newAccountPage.selectItemInDynamicDropdown(driver, AccountData.NewAccount.FIRST_ACCOUNT_TYPE, "selaccount");
-		newAccountPage.inputToDynamicTextbox(driver, "inideposit", String.valueOf(AccountData.NewAccount.FIRST_ACCOUNT_INITIAL_DEPOSIT));
+		newAccountPage.selectItemInDynamicDropdown(driver, accountData.getFirstAccountType(), "selaccount");
+		newAccountPage.inputToDynamicTextbox(driver, "inideposit", String.valueOf(accountData.getFirstAccountInitialDeposit()));
 		newAccountPage.clickDynamicButton(driver, "button2");
 
 		log.info("TC_03_CreateNewAccount - STEP 03: Verify 'Account Generated Successfully!!!' message is displayed");
@@ -204,11 +209,11 @@ public class Payment_Workflow extends AbstractTest {
 
 		log.info("TC_03_CreateNewAccount - STEP 04: Verify actual data and expected data are matching");
 		verifyEquals(newAccountPage.getDanymicDataInTable(driver, "Customer ID"), firstCustomerID);
-		verifyEquals(newAccountPage.getDanymicDataInTable(driver, "Customer Name"), CustomerData.NewCustomer.FIRST_CUSTOMER_NAME);
-		verifyEquals(newAccountPage.getDanymicDataInTable(driver, "Email"), CustomerData.EditCustomer.EMAIL);
-		verifyEquals(newAccountPage.getDanymicDataInTable(driver, "Account Type"), AccountData.NewAccount.FIRST_ACCOUNT_TYPE);
+		verifyEquals(newAccountPage.getDanymicDataInTable(driver, "Customer Name"), customerData.getFirstCustomerName());
+		verifyEquals(newAccountPage.getDanymicDataInTable(driver, "Email"), firstCustomerEditedEmail);
+		verifyEquals(newAccountPage.getDanymicDataInTable(driver, "Account Type"), accountData.getFirstAccountType());
 		verifyEquals(newAccountPage.getDanymicDataInTable(driver, "Date of Opening"), formatDate(getCurrentDate(), "yyyy-MM-dd"));
-		verifyEquals(newAccountPage.getDanymicDataInTable(driver, "Current Amount"), String.valueOf(AccountData.NewAccount.FIRST_ACCOUNT_INITIAL_DEPOSIT));
+		verifyEquals(newAccountPage.getDanymicDataInTable(driver, "Current Amount"), String.valueOf(accountData.getFirstAccountInitialDeposit()));
 		firstAccountID = newAccountPage.getDanymicDataInTable(driver, "Account ID");
 		firstAccountOpeningDate = newAccountPage.getDanymicDataInTable(driver, "Date of Opening");
 		
@@ -221,8 +226,8 @@ public class Payment_Workflow extends AbstractTest {
 		
 		log.info("TC_03_CreateNewAccount - STEP 06: Input valid data to Add New Account form and click Submit");
 		newAccountPage.inputToDynamicTextbox(driver, "cusid", secondCustomerID);
-		newAccountPage.selectItemInDynamicDropdown(driver, AccountData.NewAccount.SECOND_ACCOUNT_TYPE, "selaccount");
-		newAccountPage.inputToDynamicTextbox(driver, "inideposit", String.valueOf(AccountData.NewAccount.SECOND_ACCOUNT_INITIAL_DEPOSIT));
+		newAccountPage.selectItemInDynamicDropdown(driver, accountData.getSecondAccountType(), "selaccount");
+		newAccountPage.inputToDynamicTextbox(driver, "inideposit", String.valueOf(accountData.getSecondAccountInitialDeposit()));
 		newAccountPage.clickDynamicButton(driver, "button2");
 		
 		log.info("TC_03_CreateNewAccount - STEP 07: Verify 'Account Generated Successfully!!!' message is displayed");
@@ -230,11 +235,11 @@ public class Payment_Workflow extends AbstractTest {
 
 		log.info("TC_03_CreateNewAccount - STEP 08: Verify actual data and expected data are matching");
 		verifyEquals(newAccountPage.getDanymicDataInTable(driver, "Customer ID"), secondCustomerID);
-		verifyEquals(newAccountPage.getDanymicDataInTable(driver, "Customer Name"), CustomerData.NewCustomer.SECOND_CUSTOMER_NAME);
+		verifyEquals(newAccountPage.getDanymicDataInTable(driver, "Customer Name"), customerData.getSecondCustomerName());
 		verifyEquals(newAccountPage.getDanymicDataInTable(driver, "Email"), secondCustomerEmail);
-		verifyEquals(newAccountPage.getDanymicDataInTable(driver, "Account Type"), AccountData.NewAccount.SECOND_ACCOUNT_TYPE);
+		verifyEquals(newAccountPage.getDanymicDataInTable(driver, "Account Type"), accountData.getSecondAccountType());
 		verifyEquals(newAccountPage.getDanymicDataInTable(driver, "Date of Opening"), formatDate(getCurrentDate(), "yyyy-MM-dd"));
-		verifyEquals(newAccountPage.getDanymicDataInTable(driver, "Current Amount"), String.valueOf(AccountData.NewAccount.SECOND_ACCOUNT_INITIAL_DEPOSIT));
+		verifyEquals(newAccountPage.getDanymicDataInTable(driver, "Current Amount"), String.valueOf(accountData.getSecondAccountInitialDeposit()));
 		secondAccountID = newAccountPage.getDanymicDataInTable(driver, "Account ID");
 	}
 
@@ -253,11 +258,11 @@ public class Payment_Workflow extends AbstractTest {
 		
 		log.info("TC_04_EditAccout - STEP 03: Verify actual data and expected data are matching");
 		verifyEquals(editAccountPage.getTextValueInDynamicTextbox(driver, "txtcid"), firstCustomerID);
-		verifyEquals(editAccountPage.getCurrentSelectedItemInDynamicDropdown(driver, "a_type"), AccountData.NewAccount.FIRST_ACCOUNT_TYPE);
-		verifyEquals(editAccountPage.getTextValueInDynamicTextbox(driver, "txtinitdep"), String.valueOf(AccountData.NewAccount.FIRST_ACCOUNT_INITIAL_DEPOSIT));
+		verifyEquals(editAccountPage.getCurrentSelectedItemInDynamicDropdown(driver, "a_type"), accountData.getFirstAccountType());
+		verifyEquals(editAccountPage.getTextValueInDynamicTextbox(driver, "txtinitdep"), String.valueOf(accountData.getFirstAccountInitialDeposit()));
 
 		log.info("TC_04_EditAccout - STEP 04: Change Account Type and click Submit");
-		editAccountPage.selectItemInDynamicDropdown(driver, AccountData.EditAccount.ACCOUNT_TYPE, "a_type");
+		editAccountPage.selectItemInDynamicDropdown(driver, accountData.getFirstAccountEditedType(), "a_type");
 		editAccountPage.clickDynamicButton(driver, "AccSubmit");
 
 		log.info("TC_04_EditAccout - STEP 05: Verify 'Account details updated Successfully!!!' message is displayed");
@@ -266,11 +271,11 @@ public class Payment_Workflow extends AbstractTest {
 		log.info("TC_04_EditAccout - STEP 06: Verify actual data and expected data are matching");
 		verifyEquals(editAccountPage.getDanymicDataInTable(driver, "Account ID"), firstAccountID);
 		verifyEquals(editAccountPage.getDanymicDataInTable(driver, "Customer ID"), firstCustomerID);
-		verifyEquals(editAccountPage.getDanymicDataInTable(driver, "Customer Name"), CustomerData.NewCustomer.FIRST_CUSTOMER_NAME);
-		verifyEquals(editAccountPage.getDanymicDataInTable(driver, "Email"), CustomerData.EditCustomer.EMAIL);
-		verifyEquals(editAccountPage.getDanymicDataInTable(driver, "Account Type"), AccountData.EditAccount.ACCOUNT_TYPE);
+		verifyEquals(editAccountPage.getDanymicDataInTable(driver, "Customer Name"), customerData.getFirstCustomerName());
+		verifyEquals(editAccountPage.getDanymicDataInTable(driver, "Email"), firstCustomerEditedEmail);
+		verifyEquals(editAccountPage.getDanymicDataInTable(driver, "Account Type"), accountData.getFirstAccountEditedType());
 		verifyEquals(editAccountPage.getDanymicDataInTable(driver, "Date of Opening"), firstAccountOpeningDate);
-		verifyEquals(editAccountPage.getDanymicDataInTable(driver, "Current Amount"), String.valueOf(AccountData.NewAccount.FIRST_ACCOUNT_INITIAL_DEPOSIT));
+		verifyEquals(editAccountPage.getDanymicDataInTable(driver, "Current Amount"), String.valueOf(accountData.getFirstAccountInitialDeposit()));
 
 	}
 
@@ -285,8 +290,8 @@ public class Payment_Workflow extends AbstractTest {
 
 		log.info("TC_05_Deposit - STEP 02: Input valid data to Amount Deposit form and click Submit");
 		depositPage.inputToDynamicTextbox(driver, "accountno", firstAccountID);
-		depositPage.inputToDynamicTextbox(driver, "ammount", String.valueOf(PaymentData.Deposit.AMOUNT));
-		depositPage.inputToDynamicTextbox(driver, "desc", PaymentData.Deposit.DESCRIPTION);
+		depositPage.inputToDynamicTextbox(driver, "ammount", String.valueOf(accountData.getFirstAccountDepositAmount()));
+		depositPage.inputToDynamicTextbox(driver, "desc", accountData.getFirstAccountDepositDescription());
 		depositPage.clickDynamicButton(driver, "AccSubmit");
 
 		log.info("TC_05_Deposit - STEP 03: Verify 'Transaction details of Deposit for Account account_id' message is displayed");
@@ -294,10 +299,10 @@ public class Payment_Workflow extends AbstractTest {
 
 		log.info("TC_05_Deposit - STEP 04: Verify actual data and expected data are matching");
 		verifyEquals(depositPage.getDanymicDataInTable(driver, "Account No"), firstAccountID);
-		verifyEquals(depositPage.getDanymicDataInTable(driver, "Amount Credited"), String.valueOf(PaymentData.Deposit.AMOUNT));
+		verifyEquals(depositPage.getDanymicDataInTable(driver, "Amount Credited"), String.valueOf(accountData.getFirstAccountDepositAmount()));
 		verifyEquals(depositPage.getDanymicDataInTable(driver, "Type of Transaction"), "Deposit");
-		verifyEquals(depositPage.getDanymicDataInTable(driver, "Description"), PaymentData.Deposit.DESCRIPTION);
-		expectedBalance = AccountData.NewAccount.FIRST_ACCOUNT_INITIAL_DEPOSIT + PaymentData.Deposit.AMOUNT;
+		verifyEquals(depositPage.getDanymicDataInTable(driver, "Description"), accountData.getFirstAccountDepositDescription());
+		expectedBalance = accountData.getFirstAccountInitialDeposit() + accountData.getFirstAccountDepositAmount();
 		verifyEquals(depositPage.getDanymicDataInTable(driver, "Current Balance"), String.valueOf(expectedBalance));
 
 	}
@@ -313,8 +318,8 @@ public class Payment_Workflow extends AbstractTest {
 
 		log.info("TC_06_Withdraw - STEP 02: Input valid data to Amount Withdrawal form");
 		withdrawalPage.inputToDynamicTextbox(driver, "accountno", firstAccountID);
-		withdrawalPage.inputToDynamicTextbox(driver, "ammount", String.valueOf(PaymentData.Withdrawl.AMOUNT));
-		withdrawalPage.inputToDynamicTextbox(driver, "desc", PaymentData.Withdrawl.DESCRIPTION);
+		withdrawalPage.inputToDynamicTextbox(driver, "ammount", String.valueOf(accountData.getFirstAccountWithdrawAmount()));
+		withdrawalPage.inputToDynamicTextbox(driver, "desc", accountData.getFirstAccountWithdrawDescription());
 		withdrawalPage.clickDynamicButton(driver, "AccSubmit");
 
 		log.info("TC_06_Withdraw - STEP 03: Verify 'Transaction details of Withdrawal for Account account_id' message is displayed");
@@ -322,10 +327,10 @@ public class Payment_Workflow extends AbstractTest {
 
 		log.info("TC_06_Withdraw - STEP 04: Verify actual data and expected data are matching");
 		verifyEquals(withdrawalPage.getDanymicDataInTable(driver, "Account No"), firstAccountID);
-		verifyEquals(withdrawalPage.getDanymicDataInTable(driver, "Amount Debited"), String.valueOf(PaymentData.Withdrawl.AMOUNT));
+		verifyEquals(withdrawalPage.getDanymicDataInTable(driver, "Amount Debited"), String.valueOf(accountData.getFirstAccountWithdrawAmount()));
 		verifyEquals(withdrawalPage.getDanymicDataInTable(driver, "Type of Transaction"), "Withdrawal");
-		verifyEquals(withdrawalPage.getDanymicDataInTable(driver, "Description"), PaymentData.Withdrawl.DESCRIPTION);
-		expectedBalance = AccountData.NewAccount.FIRST_ACCOUNT_INITIAL_DEPOSIT + PaymentData.Deposit.AMOUNT - PaymentData.Withdrawl.AMOUNT;
+		verifyEquals(withdrawalPage.getDanymicDataInTable(driver, "Description"), accountData.getFirstAccountWithdrawDescription());
+		expectedBalance = accountData.getFirstAccountInitialDeposit() + accountData.getFirstAccountDepositAmount() - accountData.getFirstAccountWithdrawAmount();
 		verifyEquals(withdrawalPage.getDanymicDataInTable(driver, "Current Balance"), String.valueOf(expectedBalance));
 	}
 
@@ -341,8 +346,8 @@ public class Payment_Workflow extends AbstractTest {
 		log.info("TC_07_FundTransfer - STEP 02: Input valid data to Fund Transfer form and click Submit");
 		fundTransferPage.inputToDynamicTextbox(driver, "payersaccount", firstAccountID);
 		fundTransferPage.inputToDynamicTextbox(driver, "payeeaccount", secondAccountID);
-		fundTransferPage.inputToDynamicTextbox(driver, "ammount", String.valueOf(PaymentData.FundTransfer.AMOUNT));
-		fundTransferPage.inputToDynamicTextbox(driver, "desc", PaymentData.FundTransfer.DESCRIPTION);
+		fundTransferPage.inputToDynamicTextbox(driver, "ammount", String.valueOf(accountData.getFirstAccountTransferAmount()));
+		fundTransferPage.inputToDynamicTextbox(driver, "desc", accountData.getFirstAccountTransferDescription());
 		fundTransferPage.clickDynamicButton(driver, "AccSubmit");
 
 		log.info("TC_07_FundTransfer - STEP 03: Verify 'Fund Transfer Details' message is displayed");
@@ -351,8 +356,8 @@ public class Payment_Workflow extends AbstractTest {
 		log.info("TC_07_FundTransfer - STEP 04: Verify actual data and expected data are matching");
 		verifyEquals(fundTransferPage.getDanymicDataInTable(driver, "From Account Number"), firstAccountID);
 		verifyEquals(fundTransferPage.getDanymicDataInTable(driver, "To Account Number"), secondAccountID);
-		verifyEquals(fundTransferPage.getDanymicDataInTable(driver, "Amount"), String.valueOf(PaymentData.FundTransfer.AMOUNT));
-		verifyEquals(fundTransferPage.getDanymicDataInTable(driver, "Description"), PaymentData.FundTransfer.DESCRIPTION);
+		verifyEquals(fundTransferPage.getDanymicDataInTable(driver, "Amount"), String.valueOf(accountData.getFirstAccountTransferAmount()));
+		verifyEquals(fundTransferPage.getDanymicDataInTable(driver, "Description"), accountData.getFirstAccountTransferDescription());
 	}
 
 	@Test
@@ -373,8 +378,8 @@ public class Payment_Workflow extends AbstractTest {
 
 		log.info("TC_08_BalanceEnquiry - STEP 04: Verify actual data and expected data are matching");
 		verifyEquals(balanceEnquiryPage.getDanymicDataInTable(driver, "Account No"), firstAccountID);
-		verifyEquals(balanceEnquiryPage.getDanymicDataInTable(driver, "Type of Account"), AccountData.EditAccount.ACCOUNT_TYPE);
-		expectedBalance = AccountData.NewAccount.FIRST_ACCOUNT_INITIAL_DEPOSIT + PaymentData.Deposit.AMOUNT - PaymentData.Withdrawl.AMOUNT - PaymentData.FundTransfer.AMOUNT;
+		verifyEquals(balanceEnquiryPage.getDanymicDataInTable(driver, "Type of Account"), accountData.getFirstAccountEditedType());
+		expectedBalance = accountData.getFirstAccountInitialDeposit() + accountData.getFirstAccountDepositAmount() - accountData.getFirstAccountWithdrawAmount() - accountData.getFirstAccountTransferAmount();
 		verifyEquals(balanceEnquiryPage.getDanymicDataInTable(driver, "Balance"), String.valueOf(expectedBalance));
 		
 		log.info("--------------------- Check balance of second customer's account ---------------------");
@@ -393,8 +398,8 @@ public class Payment_Workflow extends AbstractTest {
 
 		log.info("TC_08_BalanceEnquiry - STEP 08: Verify actual data and expected data are matching");
 		verifyEquals(balanceEnquiryPage.getDanymicDataInTable(driver, "Account No"), secondAccountID);
-		verifyEquals(balanceEnquiryPage.getDanymicDataInTable(driver, "Type of Account"), AccountData.NewAccount.SECOND_ACCOUNT_TYPE);
-		expectedBalance = AccountData.NewAccount.SECOND_ACCOUNT_INITIAL_DEPOSIT + PaymentData.FundTransfer.AMOUNT;
+		verifyEquals(balanceEnquiryPage.getDanymicDataInTable(driver, "Type of Account"), accountData.getSecondAccountType());
+		expectedBalance = accountData.getSecondAccountInitialDeposit() + accountData.getFirstAccountTransferAmount();
 		verifyEquals(balanceEnquiryPage.getDanymicDataInTable(driver, "Balance"), String.valueOf(expectedBalance));
 	}
 

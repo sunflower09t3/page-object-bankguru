@@ -1,0 +1,58 @@
+{
+	"firstCustomer": {
+		"customerName": "Jack",
+		"gender": "female",
+		"dateOfBirth": "1991-01-20",
+		"address": "PO Box 911 8331 Duis Avenue",
+		"state": "FL",
+		"city": "Tampa",
+		"pin": "466250",
+		"telephone": "4555442476",
+		"email": "jack%s@gmail.com",
+		"password": "firstcustomerpassword",
+		"edit": {
+			"address": "1883 Cursus Avenue",
+			"city": "Houston",
+			"state": "Texas",
+			"pin": "166455",
+			"telephone": "1122334455",
+			"email": "JackLe%s@gmail.com"
+		}
+	},
+	"secondCustomer": {
+		"customerName": "Amanda",
+		"gender": "male",
+		"dateOfBirth": "2000-09-25",
+		"address": "Blk 136 Potong Pasir Ave 3",
+		"state": "Jurong",
+		"city": "Singapore",
+		"pin": "778855",
+		"telephone": "1478965236",
+		"email": "amanda%s@gmail.com",
+		"password": "secondcustomerpassword"
+	},
+	"thirdCustomer": {
+		"customerName": "Omaha",
+		"gender": "male",
+		"dateOfBirth": "1975-07-01",
+		"address": "Panda Avenue",
+		"state": "California",
+		"city": "USA",
+		"pin": "448877",
+		"telephone": "0278976657",
+		"email": "omaha%s@gmail.com",
+		"password": "thirdcustomerpassword"
+	},
+	"forthCustomer": {
+		"customerName": "Nicky",
+		"gender": "female",
+		"dateOfBirth": "2000-05-24",
+		"address": "Pangoul Avenue",
+		"state": "Alaskae",
+		"city": "USA",
+		"pin": "114424",
+		"telephone": "0789766668",
+		"email": "nicky%s@gmail.com",
+		"password": "forthcustomerpassword"
+	}
+}

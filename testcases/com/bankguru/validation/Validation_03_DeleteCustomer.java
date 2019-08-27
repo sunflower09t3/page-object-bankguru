@@ -1,5 +1,7 @@
 package com.bankguru.validation;
 
+import java.io.IOException;
+
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -7,8 +9,10 @@ import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import com.bankguru.commons.Common_01_RegisterToSystem;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 
-import bankguru.ValidationData;
+import bankguru.ValidationDataJson;
 import commons.AbstractTest;
 import commons.PageGeneratorManager;
 import pageObjects.DeleteCustomerPageObject;
@@ -17,16 +21,17 @@ import pageObjects.LoginPageObject;
 
 public class Validation_03_DeleteCustomer extends AbstractTest {
 	WebDriver driver;
-	
 	String deleteCustomerPageURL;
-	
 	LoginPageObject loginPage;
 	HomePageObject homePage;
 	DeleteCustomerPageObject deleteCustomerPage;
+	ValidationDataJson validationData;
 
-	@Parameters("browser")
+	@Parameters({"browser", "validationData"})
 	@BeforeClass
-	public void setup(String browserName) {
+	public void setup(String browserName, String validationDataFilePath) throws JsonParseException, JsonMappingException, IOException {
+		validationData = ValidationDataJson.get(validationDataFilePath);
+		
 		driver = openMultipleBrowser(browserName);
 
 		loginPage = PageGeneratorManager.getLoginPage(driver);
@@ -59,7 +64,7 @@ public class Validation_03_DeleteCustomer extends AbstractTest {
 		verifyTrue(deleteCustomerPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Delete Customer Form"));
 
 		log.info("TC_02_CustomerIDMustNotContainCharacter - STEP 02: Input to Customer ID field");
-		deleteCustomerPage.inputToDynamicTextbox(driver, "cusid", ValidationData.DeleteCustomer.CUSTOMER_ID_CONTAIN_CHARACTER);
+		deleteCustomerPage.inputToDynamicTextbox(driver, "cusid", validationData.getCustomerIdContainCharacter());
 
 		log.info("TC_02_CustomerIDMustNotContainCharacter - STEP 03: Verify 'Characters are not allowed' message is displayed");
 		verifyEquals(deleteCustomerPage.getErrorMessageOfDynamicField(driver, "Customer ID"), "Characters are not allowed");
@@ -72,7 +77,7 @@ public class Validation_03_DeleteCustomer extends AbstractTest {
 		verifyTrue(deleteCustomerPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Delete Customer Form"));
 
 		log.info("TC_03_CustomerIDMustNotContainSpecialCharacter - STEP 02: Input to Customer ID field");
-		deleteCustomerPage.inputToDynamicTextbox(driver, "cusid", ValidationData.DeleteCustomer.CUSTOMER_ID_CONTAIN_SPECIAL_CHARACTER);
+		deleteCustomerPage.inputToDynamicTextbox(driver, "cusid", validationData.getCustomerIdContainSpecialCharacter());
 
 		log.info("TC_03_CustomerIDMustNotContainSpecialCharacter - STEP 03: Verify 'Special characters are not allowed' message is displayed");
 		verifyEquals(deleteCustomerPage.getErrorMessageOfDynamicField(driver, "Customer ID"), "Special characters are not allowed");
@@ -85,7 +90,7 @@ public class Validation_03_DeleteCustomer extends AbstractTest {
 		verifyTrue(deleteCustomerPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Delete Customer Form"));
 
 		log.info("TC_04_CustomerIDMustNotContainSpace - STEP 02: Input to Customer ID field");
-		deleteCustomerPage.inputToDynamicTextbox(driver, "cusid", ValidationData.DeleteCustomer.CUSTOMER_ID_CONTAIN_SPACE);
+		deleteCustomerPage.inputToDynamicTextbox(driver, "cusid", validationData.getCustomerIdContainSpace());
 
 		log.info("TC_04_CustomerIDMustNotContainSpace - STEP 03: Verify 'Characters are not allowed' message is displayed");
 		verifyEquals(deleteCustomerPage.getErrorMessageOfDynamicField(driver, "Customer ID"), "Characters are not allowed");
@@ -98,7 +103,7 @@ public class Validation_03_DeleteCustomer extends AbstractTest {
 		verifyTrue(deleteCustomerPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Delete Customer Form"));
 
 		log.info("TC_05_CustomerIDMustNotBeginWithSpace - STEP 01: Input to Customer ID field");
-		deleteCustomerPage.inputToDynamicTextbox(driver, "cusid", ValidationData.DeleteCustomer.CUSTOMER_ID_BEGIN_WITH_SPACE);
+		deleteCustomerPage.inputToDynamicTextbox(driver, "cusid", validationData.getCustomerIdBeginWithSpace());
 
 		log.info("TC_05_CustomerIDMustNotBeginWithSpace - STEP 02: Verify 'First character can not have space' message is displayed");
 		verifyEquals(deleteCustomerPage.getErrorMessageOfDynamicField(driver, "Customer ID"), "First character can not have space");

@@ -1,5 +1,7 @@
 package com.bankguru.validation;
 
+import java.io.IOException;
+
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -7,8 +9,10 @@ import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import com.bankguru.commons.Common_01_RegisterToSystem;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 
-import bankguru.ValidationData;
+import bankguru.ValidationDataJson;
 import commons.AbstractTest;
 import commons.PageGeneratorManager;
 import pageObjects.HomePageObject;
@@ -17,16 +21,17 @@ import pageObjects.NewAccountPageObject;
 
 public class Validation_04_NewAccount extends AbstractTest {
 	WebDriver driver;
-	
 	String newAccountPageURL;
-	
 	LoginPageObject loginPage;
 	HomePageObject homePage;
 	NewAccountPageObject newAccountPage;
+	ValidationDataJson validationData;
 
-	@Parameters("browser")
+	@Parameters({"browser", "validationData"})
 	@BeforeClass
-	public void setup(String browserName) {
+	public void setup(String browserName, String validationDataFilePath) throws JsonParseException, JsonMappingException, IOException {
+		validationData = ValidationDataJson.get(validationDataFilePath);
+		
 		driver = openMultipleBrowser(browserName);
 
 		loginPage = PageGeneratorManager.getLoginPage(driver);
@@ -59,7 +64,7 @@ public class Validation_04_NewAccount extends AbstractTest {
 		verifyTrue(newAccountPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Add new account form"));
 
 		log.info("TC_02_CustomerIDMustNotContainCharacter STEP 02: Input to Customer ID field");
-		newAccountPage.inputToDynamicTextbox(driver, "cusid", ValidationData.NewAccount.CUSTOMER_ID_CONTAIN_CHARACTER);
+		newAccountPage.inputToDynamicTextbox(driver, "cusid", validationData.getCustomerIdContainCharacter());
 
 		log.info("TC_02_CustomerIDMustNotContainCharacter STEP 03: Verify 'Characters are not allowed' message is displayed");
 		verifyEquals(newAccountPage.getErrorMessageOfDynamicField(driver, "Customer id"), "Characters are not allowed");
@@ -72,7 +77,7 @@ public class Validation_04_NewAccount extends AbstractTest {
 		verifyTrue(newAccountPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Add new account form"));
 
 		log.info("TC_03_CustomerIDMustNotContainSpecialCharacter - STEP 01: Input to Customer ID field");
-		newAccountPage.inputToDynamicTextbox(driver, "cusid", ValidationData.NewAccount.CUSTOMER_ID_CONTAIN_SPECIAL_CHARACTER);
+		newAccountPage.inputToDynamicTextbox(driver, "cusid", validationData.getCustomerIdContainSpecialCharacter());
 
 		log.info("TC_03_CustomerIDMustNotContainSpecialCharacter - STEP 02: Verify 'Special characters are not allowed' message is displayed");
 		verifyEquals(newAccountPage.getErrorMessageOfDynamicField(driver, "Customer id"), "Special characters are not allowed");
@@ -85,7 +90,7 @@ public class Validation_04_NewAccount extends AbstractTest {
 		verifyTrue(newAccountPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Add new account form"));
 
 		log.info("TC_04_CustomerIDMustNotContainSpace - STEP 02: Input to Customer ID field");
-		newAccountPage.inputToDynamicTextbox(driver, "cusid", ValidationData.NewAccount.CUSTOMER_ID_CONTAIN_SPACE);
+		newAccountPage.inputToDynamicTextbox(driver, "cusid", validationData.getCustomerIdContainSpace());
 
 		log.info("TC_04_CustomerIDMustNotContainSpace - STEP 03: Verify 'Characters are not allowed' message is displayed");
 		verifyEquals(newAccountPage.getErrorMessageOfDynamicField(driver, "Customer id"), "Characters are not allowed");
@@ -98,7 +103,7 @@ public class Validation_04_NewAccount extends AbstractTest {
 		verifyTrue(newAccountPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Add new account form"));
 
 		log.info("TC_05_CustomerIDMustNotBeginWithSpace - STEP 02: Input to Customer ID field");
-		newAccountPage.inputToDynamicTextbox(driver, "cusid", ValidationData.NewAccount.CUSTOMER_ID_BEGIN_WITH_SPACE);
+		newAccountPage.inputToDynamicTextbox(driver, "cusid", validationData.getCustomerIdBeginWithSpace());
 
 		log.info("TC_05_CustomerIDMustNotBeginWithSpace - STEP 03: Verify 'First character can not have space' message is displayed");
 		verifyEquals(newAccountPage.getErrorMessageOfDynamicField(driver, "Customer id"), "First character can not have space");
@@ -124,7 +129,7 @@ public class Validation_04_NewAccount extends AbstractTest {
 		verifyTrue(newAccountPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Add new account form"));
 
 		log.info("TC_07_InitialDepositMustNotContainCharacter - STEP 02: Input to Initial Deposit field");
-		newAccountPage.inputToDynamicTextbox(driver, "inideposit", ValidationData.NewAccount.INITIAL_DEPOSIT_CONTAIN_CHARACTER);
+		newAccountPage.inputToDynamicTextbox(driver, "inideposit", validationData.getInitialDepositContainCharacter());
 
 		log.info("TC_07_InitialDepositMustNotContainCharacter - STEP 03: Verify 'Characters are not allowed' message is displayed");
 		verifyEquals(newAccountPage.getErrorMessageOfDynamicField(driver, "Initial deposit"), "Characters are not allowed");
@@ -137,7 +142,7 @@ public class Validation_04_NewAccount extends AbstractTest {
 		verifyTrue(newAccountPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Add new account form"));
 
 		log.info("TC_08_InitialDepositMustNotContainSpecialCharacter - STEP 02: Input to Initial Deposit field");
-		newAccountPage.inputToDynamicTextbox(driver, "inideposit", ValidationData.NewAccount.INITIAL_DEPOSIT_CONTAIN_SPECIAL_CHARACTER);
+		newAccountPage.inputToDynamicTextbox(driver, "inideposit", validationData.getInitialDepositContainSpecialCharacter());
 
 		log.info("TC_08_InitialDepositMustNotContainSpecialCharacter - STEP 03: Verify 'Special characters are not allowed' message is displayed");
 		verifyEquals(newAccountPage.getErrorMessageOfDynamicField(driver, "Initial deposit"), "Special characters are not allowed");
@@ -150,7 +155,7 @@ public class Validation_04_NewAccount extends AbstractTest {
 		verifyTrue(newAccountPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Add new account form"));
 
 		log.info("TC_09_InitialDepositMustNotContainSpace - STEP 02: Input to Initial Deposit field");
-		newAccountPage.inputToDynamicTextbox(driver, "inideposit", ValidationData.NewAccount.INITIAL_DEPOSIT_CONTAIN_SPACE);
+		newAccountPage.inputToDynamicTextbox(driver, "inideposit", validationData.getInitialDepositContainSpace());
 
 		log.info("TC_09_InitialDepositMustNotContainSpace - STEP 03: Verify 'Characters are not allowed' message is displayed");
 		verifyEquals(newAccountPage.getErrorMessageOfDynamicField(driver, "Initial deposit"), "Characters are not allowed");
@@ -163,7 +168,7 @@ public class Validation_04_NewAccount extends AbstractTest {
 		verifyTrue(newAccountPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Add new account form"));
 
 		log.info("TC_10_InitialDepositMustNotBeginWithSpace - STEP 02: Input to Initial Deposit field");
-		newAccountPage.inputToDynamicTextbox(driver, "inideposit", ValidationData.NewAccount.INITIAL_DEPOSIT_BEGIN_WITH_SPACE);
+		newAccountPage.inputToDynamicTextbox(driver, "inideposit", validationData.getInitialDepositBeginWithSpace());
 
 		log.info("TC_10_InitialDepositMustNotBeginWithSpace - STEP 03: Verify 'First character can not have space' message is displayed");
 		verifyEquals(newAccountPage.getErrorMessageOfDynamicField(driver, "Initial deposit"), "First character can not have space");

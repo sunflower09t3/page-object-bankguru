@@ -1,5 +1,7 @@
 package com.bankguru.validation;
 
+import java.io.IOException;
+
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -7,8 +9,10 @@ import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import com.bankguru.commons.Common_01_RegisterToSystem;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 
-import bankguru.ValidationData;
+import bankguru.ValidationDataJson;
 import commons.AbstractTest;
 import commons.PageGeneratorManager;
 import pageObjects.DeleteAccountPageObject;
@@ -17,16 +21,17 @@ import pageObjects.LoginPageObject;
 
 public class Validation_06_DeleteAccount extends AbstractTest {
 	WebDriver driver;
-	
 	String deleteAccountPageURL;
-
 	LoginPageObject loginPage;
 	HomePageObject homePage;
 	DeleteAccountPageObject deleteAccountPage;
+	ValidationDataJson validationData;
 
-	@Parameters("browser")
+	@Parameters({"browser", "validationData"})
 	@BeforeClass
-	public void setup(String browserName) {
+	public void setup(String browserName, String validationDataFilePath) throws JsonParseException, JsonMappingException, IOException {
+		validationData = ValidationDataJson.get(validationDataFilePath);
+		
 		driver = openMultipleBrowser(browserName);
 
 		loginPage = PageGeneratorManager.getLoginPage(driver);
@@ -59,7 +64,7 @@ public class Validation_06_DeleteAccount extends AbstractTest {
 		verifyTrue(deleteAccountPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Delete Account Form"));
 
 		log.info("TC_02_AccountNoMustNotContainCharacter - STEP 02: Input character into Account No field");
-		deleteAccountPage.inputToDynamicTextbox(driver, "accountno", ValidationData.DeleteAccount.ACCOUNT_NO_CONTAIN_CHARACTER);
+		deleteAccountPage.inputToDynamicTextbox(driver, "accountno", validationData.getAccountNoContainCharacter());
 
 		log.info("TC_02_AccountNoMustNotContainCharacter - STEP 03: Verify 'Characters are not allowed' message is displayed");
 		verifyEquals(deleteAccountPage.getErrorMessageOfDynamicField(driver, "Account No"), "Characters are not allowed");
@@ -72,7 +77,7 @@ public class Validation_06_DeleteAccount extends AbstractTest {
 		verifyTrue(deleteAccountPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Delete Account Form"));
 
 		log.info("TC_03_AccountNoMustNotContainSpecialCharacter - STEP 02: Input special character into Account No field");
-		deleteAccountPage.inputToDynamicTextbox(driver, "accountno", ValidationData.DeleteAccount.ACCOUNT_NO_CONTAIN_SPECIAL_CHARACTER);
+		deleteAccountPage.inputToDynamicTextbox(driver, "accountno", validationData.getAccountNoContainSpecialCharacter());
 
 		log.info("TC_03_AccountNoMustNotContainSpecialCharacter - STEP 03: Verify 'Special characters are not allowed' message is displayed");
 		verifyEquals(deleteAccountPage.getErrorMessageOfDynamicField(driver, "Account No"), "Special characters are not allowed");
@@ -85,7 +90,7 @@ public class Validation_06_DeleteAccount extends AbstractTest {
 		verifyTrue(deleteAccountPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Delete Account Form"));
 
 		log.info("TC_04_AccountNoMustNotContainSpace - STEP 02: Input a number which contains a space into Account No field");
-		deleteAccountPage.inputToDynamicTextbox(driver, "accountno", ValidationData.DeleteAccount.ACCOUNT_NO_CONTAIN_SPACE);
+		deleteAccountPage.inputToDynamicTextbox(driver, "accountno", validationData.getAccountNoContainSpace());
 
 		log.info("TC_04_AccountNoMustNotContainSpace - STEP 03: Verify 'Characters are not allowed' message is displayed");
 		verifyEquals(deleteAccountPage.getErrorMessageOfDynamicField(driver, "Account No"), "Characters are not allowed");
@@ -98,7 +103,7 @@ public class Validation_06_DeleteAccount extends AbstractTest {
 		verifyTrue(deleteAccountPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Delete Account Form"));
 
 		log.info("TC_05_AccountNoMustNotBeginWithSpace - STEP 02: Input first character as a space");
-		deleteAccountPage.inputToDynamicTextbox(driver, "accountno", ValidationData.DeleteAccount.ACCOUNT_NO_BEGIN_WITH_SPACE);
+		deleteAccountPage.inputToDynamicTextbox(driver, "accountno", validationData.getAccountNoBeginWithSpace());
 
 		log.info("TC_05_AccountNoMustNotBeginWithSpace - STEP 03: Verify 'Characters are not allowed' message is displayed");
 		verifyEquals(deleteAccountPage.getErrorMessageOfDynamicField(driver, "Account No"), "Characters are not allowed");
