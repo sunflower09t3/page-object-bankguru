@@ -20,6 +20,7 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import bankguru.AbstractPageUI;
+import bankguru.NewCustomerPageUI;
 
 public class AbstractPage {
 	private WebElement element;
@@ -364,6 +365,17 @@ public class AbstractPage {
 	public void sendKeyBoardToElement(WebDriver driver, String locator, CharSequence keys, String... dynamicValuesOfLocator) {
 		locator = String.format(locator, (Object[]) dynamicValuesOfLocator);
 		element = driver.findElement(By.xpath(locator));
+		
+		// Fix MoveTargetOutOfBoundsException in Firefox & Edge
+		if(driver.toString().contains("firefox") || driver.toString().contains("MicrosoftEdge")) {
+			scrollToElement(driver, locator);
+			try {
+				Thread.sleep(500);
+			}catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+		
 		action = new Actions(driver);
 		action.sendKeys(element, keys).perform();
 	}
@@ -376,7 +388,7 @@ public class AbstractPage {
 	public void scrollToElement(WebDriver driver, String locator) {
 		element = driver.findElement(By.xpath(locator));
 		javascriptExecutor = (JavascriptExecutor) driver;
-		javascriptExecutor.executeScript("arguments[0].scrollIntoView[0]", element);
+		javascriptExecutor.executeScript("arguments[0].scrollIntoView(true);", element);
 	}
 
 	public void highlightElement(WebDriver driver, String locator) {
@@ -386,6 +398,13 @@ public class AbstractPage {
 	}
 
 	public void removeAttributeOfElement(WebDriver driver, String locator, String attributeName) {
+		element = driver.findElement(By.xpath(locator));
+		javascriptExecutor = (JavascriptExecutor) driver;
+		javascriptExecutor.executeScript("arguments[0].removeAttribute('" + attributeName + "')", element);
+	}
+	
+	public void removeAttributeOfElement(WebDriver driver, String locator, String attributeName, String ...dynamicValuesOfLocator) {
+		locator = String.format(locator, (Object[])dynamicValuesOfLocator);
 		element = driver.findElement(By.xpath(locator));
 		javascriptExecutor = (JavascriptExecutor) driver;
 		javascriptExecutor.executeScript("arguments[0].removeAttribute('" + attributeName + "')", element);
@@ -547,6 +566,12 @@ public class AbstractPage {
 
 	public void inputToDynamicTextbox(WebDriver driver, String fieldName, String text) {
 		waitForElementVisible(driver, AbstractPageUI.DYNAMIC_TEXTBOX, fieldName);
+		
+		if(fieldName.equals("dob")) {
+			if(driver.toString().contains("chrome") || driver.toString().contains("MicrosoftEdge")) {
+				removeAttributeOfElement(driver, AbstractPageUI.DYNAMIC_TEXTBOX, "type", fieldName);
+			}
+		}
 		sendKeyToElement(driver, AbstractPageUI.DYNAMIC_TEXTBOX, text, fieldName);
 	}
 

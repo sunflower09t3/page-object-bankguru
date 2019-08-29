@@ -1,9 +1,6 @@
 package commons;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Random;
-import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.logging.Log;
@@ -15,7 +12,10 @@ import org.joda.time.format.DateTimeFormatter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.safari.SafariDriver;
 import org.testng.Assert;
 import org.testng.Reporter;
@@ -32,7 +32,13 @@ public class AbstractTest {
 
 	public WebDriver openMultipleBrowser(String browserName) {
 		if (browserName.equalsIgnoreCase("Firefox")) {
+			WebDriverManager.firefoxdriver().setup();
 			driver = new FirefoxDriver();
+		} else if(browserName.equalsIgnoreCase("Firefox Headless")) {
+			WebDriverManager.firefoxdriver().setup();
+			FirefoxOptions options = new FirefoxOptions();
+			options.setHeadless(true);
+			driver = new FirefoxDriver(options);
 		} else if (browserName.equalsIgnoreCase("Chrome")) {
 			WebDriverManager.chromedriver().setup();
 			driver = new ChromeDriver();
@@ -42,6 +48,12 @@ public class AbstractTest {
 			options.addArguments("headless");
 			options.addArguments("window-size=1366x768");
 			driver = new ChromeDriver(options);
+		} else if (browserName.equals("Internet Explorer")) {
+			WebDriverManager.iedriver().arch32().setup();
+			driver = new InternetExplorerDriver();
+		} else if (browserName.equals("Microsoft Edge")) {
+			WebDriverManager.edgedriver().setup();
+			driver = new EdgeDriver();
 		} else if (browserName.equalsIgnoreCase("Safari")) {
 			driver = new SafariDriver();
 		} else {
@@ -177,11 +189,6 @@ public class AbstractTest {
 		DateTime currentDate = new DateTime(DateTimeZone.UTC);
 		currentDate = DateTime.now();
 		return currentDate;
-	}
-	
-	public DateTime getParticularDate(int year, int month, int day) {
-		DateTime particularDate = new DateTime(year, month, day, 0, 0, 0, 0, DateTimeZone.UTC);
-		return particularDate;
 	}
 	
 	public String formatDate(DateTime date, String formatPattern) {
