@@ -1,53 +1,291 @@
 {
-	"customerNameContainNumber": "myname123",
-	"customerNameContainSpecialCharacter": "myname!@$",
-	"customerNameBeginWithSpace": " ",
-	"addressBeginWithSpace": " ",
-	"cityContainNumber": "city123",
-	"cityContainSpecialCharacter": "city@#%",
-	"cityBeginWithSpace": " ",
-	"stateContainNumber": "state123",
-	"stateContainSpecialCharacter": "state*&",
-	"stateBeginWithSpace": " ",
-	"pinContainCharacter": "123pin",
-	"pinWithLessThan6Digits": "123",
-	"pinContainSpecialCharacter": "12345$",
-	"pinBeginWithSpace": " ",
-	"pinContainSpace": "123 45",
-	"telephoneBeginWithSpace": " ",
-	"telephoneContainSpace": "1234567 89",
-	"telephoneContainSpecialCharacter": "12345678&",
-	"invalidEmail": "myemail@",
-	"emailBeginWithSpace": " ",
-	"customerIdContainCharacter": "123abc",
-	"customerIdContainSpecialCharacter": "123$%^",
-	"customerIdContainSpace": "123 45",
-	"customerIdBeginWithSpace": " 123",
-	"initialDepositContainCharacter": "10000Acc",
-	"initialDepositContainSpecialCharacter": "10000#$%",
-	"initialDepositContainSpace": "100 00",
-	"initialDepositBeginWithSpace": " 10000",
-	"accountNoContainCharacter": "123Acc",
-	"accountNoContainSpecialCharacter": "123$%^",
-	"accountNoContainSpace": "123 456",
-	"accountNoBeginWithSpace": " ",
-	"minimumTransactionValueContainCharacter": "123Acc",
-	"minimumTransactionValueContainSpecialCharacter": "123#$%",
-	"minimumTransactionValueContainSpace": "123 456",
-	"minimumTransactionValueBeginWithSpace": " ",
-	"numOfTransactionContainCharacter": "123Acc",
-	"numOfTransactionContainSpecialCharacter": "123#$%",
-	"numOfTransactionContainSpace": "123 456",
-	"numOfTransactionBeginWithSpace": " ",
-	"payerAccountNoContainCharacter": "123payer",
-	"payerAccountNoContainSpecialCharacter": "123@#$",
-	"payeeAccountNoContainCharacter": "123payee",
-	"payeeAccountNoContainSpecialCharacter": "123&*(",
-	"fundtransferamountContainCharacter": "123amount",
-	"fundtransferamountContainSpecialCharacter": "123$",
-	"newPasswordWithoutNumber": "Guru!@#$",
-	"newPasswordWithoutSpecialCharacter": "Guru99",
-	"newPasswordContainPasswordString": "Guru99!password",
-	"validNewPassword": "Guru99!@",
-	"confirmPasswordNotmatch": "ConfirmPassword!=NewPassword"
+	"customerName": {
+		"blank": {
+			"errorMessage": "Customer name must not be blank"
+		},
+		"containNumber": {
+			"input": "myname123",
+			"errorMessage": "Numbers are not allowed"
+		},
+		"containSpecialCharacter": {
+			"input": "myname!@$",
+			"errorMessage": "Special characters are not allowed"
+		},
+		"beginWithSpace": {
+			"input": " ",
+			"errorMessage": "First character can not have space"
+		}
+	},
+	"address": {
+		"blank": {
+			"errorMessage": "Address Field must not be blank"
+		},
+		"beginWithSpace": {
+			"input": " ",
+			"errorMessage": "First character can not have space"
+		}
+	},
+	"city": {
+		"blank": {
+			"errorMessage": "City Field must not be blank"
+		},
+		"containNumber": {
+			"input": "city123",
+			"errorMessage": "Numbers are not allowed"
+		},
+		"containSpecialCharacter": {
+			"input": "city@#%",
+			"errorMessage": "Special characters are not allowed"
+		},
+		"beginWithSpace": {
+			"input": " ",
+			"errorMessage": "First character can not have space"
+		}
+	},
+	"state": {
+		"blank": {
+			"errorMessage": "State must not be blank"
+		},
+		"containNumber": {
+			"input": "state123",
+			"errorMessage": "Numbers are not allowed"
+		},
+		"containSpecialCharacter": {
+			"input": "state*&",
+			"errorMessage": "Special characters are not allowed"
+		},
+		"beginWithSpace": {
+			"input": " ",
+			"errorMessage": "First character can not have space"
+		}
+	},
+	"pin": {
+		"blank": {
+			"errorMessage": "PIN Code must not be blank"
+		},
+		"containCharacter": {
+			"input": "123pin",
+			"errorMessage": "Characters are not allowed"
+		},
+		"lessThan6Digits": {
+			"input": "123",
+			"errorMessage": "PIN Code must have 6 Digits"
+		},
+		"containSpecialCharacter": {
+			"input": "12345$",
+			"errorMessage": "Special characters are not allowed"
+		},
+		"beginWithSpace": {
+			"input": " ",
+			"errorMessage": "First character can not have space"
+		},
+		"containSpace": {
+			"input": "123 45",
+			"errorMessage": "Characters are not allowed"
+		}
+	},
+	"telephone": {
+		"blank": {
+			"errorMessage": "Mobile no must not be blank"
+		},
+		"beginWithSpace": {
+			"input": " ",
+			"errorMessage": "First character can not have space"
+		},
+		"containSpace": {
+			"input": "1234567 89",
+			"errorMessage": "Characters are not allowed"
+		},
+		"containSpecialCharacter": {
+			"input": "12345678&",
+			"errorMessage": "Special characters are not allowed"
+		}
+	},
+	"email": {
+		"blank": {
+			"errorMessage": "Email-ID must not be blank"
+		},
+		"invalid": {
+			"input": "myemail@",
+			"errorMessage": "Email-ID is not valid"
+		},
+		"beginWithSpace": {
+			"input": " ",
+			"errorMessage": "First character can not have space"
+		}
+	},
+	"customerID": {
+		"blank": {
+			"errorMessage": "Customer ID is required"
+		},
+		"containCharacter": {
+			"input": "123abc",
+			"errorMessage": "Characters are not allowed"
+		},
+		"containSpecialCharacter": {
+			"input": "123$%^",
+			"errorMessage": "Special characters are not allowed"
+		},
+		"containSpace": {
+			"input": "123 45",
+			"errorMessage": "Characters are not allowed"
+		},
+		"beginWithSpace": {
+			"input": " 123",
+			"errorMessage": "First character can not have space"
+		}
+	},
+	"initialDeposit": {
+		"blank": {
+			"errorMessage": "Initial Deposit must not be blank"
+		},
+		"containCharacter": {
+			"input": "10000Acc",
+			"errorMessage": "Characters are not allowed"
+		},
+		"containSpecialCharacter": {
+			"input": "10000#$%",
+			"errorMessage": "Special characters are not allowed"
+		},
+		"containSpace": {
+			"input": "100 00",
+			"errorMessage": "Characters are not allowed"
+		},
+		"beginWithSpace": {
+			"input": " 10000",
+			"errorMessage": "First character can not have space"
+		}
+	},
+	"accountNo": {
+		"blank": {
+			"errorMessage": "Account Number must not be blank"
+		},
+		"containCharacter": {
+			"input": "123Acc",
+			"errorMessage": "Characters are not allowed"
+		},
+		"containSpecialCharacter": {
+			"input": "123$%^",
+			"errorMessage": "Special characters are not allowed"
+		},
+		"containSpace": {
+			"input": "123 456",
+			"errorMessage": "Characters are not allowed"
+		},
+		"beginWithSpace": {
+			"input": " ",
+			"errorMessage": "Characters are not allowed"
+		}
+	},
+	"minimumTransaction": {
+		"containCharacter": {
+			"input": "123Acc",
+			"errorMessage": "Characters are not allowed"
+		},
+		"containSpecialCharacter": {
+			"input": "123#$%",
+			"errorMessage": "Special characters are not allowed"
+		},
+		"containSpace": {
+			"input": "123 456",
+			"errorMessage": "Characters are not allowed"
+		},
+		"beginWithSpace": {
+			"input": " ",
+			"errorMessage": "Characters are not allowed"
+		}
+	},
+	"numberOfTransaction": {
+		"containCharacter": {
+			"input": "123Acc",
+			"errorMessage": "Characters are not allowed"
+		},
+		"containSpecialCharacter": {
+			"input": "123#$%",
+			"errorMessage": "Special characters are not allowed"
+		},
+		"containSpace": {
+			"input": "123 456",
+			"errorMessage": "Characters are not allowed"
+		},
+		"beginWithSpace": {
+			"input": " ",
+			"errorMessage": "Characters are not allowed"
+		}
+	},
+	"payerAccountNo": {
+		"blank": {
+			"errorMessage": "Payers Account Number must not be blank"
+		},
+		"containCharacter": {
+			"input": "123payer",
+			"errorMessage": "Characters are not allowed"
+		},
+		"containSpecialCharacter": {
+			"input": "123@#$",
+			"errorMessage": "Special characters are not allowed"
+		}
+	},
+	"payeeAccountNo": {
+		"blank": {
+			"errorMessage": "Payees Account Number must not be blank"
+		},
+		"containCharacter": {
+			"input": "123payee",
+			"errorMessage": "Characters are not allowed"
+		},
+		"containSpecialCharacter": {
+			"input": "123&*(",
+			"errorMessage": "Special characters are not allowed"
+		}
+	},
+	"fundTransferAmount": {
+		"blank": {
+			"errorMessage": "Amount field must not be blank"
+		},
+		"containCharacter": {
+			"input": "123amount",
+			"errorMessage": "Characters are not allowed"
+		},
+		"containSpecialCharacter": {
+			"input": "123$",
+			"errorMessage": "Special characters are not allowed"
+		}
+	},
+	"fundTransferDescription": {
+		"blank": {
+			"errorMessage": "Description can not be blank"
+		}
+	},
+	"oldPassword": {
+		"blank": {
+			"errorMessage": "Old Password must not be blank"
+		}
+	},
+	"newPassowrd": {
+		"blank": {
+			"errorMessage": "New Password must not be blank"
+		},
+		"withoutNumber": {
+			"input": "Guru!@#$",
+			"errorMessage": "Enter at-least one numeric value"
+		},
+		"withoutSpecialCharacter": {
+			"input": "Guru99",
+			"errorMessage": "Enter at-least one special character"
+		},
+		"containPasswordString": {
+			"input": "Guru99!password",
+			"errorMessage": "Choose a difficult Password"
+		},
+		"valid": {
+			"input": "Guru99!@"
+		}
+	},
+	"confirmPassword": {
+		"notMatchOldPassword": {
+			"input": "ConfirmPassword!=NewPassword",
+			"errorMessage": "Passwords do not Match"
+		}
+	}
 }

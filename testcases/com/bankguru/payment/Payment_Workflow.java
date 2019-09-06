@@ -90,7 +90,7 @@ public class Payment_Workflow extends AbstractTest {
 		newCustomerPage.clickDynamicButton(driver, "sub");
 
 		log.info("TC_01_CreateNewCustomer - STEP 03: Verify 'Customer Registered Successfully!!!' message is displayed");
-		verifyTrue(newCustomerPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Customer Registered Successfully!!!"));
+		verifyTrue(newCustomerPage.isPageTitleOrTableHeaderMessageDisplayed(driver, customerData.getFirstCustomerAddingResultMessage()));
 
 		log.info("TC_01_CreateNewCustomer - STEP 04: Verify actual data and expected data are matching");
 		verifyEquals(newCustomerPage.getDanymicDataInTable(driver, "Customer Name"), customerData.getFirstCustomerName());
@@ -125,7 +125,7 @@ public class Payment_Workflow extends AbstractTest {
 		newCustomerPage.clickDynamicButton(driver, "sub");
 		
 		log.info("TC_01_CreateNewCustomer - STEP 07: Verify 'Customer Registered Successfully!!!' message is displayed");
-		verifyTrue(newCustomerPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Customer Registered Successfully!!!"));
+		verifyTrue(newCustomerPage.isPageTitleOrTableHeaderMessageDisplayed(driver, customerData.getSecondCustomerAddingResultMessage()));
 
 		log.info("TC_01_CreateNewCustomer - STEP 08: Verify actual data and expected data are matching");
 		verifyEquals(newCustomerPage.getDanymicDataInTable(driver, "Customer Name"), customerData.getSecondCustomerName());
@@ -175,7 +175,7 @@ public class Payment_Workflow extends AbstractTest {
 		editCustomerPage.clickDynamicButton(driver, "sub");
 
 		log.info("TC_02_EditCustomer - STEP 05: Verify 'Customer details updated Successfully!!!' message is displayed");
-		verifyTrue(editCustomerPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Customer details updated Successfully!!!"));
+		verifyTrue(editCustomerPage.isPageTitleOrTableHeaderMessageDisplayed(driver, customerData.getFirstCustomerEditingResultMessage()));
 
 		log.info("TC_02_EditCustomer - STEP 06: Verify actual data and expected data are matching");
 		verifyEquals(editCustomerPage.getDanymicDataInTable(driver, "Address"), customerData.getFirstCustomerEditedAddress());
@@ -205,7 +205,7 @@ public class Payment_Workflow extends AbstractTest {
 		newAccountPage.clickDynamicButton(driver, "button2");
 
 		log.info("TC_03_CreateNewAccount - STEP 03: Verify 'Account Generated Successfully!!!' message is displayed");
-		verifyTrue(newAccountPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Account Generated Successfully!!!"));
+		verifyTrue(newAccountPage.isPageTitleOrTableHeaderMessageDisplayed(driver, accountData.getFirstAccountAddingResultMessage()));
 
 		log.info("TC_03_CreateNewAccount - STEP 04: Verify actual data and expected data are matching");
 		verifyEquals(newAccountPage.getDanymicDataInTable(driver, "Customer ID"), firstCustomerID);
@@ -231,7 +231,7 @@ public class Payment_Workflow extends AbstractTest {
 		newAccountPage.clickDynamicButton(driver, "button2");
 		
 		log.info("TC_03_CreateNewAccount - STEP 07: Verify 'Account Generated Successfully!!!' message is displayed");
-		verifyTrue(newAccountPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Account Generated Successfully!!!"));
+		verifyTrue(newAccountPage.isPageTitleOrTableHeaderMessageDisplayed(driver, accountData.getSecondAccountAddingResultMessage()));
 
 		log.info("TC_03_CreateNewAccount - STEP 08: Verify actual data and expected data are matching");
 		verifyEquals(newAccountPage.getDanymicDataInTable(driver, "Customer ID"), secondCustomerID);
@@ -266,7 +266,7 @@ public class Payment_Workflow extends AbstractTest {
 		editAccountPage.clickDynamicButton(driver, "AccSubmit");
 
 		log.info("TC_04_EditAccout - STEP 05: Verify 'Account details updated Successfully!!!' message is displayed");
-		verifyTrue(editAccountPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Account details updated Successfully!!!"));
+		verifyTrue(editAccountPage.isPageTitleOrTableHeaderMessageDisplayed(driver, accountData.getFirstAccountEditingResultMessage()));
 
 		log.info("TC_04_EditAccout - STEP 06: Verify actual data and expected data are matching");
 		verifyEquals(editAccountPage.getDanymicDataInTable(driver, "Account ID"), firstAccountID);
@@ -294,8 +294,8 @@ public class Payment_Workflow extends AbstractTest {
 		depositPage.inputToDynamicTextbox(driver, "desc", accountData.getFirstAccountDepositDescription());
 		depositPage.clickDynamicButton(driver, "AccSubmit");
 
-		log.info("TC_05_Deposit - STEP 03: Verify 'Transaction details of Deposit for Account account_id' message is displayed");
-		verifyTrue(depositPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Transaction details of Deposit for Account " + firstAccountID));
+		log.info("TC_05_Deposit - STEP 03: Verify 'Transaction details of Deposit for Account " + firstAccountID + "' message is displayed");
+		verifyTrue(depositPage.isPageTitleOrTableHeaderMessageDisplayed(driver, accountData.getFirstAccountDepositResultMessage() + firstAccountID));
 
 		log.info("TC_05_Deposit - STEP 04: Verify actual data and expected data are matching");
 		verifyEquals(depositPage.getDanymicDataInTable(driver, "Account No"), firstAccountID);
@@ -322,8 +322,8 @@ public class Payment_Workflow extends AbstractTest {
 		withdrawalPage.inputToDynamicTextbox(driver, "desc", accountData.getFirstAccountWithdrawDescription());
 		withdrawalPage.clickDynamicButton(driver, "AccSubmit");
 
-		log.info("TC_06_Withdraw - STEP 03: Verify 'Transaction details of Withdrawal for Account account_id' message is displayed");
-		verifyTrue(withdrawalPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Transaction details of Withdrawal for Account " + firstAccountID));
+		log.info("TC_06_Withdraw - STEP 03: Verify 'Transaction details of Withdrawal for Account " + firstAccountID + "' message is displayed");
+		verifyTrue(withdrawalPage.isPageTitleOrTableHeaderMessageDisplayed(driver, accountData.getFirstAccountWithdrawResultMessage() + firstAccountID));
 
 		log.info("TC_06_Withdraw - STEP 04: Verify actual data and expected data are matching");
 		verifyEquals(withdrawalPage.getDanymicDataInTable(driver, "Account No"), firstAccountID);
@@ -351,7 +351,7 @@ public class Payment_Workflow extends AbstractTest {
 		fundTransferPage.clickDynamicButton(driver, "AccSubmit");
 
 		log.info("TC_07_FundTransfer - STEP 03: Verify 'Fund Transfer Details' message is displayed");
-		verifyTrue(fundTransferPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Fund Transfer Details"));
+		verifyTrue(fundTransferPage.isPageTitleOrTableHeaderMessageDisplayed(driver, accountData.getFirstAccountTransferResultMessage()));
 
 		log.info("TC_07_FundTransfer - STEP 04: Verify actual data and expected data are matching");
 		verifyEquals(fundTransferPage.getDanymicDataInTable(driver, "From Account Number"), firstAccountID);
@@ -373,8 +373,8 @@ public class Payment_Workflow extends AbstractTest {
 		balanceEnquiryPage.inputToDynamicTextbox(driver, "accountno", firstAccountID);
 		balanceEnquiryPage.clickDynamicButton(driver, "AccSubmit");
 
-		log.info("TC_08_BalanceEnquiry - STEP 03: Verify 'Balance Details for Account account_id' message is displayed");
-		verifyTrue(balanceEnquiryPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Balance Details for Account " + firstAccountID));
+		log.info("TC_08_BalanceEnquiry - STEP 03: Verify 'Balance Details for Account " + firstAccountID + "' message is displayed");
+		verifyTrue(balanceEnquiryPage.isPageTitleOrTableHeaderMessageDisplayed(driver, accountData.getFirstAccountBalanceEnquiryResultMessage() + firstAccountID));
 
 		log.info("TC_08_BalanceEnquiry - STEP 04: Verify actual data and expected data are matching");
 		verifyEquals(balanceEnquiryPage.getDanymicDataInTable(driver, "Account No"), firstAccountID);
@@ -393,8 +393,8 @@ public class Payment_Workflow extends AbstractTest {
 		balanceEnquiryPage.inputToDynamicTextbox(driver, "accountno", secondAccountID);
 		balanceEnquiryPage.clickDynamicButton(driver, "AccSubmit");
 
-		log.info("TC_08_BalanceEnquiry - STEP 07: Verify 'Balance Details for Account account_id' message is displayed");
-		verifyTrue(balanceEnquiryPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Balance Details for Account " + secondAccountID));
+		log.info("TC_08_BalanceEnquiry - STEP 07: Verify 'Balance Details for Account "+ secondAccountID +"' message is displayed");
+		verifyTrue(balanceEnquiryPage.isPageTitleOrTableHeaderMessageDisplayed(driver, accountData.getSecondAccountBalanceEnquiryResultMessage() + secondAccountID));
 
 		log.info("TC_08_BalanceEnquiry - STEP 08: Verify actual data and expected data are matching");
 		verifyEquals(balanceEnquiryPage.getDanymicDataInTable(driver, "Account No"), secondAccountID);
@@ -423,7 +423,7 @@ public class Payment_Workflow extends AbstractTest {
 		deleteAccountPage.acceptDeleteAccountConfirmationAlert();
 
 		log.info("TC_09_DeleteAccount - STEP 04: Verify 'Account Deleted Sucessfully' alert message is displayed");
-		verifyTrue(deleteAccountPage.isDynamicAlertDisplayed(driver, "Account Deleted Sucessfully"));
+		verifyTrue(deleteAccountPage.isDynamicAlertDisplayed(driver, accountData.getFirstAccountDeletingResultMessage()));
 
 		log.info("TC_09_DeleteAccount - STEP 05: Accept the alert");
 		homePage = deleteAccountPage.acceptAccountDeletedSuccessfullyAlert();
@@ -458,7 +458,7 @@ public class Payment_Workflow extends AbstractTest {
 		deleteAccountPage.acceptDeleteAccountConfirmationAlert();
 
 		log.info("TC_09_DeleteAccount - STEP 13: Verify 'Account Deleted Sucessfully' alert message is displayed");
-		verifyTrue(deleteAccountPage.isDynamicAlertDisplayed(driver, "Account Deleted Sucessfully"));
+		verifyTrue(deleteAccountPage.isDynamicAlertDisplayed(driver, accountData.getSecondAccountDeletingResultMessage()));
 
 		log.info("TC_09_DeleteAccount - STEP 14: Accept the alert");
 		homePage = deleteAccountPage.acceptAccountDeletedSuccessfullyAlert();

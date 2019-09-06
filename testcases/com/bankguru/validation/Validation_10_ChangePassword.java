@@ -56,7 +56,7 @@ public class Validation_10_ChangePassword extends AbstractTest {
 		changePasswordPage.pressTabToDynamicTextbox(driver, "oldpassword");
 		
 		log.info("TC_01_OldPasswordMustNotBeBlank - STEP 03: Verify 'Old Password must not be blank' message is displayed");
-		verifyEquals(changePasswordPage.getErrorMessageOfDynamicField(driver, "Old Password"), "Old Password must not be blank");
+		verifyEquals(changePasswordPage.getErrorMessageOfDynamicField(driver, "Old Password"), validationData.getOldPasswordBlankErrorMsg());
 	}
 	
 	@Test
@@ -69,7 +69,7 @@ public class Validation_10_ChangePassword extends AbstractTest {
 		changePasswordPage.pressTabToDynamicTextbox(driver, "newpassword");
 		
 		log.info("TC_02_NewPasswordMustNotBeBlank - STEP 03: Verify 'New Password must not be blank' message is displayed");
-		verifyEquals(changePasswordPage.getErrorMessageOfDynamicField(driver, "New Password"), "New Password must not be blank");
+		verifyEquals(changePasswordPage.getErrorMessageOfDynamicField(driver, "New Password"), validationData.getNewPasswordBlankErrorMsg());
 	}
 	
 	@Test
@@ -82,7 +82,7 @@ public class Validation_10_ChangePassword extends AbstractTest {
 		changePasswordPage.inputToDynamicTextbox(driver, "newpassword", validationData.getNewPasswordWithoutNumber());
 		
 		log.info("TC_03_NewPasswordMustHaveAtLeastOneNumericValue - STEP 03: Verify 'Enter at-least one numeric value' message is displayed");
-		verifyEquals(changePasswordPage.getErrorMessageOfDynamicField(driver, "New Password"), "Enter at-least one numeric value");
+		verifyEquals(changePasswordPage.getErrorMessageOfDynamicField(driver, "New Password"), validationData.getNewPasswordWithoutNumberErrorMsg());
 	}
 	
 	@Test
@@ -95,7 +95,7 @@ public class Validation_10_ChangePassword extends AbstractTest {
 		changePasswordPage.inputToDynamicTextbox(driver, "newpassword", validationData.getNewPasswordWithoutSpecialCharacter());
 		
 		log.info("TC_04_NewPasswordMustHaveAtLeastOneSpecialCharacter - STEP 03: Verify 'Enter at-least one special character' message is displayed");
-		verifyEquals(changePasswordPage.getErrorMessageOfDynamicField(driver, "New Password"), "Enter at-least one special character");
+		verifyEquals(changePasswordPage.getErrorMessageOfDynamicField(driver, "New Password"), validationData.getNewPasswordWithoutSpecialCharacterErrorMsg());
 	}
 	
 	@Test
@@ -108,7 +108,7 @@ public class Validation_10_ChangePassword extends AbstractTest {
 		changePasswordPage.inputToDynamicTextbox(driver, "newpassword", validationData.getNewPasswordContainPasswordString());
 		
 		log.info("TC_05_NewPasswordMustNotContainPasswordString - STEP 03: Verify 'Choose a difficult Password' message is displayed");
-		verifyEquals(changePasswordPage.getErrorMessageOfDynamicField(driver, "New Password"), "Choose a difficult Password");
+		verifyEquals(changePasswordPage.getErrorMessageOfDynamicField(driver, "New Password"), validationData.getNewPasswordContainPasswordStringErrorMsg());
 	}
 	
 	@Test
@@ -124,7 +124,7 @@ public class Validation_10_ChangePassword extends AbstractTest {
 		changePasswordPage.inputToDynamicTextbox(driver, "confirmpassword", validationData.getConfirmPasswordNotmatch());
 		
 		log.info("TC_06_NewPasswordAndConfirmPasswordMustMatch - STEP 04: Verify 'Passwords do not Match' message is displayed");
-		verifyEquals(changePasswordPage.getErrorMessageOfDynamicField(driver, "Confirm Password"), "Passwords do not Match");
+		verifyEquals(changePasswordPage.getErrorMessageOfDynamicField(driver, "Confirm Password"), validationData.getConfirmPasswordNotmatchErrorMsg());
 	}
 
 	@AfterClass (alwaysRun=true)

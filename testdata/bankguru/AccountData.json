@@ -2,25 +2,43 @@
 	"firstAccount": {
 		"accountType": "Savings",
 		"initialDeposit": 50000,
+		"resultMessage": "Account Generated Successfully!!!",
 		"edit": {
-			"editedAccountType": "Current"
+			"editedAccountType": "Current",
+			"resultMessage": "Account details updated Successfully!!!"
 		},
 		"deposit": {
 			"amount": 5000,
-			"description": "Deposit"
+			"description": "Deposit",
+			"resultMessage": "Transaction details of Deposit for Account "
 		},
 		"withdrawal": {
 			"amount": 15000,
-			"description": "Withdraw"
+			"description": "Withdraw",
+			"resultMessage": "Transaction details of Withdrawal for Account "
 		},
 		"fundTransfer": {
 			"amount": 10000,
-			"description": "Transfer"
+			"description": "Transfer",
+			"resultMessage": "Fund Transfer Details"
+		},
+		"balanceEnquiry": {
+			"resultMessage": "Balance Details for Account "
+		},
+		"delete": {
+			"resultMessage": "Account Deleted Sucessfully"
 		}
 	},
 	"secondAccount": {
 		"accountType": "Savings",
-		"initialDeposit": 100000
+		"initialDeposit": 100000,
+		"resultMessage": "Account Generated Successfully!!!",
+		"balanceEnquiry": {
+			"resultMessage": "Balance Details for Account "
+		},
+		"delete": {
+			"resultMessage": "Account Deleted Sucessfully"
+		}
 	},
 	"thirdAccount": {
 		"accountType": "Current",

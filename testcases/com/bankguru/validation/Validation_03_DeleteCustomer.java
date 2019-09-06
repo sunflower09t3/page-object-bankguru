@@ -54,7 +54,7 @@ public class Validation_03_DeleteCustomer extends AbstractTest {
 		deleteCustomerPage.pressTabToDynamicTextbox(driver, "cusid");
 
 		log.info("TC_01_CustomerIDMustNotBeBlank - STEP 03: Verify 'Customer ID is required' message is displayed");
-		verifyEquals(deleteCustomerPage.getErrorMessageOfDynamicField(driver, "Customer ID"), "Customer ID is required");
+		verifyEquals(deleteCustomerPage.getErrorMessageOfDynamicField(driver, "Customer ID"), validationData.getCustomerIdBlankErrorMsg());
 	}
 
 	@Test
@@ -67,7 +67,7 @@ public class Validation_03_DeleteCustomer extends AbstractTest {
 		deleteCustomerPage.inputToDynamicTextbox(driver, "cusid", validationData.getCustomerIdContainCharacter());
 
 		log.info("TC_02_CustomerIDMustNotContainCharacter - STEP 03: Verify 'Characters are not allowed' message is displayed");
-		verifyEquals(deleteCustomerPage.getErrorMessageOfDynamicField(driver, "Customer ID"), "Characters are not allowed");
+		verifyEquals(deleteCustomerPage.getErrorMessageOfDynamicField(driver, "Customer ID"),validationData.getCustomerIdContainCharacterErrorMsg());
 	}
 
 	@Test
@@ -80,7 +80,7 @@ public class Validation_03_DeleteCustomer extends AbstractTest {
 		deleteCustomerPage.inputToDynamicTextbox(driver, "cusid", validationData.getCustomerIdContainSpecialCharacter());
 
 		log.info("TC_03_CustomerIDMustNotContainSpecialCharacter - STEP 03: Verify 'Special characters are not allowed' message is displayed");
-		verifyEquals(deleteCustomerPage.getErrorMessageOfDynamicField(driver, "Customer ID"), "Special characters are not allowed");
+		verifyEquals(deleteCustomerPage.getErrorMessageOfDynamicField(driver, "Customer ID"), validationData.getCustomerIdContainSpecialCharacterErrorMsg());
 	}
 
 	@Test
@@ -93,7 +93,7 @@ public class Validation_03_DeleteCustomer extends AbstractTest {
 		deleteCustomerPage.inputToDynamicTextbox(driver, "cusid", validationData.getCustomerIdContainSpace());
 
 		log.info("TC_04_CustomerIDMustNotContainSpace - STEP 03: Verify 'Characters are not allowed' message is displayed");
-		verifyEquals(deleteCustomerPage.getErrorMessageOfDynamicField(driver, "Customer ID"), "Characters are not allowed");
+		verifyEquals(deleteCustomerPage.getErrorMessageOfDynamicField(driver, "Customer ID"), validationData.getCustomerIdContainCharacterErrorMsg());
 	}
 
 	@Test
@@ -106,7 +106,7 @@ public class Validation_03_DeleteCustomer extends AbstractTest {
 		deleteCustomerPage.inputToDynamicTextbox(driver, "cusid", validationData.getCustomerIdBeginWithSpace());
 
 		log.info("TC_05_CustomerIDMustNotBeginWithSpace - STEP 02: Verify 'First character can not have space' message is displayed");
-		verifyEquals(deleteCustomerPage.getErrorMessageOfDynamicField(driver, "Customer ID"), "First character can not have space");
+		verifyEquals(deleteCustomerPage.getErrorMessageOfDynamicField(driver, "Customer ID"), validationData.getCustomerIdBeginWithSpaceErrorMsg());
 	}
 
 	@AfterClass(alwaysRun = true)

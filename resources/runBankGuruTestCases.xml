@@ -14,18 +14,18 @@
 	<test name="Run on Firefox">
 		<parameter name="browser" value="Firefox"></parameter>
 		<classes>
-			<class name="com.bankguru.commons.Common_01_RegisterToSystem" />
-			<class name="com.bankguru.validation.Validation_01_NewCustomer" />
+			 <class name="com.bankguru.commons.Common_01_RegisterToSystem" />
+			<!--<class name="com.bankguru.validation.Validation_01_NewCustomer" /> 
 			<class name="com.bankguru.validation.Validation_02_EditCustomer" />   
 			<class name = "com.bankguru.validation.Validation_03_DeleteCustomer"/>
 			<class name = "com.bankguru.validation.Validation_04_NewAccount"/>
 			<class name = "com.bankguru.validation.Validation_05_EditAccount"/> 
 			<class name = "com.bankguru.validation.Validation_06_DeleteAccount"/>
 			<class name = "com.bankguru.validation.Validation_07_MiniStatement"/>
-			<class name = "com.bankguru.validation.Validation_08_CustomisedStatement"/>
+			<class name = "com.bankguru.validation.Validation_08_CustomisedStatement"/> -->
 			<class name = "com.bankguru.validation.Validation_09_FundTransfer"/>
-			<class name = "com.bankguru.validation.Validation_10_ChangePassword"/>
-			<class name = "com.bankguru.payment.Payment_Workflow" /> 
+			<!-- <class name = "com.bankguru.validation.Validation_10_ChangePassword"/> -->
+			<!-- <class name = "com.bankguru.payment.Payment_Workflow" />  -->
 		</classes>
 	</test>
 	

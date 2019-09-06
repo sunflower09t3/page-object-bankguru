@@ -29,6 +29,7 @@ public class CustomerDataJson {
 		this.firstCustomerTelephone = (String) firstCustomer.get("telephone");
 		this.firstCustomerEmail = (String) firstCustomer.get("email");
 		this.firstCustomerPassword = (String)firstCustomer.get("password");
+		this.firstCustomerAddingResultMessage = (String)firstCustomer.get("resultMessage");
 		
 		Map<String, Object> editedCustomer = (Map<String, Object>) firstCustomer.get("edit");
 		this.firstCustomerEditedAddress = (String) editedCustomer.get("address");
@@ -37,6 +38,7 @@ public class CustomerDataJson {
 		this.firstCustomerEditedPin = (String) editedCustomer.get("pin");
 		this.firstCustomerEditedTelephone = (String) editedCustomer.get("telephone");
 		this.firstCustomerEditedEmail = (String) editedCustomer.get("email");
+		this.firstCustomerEditingResultMessage = (String) editedCustomer.get("resultMessage");
 	}
 
 	@JsonProperty("secondCustomer")
@@ -51,6 +53,7 @@ public class CustomerDataJson {
 		this.secondCustomerTelephone = (String) secondCustomer.get("telephone");
 		this.secondCustomerEmail = (String) secondCustomer.get("email");
 		this.secondCustomerPassword = (String) secondCustomer.get("password");
+		this.secondCustomerAddingResultMessage = (String)secondCustomer.get("resultMessage");
 	}
 
 	@JsonProperty("thirdCustomer")
@@ -100,6 +103,8 @@ public class CustomerDataJson {
 	private String firstCustomerEmail;
 
 	private String firstCustomerPassword;
+	
+	private String firstCustomerAddingResultMessage;
 
 	private String firstCustomerEditedAddress;
 
@@ -113,6 +118,8 @@ public class CustomerDataJson {
 
 	private String firstCustomerEditedEmail;
 
+	private String firstCustomerEditingResultMessage;
+	
 	private String secondCustomerName;
 
 	private String secondCustomerGender;
@@ -132,6 +139,8 @@ public class CustomerDataJson {
 	private String secondCustomerEmail;
 
 	private String secondCustomerPassword;
+	
+	private String secondCustomerAddingResultMessage;
 
 	private String thirdCustomerName;
 
@@ -213,6 +222,10 @@ public class CustomerDataJson {
 		return firstCustomerPassword;
 	}
 
+	public String getFirstCustomerAddingResultMessage() {
+		return firstCustomerAddingResultMessage;
+	}
+
 	public String getFirstCustomerEditedAddress() {
 		return firstCustomerEditedAddress;
 	}
@@ -235,6 +248,10 @@ public class CustomerDataJson {
 
 	public String getFirstCustomerEditedEmail() {
 		return firstCustomerEditedEmail;
+	}
+
+	public String getFirstCustomerEditingResultMessage() {
+		return firstCustomerEditingResultMessage;
 	}
 
 	public String getSecondCustomerName() {
@@ -275,6 +292,10 @@ public class CustomerDataJson {
 
 	public String getSecondCustomerPassword() {
 		return secondCustomerPassword;
+	}
+	
+	public String getSecondCustomerAddingResultMessage() {
+		return secondCustomerAddingResultMessage;
 	}
 
 	public String getThirdCustomerName() {

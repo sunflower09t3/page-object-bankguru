@@ -10,13 +10,15 @@
 		"telephone": "4555442476",
 		"email": "jack%s@gmail.com",
 		"password": "firstcustomerpassword",
+		"resultMessage": "Customer Registered Successfully!!!",
 		"edit": {
 			"address": "1883 Cursus Avenue",
 			"city": "Houston",
 			"state": "Texas",
 			"pin": "166455",
 			"telephone": "1122334455",
-			"email": "JackLe%s@gmail.com"
+			"email": "JackLe%s@gmail.com",
+			"resultMessage": "Customer details updated Successfully!!!"
 		}
 	},
 	"secondCustomer": {
@@ -29,7 +31,8 @@
 		"pin": "778855",
 		"telephone": "1478965236",
 		"email": "amanda%s@gmail.com",
-		"password": "secondcustomerpassword"
+		"password": "secondcustomerpassword",
+		"resultMessage": "Customer Registered Successfully!!!"
 	},
 	"thirdCustomer": {
 		"customerName": "Omaha",

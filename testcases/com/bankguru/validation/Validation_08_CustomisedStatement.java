@@ -54,7 +54,7 @@ public class Validation_08_CustomisedStatement extends AbstractTest {
 		customisedStatementPage.pressTabToDynamicTextbox(driver, "accountno");
 
 		log.info("TC_01_AccountNoMustNotBeBlank - STEP 03: Verify 'Account Number must not be blank' message is displayed");
-		verifyEquals(customisedStatementPage.getErrorMessageOfDynamicField(driver, "Account No"), "Account Number must not be blank");
+		verifyEquals(customisedStatementPage.getErrorMessageOfDynamicField(driver, "Account No"), validationData.getAccountNoBlankErrorMsg());
 	}
 
 	@Test
@@ -67,7 +67,7 @@ public class Validation_08_CustomisedStatement extends AbstractTest {
 		customisedStatementPage.inputToDynamicTextbox(driver, "accountno", validationData.getAccountNoContainCharacter());
 
 		log.info("TC_02_AccountNoMustNotContainCharacter - STEP 03: Verify 'Characters are not allowed' message is displayed");
-		verifyEquals(customisedStatementPage.getErrorMessageOfDynamicField(driver, "Account No"), "Characters are not allowed");
+		verifyEquals(customisedStatementPage.getErrorMessageOfDynamicField(driver, "Account No"), validationData.getAccountNoContainCharacterErrorMsg());
 	}
 
 	@Test
@@ -80,7 +80,7 @@ public class Validation_08_CustomisedStatement extends AbstractTest {
 		customisedStatementPage.inputToDynamicTextbox(driver, "accountno", validationData.getAccountNoContainSpecialCharacter());
 
 		log.info("TC_03_AccountNoMustNotContainSpecialCharacter - STEP 03: Verify 'Special characters are not allowed' message is displayed");
-		verifyEquals(customisedStatementPage.getErrorMessageOfDynamicField(driver, "Account No"), "Special characters are not allowed");
+		verifyEquals(customisedStatementPage.getErrorMessageOfDynamicField(driver, "Account No"), validationData.getAccountNoContainSpecialCharacterErrorMsg());
 	}
 
 	@Test
@@ -93,7 +93,7 @@ public class Validation_08_CustomisedStatement extends AbstractTest {
 		customisedStatementPage.inputToDynamicTextbox(driver, "accountno", validationData.getAccountNoContainSpace());
 
 		log.info("TC_05_AccountNoMustNotBeginWithSpace - STEP 03: Verify 'Characters are not allowed' message is displayed");
-		verifyEquals(customisedStatementPage.getErrorMessageOfDynamicField(driver, "Account No"), "Characters are not allowed");
+		verifyEquals(customisedStatementPage.getErrorMessageOfDynamicField(driver, "Account No"), validationData.getAccountNoContainSpaceErrorMsg());
 	}
 
 	@Test
@@ -106,7 +106,7 @@ public class Validation_08_CustomisedStatement extends AbstractTest {
 		customisedStatementPage.inputToDynamicTextbox(driver, "accountno", validationData.getAccountNoBeginWithSpace());
 
 		log.info("TC_05_AccountNoMustNotBeginWithSpace - STEP 03: Verify 'Characters are not allowed' message is displayed");
-		verifyEquals(customisedStatementPage.getErrorMessageOfDynamicField(driver, "Account No"), "Characters are not allowed");
+		verifyEquals(customisedStatementPage.getErrorMessageOfDynamicField(driver, "Account No"), validationData.getAccountNoBeginWithSpaceErrorMsg());
 	}
 
 	@Test
@@ -119,7 +119,7 @@ public class Validation_08_CustomisedStatement extends AbstractTest {
 		customisedStatementPage.inputToDynamicTextbox(driver, "amountlowerlimit", validationData.getMinimumTransactionValueContainCharacter());
 
 		log.info("Validate Minimum Transaction Value field with blank value - STEP 03: Verify 'Characters are not allowed' message is displayed");
-		verifyEquals(customisedStatementPage.getErrorMessageOfDynamicField(driver, "Minimum Transaction Value"), "Characters are not allowed");
+		verifyEquals(customisedStatementPage.getErrorMessageOfDynamicField(driver, "Minimum Transaction Value"), validationData.getMinimumTransactionValueContainCharacterErrorMsg());
 	}
 
 	@Test
@@ -132,7 +132,7 @@ public class Validation_08_CustomisedStatement extends AbstractTest {
 		customisedStatementPage.inputToDynamicTextbox(driver, "amountlowerlimit", validationData.getMinimumTransactionValueContainSpecialCharacter());
 
 		log.info("TC_07_MinimumTransactionValueNoMustNotContainSpecialCharacter - STEP 03: Verify 'Special characters are not allowed' message is displayed");
-		verifyEquals(customisedStatementPage.getErrorMessageOfDynamicField(driver, "Minimum Transaction Value"), "Special characters are not allowed");
+		verifyEquals(customisedStatementPage.getErrorMessageOfDynamicField(driver, "Minimum Transaction Value"), validationData.getMinimumTransactionValueContainSpecialCharacterErrorMsg());
 	}
 
 	@Test
@@ -145,7 +145,7 @@ public class Validation_08_CustomisedStatement extends AbstractTest {
 		customisedStatementPage.inputToDynamicTextbox(driver, "amountlowerlimit", validationData.getMinimumTransactionValueContainSpace());
 
 		log.info("TC_08_MinimumTransactionValueMustNotContainSpace - STEP 03: Verify 'Characters are not allowed' message is displayed");
-		verifyEquals(customisedStatementPage.getErrorMessageOfDynamicField(driver, "Minimum Transaction Value"), "Characters are not allowed");
+		verifyEquals(customisedStatementPage.getErrorMessageOfDynamicField(driver, "Minimum Transaction Value"), validationData.getMinimumTransactionValueContainSpaceErrorMsg());
 	}
 
 	@Test
@@ -158,7 +158,7 @@ public class Validation_08_CustomisedStatement extends AbstractTest {
 		customisedStatementPage.inputToDynamicTextbox(driver, "amountlowerlimit", validationData.getMinimumTransactionValueBeginWithSpace());
 
 		log.info("TC_09_MinimumTransactionValueoMustNotBeginWithSpace - STEP 03: Verify 'Characters are not allowed' message is displayed");
-		verifyEquals(customisedStatementPage.getErrorMessageOfDynamicField(driver, "Minimum Transaction Value"), "Characters are not allowed");
+		verifyEquals(customisedStatementPage.getErrorMessageOfDynamicField(driver, "Minimum Transaction Value"), validationData.getMinimumTransactionValueBeginWithSpaceErrorMsg());
 	}
 
 	@Test
@@ -171,7 +171,7 @@ public class Validation_08_CustomisedStatement extends AbstractTest {
 		customisedStatementPage.inputToDynamicTextbox(driver, "numtransaction", validationData.getNumOfTransactionContainCharacter());
 
 		log.info("Validate Number of Transaction field with blank value - STEP 03: Verify 'Characters are not allowed' message is displayed");
-		verifyEquals(customisedStatementPage.getErrorMessageOfDynamicField(driver, "Number of Transaction"), "Characters are not allowed");
+		verifyEquals(customisedStatementPage.getErrorMessageOfDynamicField(driver, "Number of Transaction"), validationData.getNumOfTransactionContainCharacterErrorMsg());
 	}
 
 	@Test
@@ -184,7 +184,7 @@ public class Validation_08_CustomisedStatement extends AbstractTest {
 		customisedStatementPage.inputToDynamicTextbox(driver, "numtransaction", validationData.getNumOfTransactionContainSpecialCharacter());
 
 		log.info("TC_11_NumberOfTransactionValueNoMustNotContainSpecialCharacter - STEP 03: Verify 'Special characters are not allowed' message is displayed");
-		verifyEquals(customisedStatementPage.getErrorMessageOfDynamicField(driver, "Number of Transaction"), "Special characters are not allowed");
+		verifyEquals(customisedStatementPage.getErrorMessageOfDynamicField(driver, "Number of Transaction"), validationData.getNumOfTransactionContainSpecialCharacterErrorMsg());
 	}
 
 	@Test
@@ -197,7 +197,7 @@ public class Validation_08_CustomisedStatement extends AbstractTest {
 		customisedStatementPage.inputToDynamicTextbox(driver, "numtransaction", validationData.getNumOfTransactionContainSpace());
 
 		log.info("TC_12_NumberOfTransactionValueMustNotContainSpace - STEP 03: Verify 'Characters are not allowed' message is displayed");
-		verifyEquals(customisedStatementPage.getErrorMessageOfDynamicField(driver, "Number of Transaction"), "Characters are not allowed");
+		verifyEquals(customisedStatementPage.getErrorMessageOfDynamicField(driver, "Number of Transaction"), validationData.getNumOfTransactionContainSpaceErrorMsg());
 	}
 
 	@Test
@@ -210,7 +210,7 @@ public class Validation_08_CustomisedStatement extends AbstractTest {
 		customisedStatementPage.inputToDynamicTextbox(driver, "numtransaction", validationData.getNumOfTransactionBeginWithSpace());
 
 		log.info("TC_13_NumberOfTransactionValueoMustNotBeginWithSpace - STEP 03: Verify 'Characters are not allowed' message is displayed");
-		verifyEquals(customisedStatementPage.getErrorMessageOfDynamicField(driver, "Number of Transaction"), "Characters are not allowed");
+		verifyEquals(customisedStatementPage.getErrorMessageOfDynamicField(driver, "Number of Transaction"), validationData.getNumOfTransactionBeginWithSpaceErrorMsg());
 	}
 
 	@AfterClass(alwaysRun = true)

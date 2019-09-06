@@ -54,7 +54,7 @@ public class Validation_04_NewAccount extends AbstractTest {
 		newAccountPage.pressTabToDynamicTextbox(driver, "cusid");
 
 		log.info("TC_01_CustomerIDMustNotBeBlank STEP 03: Verify 'Customer ID is required' message is displayed");
-		verifyEquals(newAccountPage.getErrorMessageOfDynamicField(driver, "Customer id"), "Customer ID is required");
+		verifyEquals(newAccountPage.getErrorMessageOfDynamicField(driver, "Customer id"), validationData.getCustomerIdBlankErrorMsg());
 	}
 
 	@Test
@@ -67,7 +67,7 @@ public class Validation_04_NewAccount extends AbstractTest {
 		newAccountPage.inputToDynamicTextbox(driver, "cusid", validationData.getCustomerIdContainCharacter());
 
 		log.info("TC_02_CustomerIDMustNotContainCharacter STEP 03: Verify 'Characters are not allowed' message is displayed");
-		verifyEquals(newAccountPage.getErrorMessageOfDynamicField(driver, "Customer id"), "Characters are not allowed");
+		verifyEquals(newAccountPage.getErrorMessageOfDynamicField(driver, "Customer id"), validationData.getCustomerIdContainCharacterErrorMsg());
 	}
 
 	@Test
@@ -80,7 +80,7 @@ public class Validation_04_NewAccount extends AbstractTest {
 		newAccountPage.inputToDynamicTextbox(driver, "cusid", validationData.getCustomerIdContainSpecialCharacter());
 
 		log.info("TC_03_CustomerIDMustNotContainSpecialCharacter - STEP 02: Verify 'Special characters are not allowed' message is displayed");
-		verifyEquals(newAccountPage.getErrorMessageOfDynamicField(driver, "Customer id"), "Special characters are not allowed");
+		verifyEquals(newAccountPage.getErrorMessageOfDynamicField(driver, "Customer id"), validationData.getCustomerIdContainSpecialCharacterErrorMsg());
 	}
 
 	@Test
@@ -93,7 +93,7 @@ public class Validation_04_NewAccount extends AbstractTest {
 		newAccountPage.inputToDynamicTextbox(driver, "cusid", validationData.getCustomerIdContainSpace());
 
 		log.info("TC_04_CustomerIDMustNotContainSpace - STEP 03: Verify 'Characters are not allowed' message is displayed");
-		verifyEquals(newAccountPage.getErrorMessageOfDynamicField(driver, "Customer id"), "Characters are not allowed");
+		verifyEquals(newAccountPage.getErrorMessageOfDynamicField(driver, "Customer id"), validationData.getCustomerIdContainSpaceErrorMsg());
 	}
 
 	@Test
@@ -106,7 +106,7 @@ public class Validation_04_NewAccount extends AbstractTest {
 		newAccountPage.inputToDynamicTextbox(driver, "cusid", validationData.getCustomerIdBeginWithSpace());
 
 		log.info("TC_05_CustomerIDMustNotBeginWithSpace - STEP 03: Verify 'First character can not have space' message is displayed");
-		verifyEquals(newAccountPage.getErrorMessageOfDynamicField(driver, "Customer id"), "First character can not have space");
+		verifyEquals(newAccountPage.getErrorMessageOfDynamicField(driver, "Customer id"), validationData.getCustomerIdBeginWithSpaceErrorMsg());
 	}
 
 	@Test
@@ -119,7 +119,7 @@ public class Validation_04_NewAccount extends AbstractTest {
 		newAccountPage.pressTabToDynamicTextbox(driver, "inideposit");
 
 		log.info("TC_06_InitialDepositMustNotBeBlank - STEP 03: Verify 'Initial Deposit must not be blank' message is displayed");
-		verifyEquals(newAccountPage.getErrorMessageOfDynamicField(driver, "Initial deposit"), "Initial Deposit must not be blank");
+		verifyEquals(newAccountPage.getErrorMessageOfDynamicField(driver, "Initial deposit"), validationData.getInitialDepositBlankErrorMsg());
 	}
 
 	@Test
@@ -132,7 +132,7 @@ public class Validation_04_NewAccount extends AbstractTest {
 		newAccountPage.inputToDynamicTextbox(driver, "inideposit", validationData.getInitialDepositContainCharacter());
 
 		log.info("TC_07_InitialDepositMustNotContainCharacter - STEP 03: Verify 'Characters are not allowed' message is displayed");
-		verifyEquals(newAccountPage.getErrorMessageOfDynamicField(driver, "Initial deposit"), "Characters are not allowed");
+		verifyEquals(newAccountPage.getErrorMessageOfDynamicField(driver, "Initial deposit"), validationData.getInitialDepositContainCharacterErrorMsg());
 	}
 
 	@Test
@@ -145,7 +145,7 @@ public class Validation_04_NewAccount extends AbstractTest {
 		newAccountPage.inputToDynamicTextbox(driver, "inideposit", validationData.getInitialDepositContainSpecialCharacter());
 
 		log.info("TC_08_InitialDepositMustNotContainSpecialCharacter - STEP 03: Verify 'Special characters are not allowed' message is displayed");
-		verifyEquals(newAccountPage.getErrorMessageOfDynamicField(driver, "Initial deposit"), "Special characters are not allowed");
+		verifyEquals(newAccountPage.getErrorMessageOfDynamicField(driver, "Initial deposit"), validationData.getInitialDepositContainSpecialCharacterErrorMsg());
 	}
 
 	@Test
@@ -158,7 +158,7 @@ public class Validation_04_NewAccount extends AbstractTest {
 		newAccountPage.inputToDynamicTextbox(driver, "inideposit", validationData.getInitialDepositContainSpace());
 
 		log.info("TC_09_InitialDepositMustNotContainSpace - STEP 03: Verify 'Characters are not allowed' message is displayed");
-		verifyEquals(newAccountPage.getErrorMessageOfDynamicField(driver, "Initial deposit"), "Characters are not allowed");
+		verifyEquals(newAccountPage.getErrorMessageOfDynamicField(driver, "Initial deposit"), validationData.getInitialDepositContainSpaceErrorMsg());
 	}
 
 	@Test
@@ -171,7 +171,7 @@ public class Validation_04_NewAccount extends AbstractTest {
 		newAccountPage.inputToDynamicTextbox(driver, "inideposit", validationData.getInitialDepositBeginWithSpace());
 
 		log.info("TC_10_InitialDepositMustNotBeginWithSpace - STEP 03: Verify 'First character can not have space' message is displayed");
-		verifyEquals(newAccountPage.getErrorMessageOfDynamicField(driver, "Initial deposit"), "First character can not have space");
+		verifyEquals(newAccountPage.getErrorMessageOfDynamicField(driver, "Initial deposit"), validationData.getInitialDepositBeginWithSpaceErrorMsg());
 	}
 
 	@AfterClass(alwaysRun = true)

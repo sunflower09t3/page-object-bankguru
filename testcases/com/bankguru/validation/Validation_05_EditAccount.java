@@ -64,7 +64,7 @@ public class Validation_05_EditAccount extends AbstractTest {
 		editAccountPage.pressTabToDynamicTextbox(driver, "accountno");
 
 		log.info("TC_01_AccountNoMustNotBeBlank - STEP 03: Verify 'Account Number must not be blank' message is displayed");
-		verifyEquals(editAccountPage.getErrorMessageOfDynamicField(driver, "Account No"), "Account Number must not be blank");
+		verifyEquals(editAccountPage.getErrorMessageOfDynamicField(driver, "Account No"), validationData.getAccountNoBlankErrorMsg());
 	}
 
 	@Test
@@ -77,7 +77,7 @@ public class Validation_05_EditAccount extends AbstractTest {
 		editAccountPage.inputToDynamicTextbox(driver, "accountno", validationData.getAccountNoContainCharacter());
 
 		log.info("TC_02_AccountNoMustNotContainCharacter - STEP 03: Verify 'Characters are not allowed' message is displayed");
-		verifyEquals(editAccountPage.getErrorMessageOfDynamicField(driver, "Account No"), "Characters are not allowed");
+		verifyEquals(editAccountPage.getErrorMessageOfDynamicField(driver, "Account No"), validationData.getAccountNoContainCharacterErrorMsg());
 	}
 
 	@Test
@@ -90,7 +90,7 @@ public class Validation_05_EditAccount extends AbstractTest {
 		editAccountPage.inputToDynamicTextbox(driver, "accountno", validationData.getAccountNoContainSpecialCharacter());
 
 		log.info("TC_03_AccountNoMustNotContainSpecialCharacter - STEP 03: Verify 'Special characters are not allowed' message is displayed");
-		verifyEquals(editAccountPage.getErrorMessageOfDynamicField(driver, "Account No"), "Special characters are not allowed");
+		verifyEquals(editAccountPage.getErrorMessageOfDynamicField(driver, "Account No"), validationData.getAccountNoContainSpecialCharacterErrorMsg());
 	}
 
 	@Test
@@ -103,7 +103,7 @@ public class Validation_05_EditAccount extends AbstractTest {
 		editAccountPage.inputToDynamicTextbox(driver, "accountno", validationData.getAccountNoContainSpace());
 
 		log.info("TC_04_AccountNoMustNotContainSpace - STEP 03: Verify 'Characters are not allowed' message is displayed");
-		verifyEquals(editAccountPage.getErrorMessageOfDynamicField(driver, "Account No"), "Characters are not allowed");
+		verifyEquals(editAccountPage.getErrorMessageOfDynamicField(driver, "Account No"), validationData.getAccountNoContainSpaceErrorMsg());
 	}
 
 	@Test
@@ -116,7 +116,7 @@ public class Validation_05_EditAccount extends AbstractTest {
 		editAccountPage.inputToDynamicTextbox(driver, "accountno", validationData.getAccountNoBeginWithSpace());
 
 		log.info("TC_05_AccountNoMustNotBeginWithSpace - STEP 03: Verify 'Characters are not allowed' message is displayed");
-		verifyEquals(editAccountPage.getErrorMessageOfDynamicField(driver, "Account No"), "Characters are not allowed");
+		verifyEquals(editAccountPage.getErrorMessageOfDynamicField(driver, "Account No"), validationData.getAccountNoBeginWithSpaceErrorMsg());
 	}
 
 	@Test

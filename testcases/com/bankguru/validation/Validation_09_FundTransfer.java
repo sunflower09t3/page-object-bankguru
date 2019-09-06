@@ -54,7 +54,7 @@ public class Validation_09_FundTransfer extends AbstractTest {
 		fundTransferPage.pressTabToDynamicTextbox(driver, "payersaccount");
 
 		log.info("TC_01_PayerAccountNoMustNotBeBlank - STEP 03: Verify 'Payers Account Number must not be blank' message is displayed");
-		verifyEquals(fundTransferPage.getErrorMessageOfDynamicField(driver, "Payers account no"), "Payers Account Number must not be blank");
+		verifyEquals(fundTransferPage.getErrorMessageOfDynamicField(driver, "Payers account no"), validationData.getPayerAccountNoBlankErrorMsg());
 	}
 
 	@Test
@@ -67,7 +67,7 @@ public class Validation_09_FundTransfer extends AbstractTest {
 		fundTransferPage.inputToDynamicTextbox(driver, "payersaccount", validationData.getPayerAccountNoContainCharacter());
 
 		log.info("TC_02_PayerAccountNoMustNotContainCharacter - STEP 03: Verify 'Characters are not allowed' message is displayed");
-		verifyEquals(fundTransferPage.getErrorMessageOfDynamicField(driver, "Payers account no"), "Characters are not allowed");
+		verifyEquals(fundTransferPage.getErrorMessageOfDynamicField(driver, "Payers account no"), validationData.getPayerAccountNoContainCharacterErrorMsg());
 	}
 
 	@Test
@@ -80,7 +80,7 @@ public class Validation_09_FundTransfer extends AbstractTest {
 		fundTransferPage.inputToDynamicTextbox(driver, "payersaccount", validationData.getPayerAccountNoContainSpecialCharacter());
 
 		log.info("TC_03_PayerAccountNoMustNotContainSpecialCharacter - STEP 03: Verify 'Special characters are not allowed' message is displayed");
-		verifyEquals(fundTransferPage.getErrorMessageOfDynamicField(driver, "Payers account no"), "Special characters are not allowed");
+		verifyEquals(fundTransferPage.getErrorMessageOfDynamicField(driver, "Payers account no"), validationData.getPayerAccountNoContainSpecialCharacterErrorMsg());
 	}
 
 	@Test
@@ -93,7 +93,7 @@ public class Validation_09_FundTransfer extends AbstractTest {
 		fundTransferPage.pressTabToDynamicTextbox(driver, "payeeaccount");
 
 		log.info("TC_04_PayeeAccountNoMustNotBeBlank - STEP 03: Verify 'Payees Account Number must not be blank' message is displayed");
-		verifyEquals(fundTransferPage.getErrorMessageOfDynamicField(driver, "Payees account no"), "Payees Account Number must not be blank");
+		verifyEquals(fundTransferPage.getErrorMessageOfDynamicField(driver, "Payees account no"), validationData.getPayeeAccountNoBlankErrorMsg());
 	}
 
 	@Test
@@ -106,7 +106,7 @@ public class Validation_09_FundTransfer extends AbstractTest {
 		fundTransferPage.inputToDynamicTextbox(driver, "payeeaccount", validationData.getPayeeAccountNoContainCharacter());
 
 		log.info("TC_05_PayeeAccountNoMustNotContainCharacter - STEP 03: Verify 'Characters are not allowed' message is displayed");
-		verifyEquals(fundTransferPage.getErrorMessageOfDynamicField(driver, "Payees account no"), "Characters are not allowed");
+		verifyEquals(fundTransferPage.getErrorMessageOfDynamicField(driver, "Payees account no"), validationData.getPayeeAccountNoContainCharacterErrorMsg());
 	}
 
 	@Test
@@ -119,7 +119,7 @@ public class Validation_09_FundTransfer extends AbstractTest {
 		fundTransferPage.inputToDynamicTextbox(driver, "payeeaccount", validationData.getPayeeAccountNoContainSpecialCharacter());
 
 		log.info("TC_06_PayeeAccountNoMustNotContainSpecialCharacter - STEP 03: Verify 'Special characters are not allowed' message is displayed");
-		verifyEquals(fundTransferPage.getErrorMessageOfDynamicField(driver, "Payees account no"), "Special characters are not allowed");
+		verifyEquals(fundTransferPage.getErrorMessageOfDynamicField(driver, "Payees account no"), validationData.getPayeeAccountNoContainSpecialCharacterErrorMsg());
 	}
 
 	@Test
@@ -132,7 +132,7 @@ public class Validation_09_FundTransfer extends AbstractTest {
 		fundTransferPage.pressTabToDynamicTextbox(driver, "ammount");
 
 		log.info("TC_07_AmountMustNotBeBlank - STEP 03: Verify 'Amount field must not be blank' message is displayed");
-		verifyEquals(fundTransferPage.getErrorMessageOfDynamicField(driver, "Amount"), "Amount field must not be blank");
+		verifyEquals(fundTransferPage.getErrorMessageOfDynamicField(driver, "Amount"), validationData.getFundTransferAmountBlankErrorMsg());
 	}
 
 	@Test
@@ -142,10 +142,10 @@ public class Validation_09_FundTransfer extends AbstractTest {
 		verifyTrue(fundTransferPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Fund transfer"));
 		
 		log.info("TC_08_AmountMustNotContainCharacter - STEP 02: Input character into Amount field");
-		fundTransferPage.inputToDynamicTextbox(driver, "ammount", validationData.getFundtransferamountContainCharacter());
+		fundTransferPage.inputToDynamicTextbox(driver, "ammount", validationData.getFundTransferAmountContainCharacter());
 
 		log.info("TC_08_AmountMustNotContainCharacter - STEP 03: Verify 'Characters are not allowed' message is displayed");
-		verifyEquals(fundTransferPage.getErrorMessageOfDynamicField(driver, "Amount"), "Characters are not allowed");
+		verifyEquals(fundTransferPage.getErrorMessageOfDynamicField(driver, "Amount"), validationData.getFundTransferAmountContainCharacterErrorMsg());
 	}
 
 	@Test
@@ -155,10 +155,10 @@ public class Validation_09_FundTransfer extends AbstractTest {
 		verifyTrue(fundTransferPage.isPageTitleOrTableHeaderMessageDisplayed(driver, "Fund transfer"));
 		
 		log.info("TC_09_AmountMustNotContainSpecialCharacter - STEP 02: Input special character into Amount field");
-		fundTransferPage.inputToDynamicTextbox(driver, "ammount", validationData.getFundtransferamountContainSpecialCharacter());
+		fundTransferPage.inputToDynamicTextbox(driver, "ammount", validationData.getFundTransferAmountContainSpecialCharacter());
 
 		log.info("TC_09_AmountMustNotContainSpecialCharacter - STEP 03: Verify 'Special characters are not allowed' message is displayed");
-		verifyEquals(fundTransferPage.getErrorMessageOfDynamicField(driver, "Amount"), "Special characters are not allowed");
+		verifyEquals(fundTransferPage.getErrorMessageOfDynamicField(driver, "Amount"), validationData.getFundTransferAmountContainSpecialCharacterErrorMsg());
 	}
 
 	@Test
@@ -171,7 +171,7 @@ public class Validation_09_FundTransfer extends AbstractTest {
 		fundTransferPage.pressTabToDynamicTextbox(driver, "desc");
 
 		log.info("TC_10_DescriptionMustNotBeBlank - STEP 03: Verify 'Description can not be blank' message is displayed");
-		verifyEquals(fundTransferPage.getErrorMessageOfDynamicField(driver, "Description"), "Description can not be blank");
+		verifyEquals(fundTransferPage.getErrorMessageOfDynamicField(driver, "Description"), validationData.getFundTransferDescriptionBlankErrorMsg());
 	}
 
 	@AfterClass(alwaysRun = true)
