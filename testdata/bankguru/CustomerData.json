@@ -19,6 +19,9 @@
 			"telephone": "1122334455",
 			"email": "JackLe%s@gmail.com",
 			"resultMessage": "Customer details updated Successfully!!!"
+		},
+		"delete": {
+			"resultMessage": "Customer deleted Successfully"
 		}
 	},
 	"secondCustomer": {
@@ -32,7 +35,10 @@
 		"telephone": "1478965236",
 		"email": "amanda%s@gmail.com",
 		"password": "secondcustomerpassword",
-		"resultMessage": "Customer Registered Successfully!!!"
+		"resultMessage": "Customer Registered Successfully!!!",
+		"delete": {
+			"resultMessage": "Customer deleted Successfully"
+		}
 	},
 	"thirdCustomer": {
 		"customerName": "Omaha",

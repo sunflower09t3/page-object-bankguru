@@ -146,7 +146,7 @@ public class AbstractPage {
 
 		elements = driver.findElements(By.xpath(allOptionsLocator));
 
-		explicitWait = new WebDriverWait(driver, 30);
+		explicitWait = new WebDriverWait(driver, Constants.LONG_TIMEOUT);
 		explicitWait.until(ExpectedConditions.visibilityOfAllElements(elements));
 
 		for (WebElement childElement : elements) {
@@ -437,39 +437,39 @@ public class AbstractPage {
 
 	public void waitForElementPresent(WebDriver driver, String locator) {
 		byLocator = By.xpath(locator);
-		explicitWait = new WebDriverWait(driver, 30);
+		explicitWait = new WebDriverWait(driver, Constants.LONG_TIMEOUT);
 		explicitWait.until(ExpectedConditions.presenceOfElementLocated(byLocator));
 	}
 
 	public void waitForElementVisible(WebDriver driver, String locator) {
 		byLocator = By.xpath(locator);
-		explicitWait = new WebDriverWait(driver, 30);
+		explicitWait = new WebDriverWait(driver, Constants.LONG_TIMEOUT);
 		explicitWait.until(ExpectedConditions.visibilityOfElementLocated(byLocator));
 	}
 
 	public void waitForElementVisible(WebDriver driver, String locator, String... dynamicValue) {
 		locator = String.format(locator, (Object[]) dynamicValue);
 		byLocator = By.xpath(locator);
-		explicitWait = new WebDriverWait(driver, 30);
+		explicitWait = new WebDriverWait(driver, Constants.LONG_TIMEOUT);
 		explicitWait.until(ExpectedConditions.visibilityOfElementLocated(byLocator));
 	}
 
 	public void waitForElementClickable(WebDriver driver, String locator) {
 		byLocator = By.xpath(locator);
-		explicitWait = new WebDriverWait(driver, 30);
+		explicitWait = new WebDriverWait(driver, Constants.LONG_TIMEOUT);
 		explicitWait.until(ExpectedConditions.elementToBeClickable(byLocator));
 	}
 
 	public void waitForElementInvisible(WebDriver driver, String locator) {
 		byLocator = By.xpath(locator);
-		explicitWait = new WebDriverWait(driver, 30);
+		explicitWait = new WebDriverWait(driver, Constants.LONG_TIMEOUT);
 		overrideGlobalTimeout(driver, Constants.SHORT_TIMEOUT);
 		explicitWait.until(ExpectedConditions.invisibilityOfElementLocated(byLocator));
 		overrideGlobalTimeout(driver, Constants.LONG_TIMEOUT);
 	}
 
 	public void waitForAlertPresent(WebDriver driver) {
-		explicitWait = new WebDriverWait(driver, 30);
+		explicitWait = new WebDriverWait(driver, Constants.LONG_TIMEOUT);
 		explicitWait.until(ExpectedConditions.alertIsPresent());
 	}
 

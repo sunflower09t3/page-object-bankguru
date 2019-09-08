@@ -39,8 +39,12 @@ public class CustomerDataJson {
 		this.firstCustomerEditedTelephone = (String) editedCustomer.get("telephone");
 		this.firstCustomerEditedEmail = (String) editedCustomer.get("email");
 		this.firstCustomerEditingResultMessage = (String) editedCustomer.get("resultMessage");
+		
+		Map<String, Object> deletedCustomer = (Map<String, Object>) firstCustomer.get("delete");
+		this.firstCustomerDeletingResultMessage = (String) deletedCustomer.get("resultMessage");
 	}
 
+	@SuppressWarnings("unchecked")
 	@JsonProperty("secondCustomer")
 	private void unpackSecondCustomer(Map<String, Object> secondCustomer) {
 		this.secondCustomerName = (String) secondCustomer.get("customerName");
@@ -54,6 +58,9 @@ public class CustomerDataJson {
 		this.secondCustomerEmail = (String) secondCustomer.get("email");
 		this.secondCustomerPassword = (String) secondCustomer.get("password");
 		this.secondCustomerAddingResultMessage = (String)secondCustomer.get("resultMessage");
+		
+		Map<String, Object> deletedCustomer = (Map<String, Object>) secondCustomer.get("delete");
+		this.secondCustomerDeletingResultMessage = (String) deletedCustomer.get("resultMessage");
 	}
 
 	@JsonProperty("thirdCustomer")
@@ -120,6 +127,8 @@ public class CustomerDataJson {
 
 	private String firstCustomerEditingResultMessage;
 	
+	private String firstCustomerDeletingResultMessage;
+	
 	private String secondCustomerName;
 
 	private String secondCustomerGender;
@@ -141,6 +150,8 @@ public class CustomerDataJson {
 	private String secondCustomerPassword;
 	
 	private String secondCustomerAddingResultMessage;
+	
+	private String secondCustomerDeletingResultMessage;
 
 	private String thirdCustomerName;
 
@@ -254,6 +265,10 @@ public class CustomerDataJson {
 		return firstCustomerEditingResultMessage;
 	}
 
+	public String getFirstCustomerDeletingResultMessage() {
+		return firstCustomerDeletingResultMessage;
+	}
+
 	public String getSecondCustomerName() {
 		return secondCustomerName;
 	}
@@ -296,6 +311,10 @@ public class CustomerDataJson {
 	
 	public String getSecondCustomerAddingResultMessage() {
 		return secondCustomerAddingResultMessage;
+	}
+
+	public String getSecondCustomerDeletingResultMessage() {
+		return secondCustomerDeletingResultMessage;
 	}
 
 	public String getThirdCustomerName() {
